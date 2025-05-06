@@ -12,6 +12,10 @@ import { generateToken, messaging } from "./firebase/Firebase"
 import { useEffect } from "react";
 import { onMessage } from "firebase/messaging";
 import toast, { Toaster } from 'react-hot-toast';
+import Home from "./components/dashboard/landingpage/Home";
+import FAQSection from "./components/dashboard/landingpage/FAQSection";
+import ContactForm from "./components/dashboard/landingpage/ContactForm";
+import WelcomePage from "./components/auth/WelcomePage";
 
 
 function App() {
@@ -39,6 +43,10 @@ function App() {
             <Route path="/opt" element={<Opt />} />
             <Route path="/newpassword" element={<NewPassword />} />
             <Route path="/*" element={<DashboardLayout />} />            
+            <Route path="/" element={<Home />} />            
+            <Route path="/faq" element={<FAQSection />} />            
+            <Route path="/contact" element={<ContactForm />} />            
+            <Route path="/welcome" element={<WelcomePage />} />            
            
           </Routes>
         </BrowserRouter>

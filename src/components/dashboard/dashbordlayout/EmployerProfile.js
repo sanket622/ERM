@@ -22,13 +22,18 @@ const EmployerProfile = () => {
         gender: '',
         totalEmployees: 0,
         workLocation: [{ country: '', state: '', district: '', locationName: '', totalEmployees: 0 }],
-        contractType: ''
+        contractType: '',
+        paymentType: '',
+        paymentCycleDates: [], // Replace with below
+        paymentCycles: [], // Each item will be { from: '', to: '' }
+
+
     });
     const [countries, setCountries] = useState([]);
     const [states, setStates] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [contracts, setContracts] = useState([]);
-    const steps = ['Business Details', 'Company Policies', 'Email Details', 'Work Location', 'Contract Details'];
+    const steps = ['Business Details', 'Company Policies', 'Email Details', 'Work Location', 'Contract Details', 'Payment Details'];
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -78,25 +83,36 @@ const EmployerProfile = () => {
 
 
     const handleChange = (e) => {
-        const { name, value, type, multiple } = e.target;
-    
-        // Handle simple fields (text, number, etc.)
-        if (!multiple) {
-            setFormData(prevData => ({
-                ...prevData,
-                [name]: value,
+        const { name, value, type } = e.target;
+        const val = type === 'number' ? Number(value) : value;
+
+        if (name === 'paymentCycleCount') {
+            const count = parseInt(val, 10);
+            const cycles = Array(count).fill('').map((_, i) => formData.paymentCycles[i] || { from: '', to: '' });
+        
+            setFormData(prev => ({
+                ...prev,
+                [name]: count,
+                paymentCycles: cycles,
             }));
-        } else {
-            // Handle multiple select fields (e.g., for contract types, emails, etc.)
-            setFormData(prevData => ({
-                ...prevData,
-                [name]: value,
+        }
+         else {
+            setFormData(prev => ({
+                ...prev,
+                [name]: val,
             }));
         }
     };
+
+    const handlePaymentCycleDateChange = (index, field, value) => {
+        const updatedCycles = [...formData.paymentCycles];
+        updatedCycles[index] = { ...updatedCycles[index], [field]: value };
+        setFormData(prev => ({
+            ...prev,
+            paymentCycles: updatedCycles,
+        }));
+    };
     
-
-
     // Handle Next button
     const handleNext = () => {
         handleSubmit(); // Submit the data on "Next"
@@ -198,6 +214,13 @@ const EmployerProfile = () => {
                     work_location_details: formData.workLocation // Send all work location details as an array
                 };
             case 4: return { filter_type: 'contract', contract_under: formData.contractType };
+            case 5: return {
+                filter_type: 'payment',
+                payment_type: formData.paymentType,
+                payment_cycle_count: formData.paymentCycleCount,
+                payment_cycles: formData.paymentCycles
+            };            
+
             default: return {};
         }
     };
@@ -262,6 +285,46 @@ const EmployerProfile = () => {
                     <Dropdown label="Select Contract Type" name="contractType" value={formData.contractType} onChange={handleChange} multiple={true} options={contracts.map(d => ({ id: d.id, name: d.contract_type }))} />
                 </Box>
             );
+            case 5: return (
+                <Box>
+                    <Dropdown
+                        label="Payment Type"
+                        name="paymentType"
+                        value={formData.paymentType}
+                        onChange={handleChange}
+                        options={['Fixed Monthly', 'Monthly Variable', 'Fully Variable']}
+                    />
+                    <Dropdown
+                        label="Payment Cycle Count"
+                        name="paymentCycleCount"
+                        value={formData.paymentCycleCount}
+                        onChange={handleChange}
+                        options={[1, 2, 3, 4, 5]}
+                    />
+            
+                    {formData.paymentCycles.map((cycle, index) => (
+                        <Box key={index} mb={3} border={1} borderRadius={2} p={2} borderColor="gray.300">
+                            <h4 className="text-lg font-semibold mb-2">{['First', 'Second', 'Third', 'Fourth', 'Fifth'][index]} Cycle</h4>
+                            <FormField
+                                label="From Date"
+                                name="from"
+                                type="date"
+                                value={cycle.from}
+                                onChange={(e) => handlePaymentCycleDateChange(index, 'from', e.target.value)}
+                            />
+                            <FormField
+                                label="To Date"
+                                name="to"
+                                type="date"
+                                value={cycle.to}
+                                onChange={(e) => handlePaymentCycleDateChange(index, 'to', e.target.value)}
+                            />
+                        </Box>
+                    ))}
+                </Box>
+            );
+            
+
             default: return null;
         }
     };

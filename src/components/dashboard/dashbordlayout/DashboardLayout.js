@@ -115,7 +115,7 @@ const DashboardLayout = () => {
       <div className="flex" style={{ height: "100vh" }}>
         <div
           style={{ height: 700, paddingBottom: 5 }}
-          className={`bg-[#00B251] text-white pl-6 pt-6  w-64 min-h-full fixed top-0 left-0 bottom-0 transform transition-transform md:relative md:block z-50 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+          className={`bg-blue-900 text-white pl-6 pt-6  w-64 min-h-full fixed top-0 left-0 bottom-0 transform transition-transform md:relative md:block z-50 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
         >
 
           {/* Profile Section */}
