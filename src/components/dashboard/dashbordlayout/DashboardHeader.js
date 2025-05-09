@@ -1,473 +1,138 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import img1 from '../../../assets/photo_2025-02-12_15-04-41.jpg';
-import img2 from '../../../assets/photo_2025-02-12_15-04-49.jpg';
-import img3 from '../../../assets/photo_2025-02-12_15-04-55.jpg';
-import img4 from '../../../assets/photo_2025-02-12_15-05-00.jpg';
+import React from 'react';
+import { Card, CardContent, Divider } from '@mui/material';
+import { CalendarMonth, ArrowForwardIos } from '@mui/icons-material';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import PersonIcon from '@mui/icons-material/Person';
+import WorkIcon from '@mui/icons-material/Work';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { useState } from 'react';
+import img from '../../../assets/farmer.png'
+import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
+import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined';
 
 
-import { useNavigate } from 'react-router';
-
-import {GetHomeScreenKPI } from '../../Api_url';
-import { FaUserCheck, FaUserSlash } from "react-icons/fa";
-
-const slides = [
-    {
-        title: ' "Manage your team effortlessly and stay organized."',
-        buttonText: "Add Members",
-        image: img4,
-        buttonColor: "#00B251",
-        navigateTo: "/member", // Target route for this button
-    },
-    {
-        title: '"Explore and choose the premium offers that best suit your needs for exclusive features."',
-        buttonText: "Explore Premium Plans",
-        image: img1,
-        buttonColor: "#FF9933",
-        // navigateTo: "/premium-plans", 
-    },
-    {
-        title: '"Explore products, make purchases, and view your order history to keep track of all your transactions."',
-        buttonText: "Make a Purchase",
-        image: img2,
-        buttonColor: "#0288D1",
-        navigateTo: "/purchase", // Target route for this button
-    },
-    {
-        title: ' "Monitor your sales performance and make data-driven decisions to boost your business growth."',
-        buttonText: "View Sales Insights",
-        image: img3,
-        buttonColor: "#000080",
-        navigateTo: "/sale", // Target route for this button
-    },
-];
-const DashboardHeader = ({ profileData }) => {
-    const navigate = useNavigate();
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [profileStatus, setProfileStatus] = useState(null);
-    const [skipStatus, setSkipStatus] = useState(null);
-    const [modalOpen, setModalOpen] = useState(false);
-
-    const [data, setData] = useState({ active_employees: 0, inactive_employees: 0 });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-
-    // const totalSlides = slides.length;
-
-    // useEffect(() => {
-       
-    //     if (totalSlides > 0) {
-    //         const intervalId = setInterval(() => {
-    //             setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
-    //         }, 2000);
-    //         return () => clearInterval(intervalId);
-    //     }
-    // }, [totalSlides]);
-
-    // const TABS = [
-    //     { key: 1, component: <ProfileScreen /> },
-    //     { key: 2, component: <ShopScreen /> },
-    //     { key: 3, component: <BankScreen /> },
-    //     { key: 4, component: <MembersManagement /> },
-    //     { key: 5, component: <FranchiseSubscription /> },
-    // ]
-
-
-    // const [currentIndex, setCurrentIndex] = useState(1)
-
-    // const fetchProfileCompletionStatus = async () => {
-    //     try {
-    //         const token = localStorage.getItem('access_token');
-    //         const response = await axios.get(FPOProfileCompletionView, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         });
-
-    //         if (response?.data) {
-    //             const { profile_completion, is_complete } = response?.data;
-
-    //             setProfileStatus({
-    //                 profileCompletion: profile_completion,
-    //                 isComplete: is_complete
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error("Error fetching profile completion status", error);
-    //     }
-    // };
-
-    // const fetchSkipStatus = async () => {
-    //     try {
-    //         const token = localStorage.getItem('access_token');
-    //         const response = await axios.get('https://apis.agrisarathi.com/fposupplier/UserProfileView', {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         });
-
-    //         if (response?.data?.data?.profile) {
-    //             const { skip_status } = response.data.data.profile; // Extract skip_status
-
-    //             setSkipStatus(skip_status);
-    //             setModalOpen(!skip_status); // Open dialog if false, close if true
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching skip status', error);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     fetchSkipStatus();
-    //     fetchProfileCompletionStatus();
-    // }, []);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const token = localStorage.getItem("access_token"); // Get token from localStorage
-            if (!token) {
-                setError("No access token found.");
-                setLoading(false);
-                return;
-            }
-
-            try {
-                const response = await axios.get(GetHomeScreenKPI, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                if (response.data.status === "success") {
-                    setData({
-                        active_employees: response.data.active_employees,
-                        inactive_employees: response.data.inactive_employees,
-                    });
-                } else {
-                    setError("Failed to fetch data.");
-                }
-            } catch (err) {
-                setError("Error fetching data.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-
-
+export default function Dashboard() {
+    const [userData] = useState({
+        name: 'Abhiraj',
+        employees: 560,
+        employeeGrowth: 12,
+        applicants: 1050,
+        applicantGrowth: 5,
+        lastUpdate: 'April 14, 2025',
+    });
     return (
         <>
-
-            <div className="flex flex-col min-h-screen  p-6">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">Employee Status</h2>
-
-                {loading ? (
-                    <p className="text-lg text-blue-500 font-semibold">Loading...</p>
-                ) : error ? (
-                    <p className="text-lg text-red-500 font-semibold">{error}</p>
-                ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {/* Active Employees Card */}
-                        <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center transition-transform transform hover:scale-105">
-                            <FaUserCheck className="text-green-500 text-5xl mb-4" />
-                            <h3 className="text-xl font-semibold text-gray-700">Active Employees</h3>
-                            <p className="text-3xl font-bold text-gray-900">{data?.active_employees}</p>
+        <h1 className='text-3xl font-semibold mb-4'>Dashboard</h1>
+        <div className=" min-h-screen flex flex-col items-center">
+            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                {/* Profile Card */}
+                <div className="col-span-1 flex justify-center">
+                    <div className="bg-white  h-[350px] w-[323px] shadow-md p-6 flex flex-col items-center text-center ">
+                        <div className="bg-gray-100 rounded-full w-48 h-48 mb-6 overflow-hidden flex items-center justify-center">
+                            <img
+                                src={img}
+                                alt="Profile avatar"
+                                className="w-full h-full object-cover"
+                            />
                         </div>
-
-                        {/* Inactive Employees Card */}
-                        <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center transition-transform transform hover:scale-105">
-                            <FaUserSlash className="text-red-500 text-5xl mb-4" />
-                            <h3 className="text-xl font-semibold text-gray-700">Inactive Employees</h3>
-                            <p className="text-3xl font-bold text-gray-900">{data?.inactive_employees}</p>
-                        </div>
-                    </div>
-                )}
-            </div>
-
-
-
-
-
-
-            <div className="w-full mx-auto p-4">
-
-                <div className='md:flex md:justify-between'>
-
-
-                    {profileStatus && !profileStatus?.isComplete && (
-                        <div className='md:flex md:justify-between px-4'>
-                            <div className="flex flex-col md:flex-row  items-center space-x-6 mb-8">
-
-                                {/* <div className="relative">
-                                    <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                                        <CircularProgress
-                                            size={148}
-                                            variant="determinate"
-                                            value={profileStatus?.profileCompletion}
-                                            sx={{
-                                                color: '#00B251',
-                                                "& .MuiCircularProgress-circle": {
-                                                    strokeLinecap: "round", 
-                                                },
-                                            }}
-                                        />
-                                        <Box
-                                            sx={{
-                                                position: 'absolute',
-                                                top: '50%',
-                                                left: '50%',
-                                                transform: 'translate(-50%, -50%)',
-                                                width: 140, // Adjust size as needed
-                                                height: 140,
-                                                borderRadius: '50%',
-                                                overflow: 'hidden', 
-                                                zIndex: -1
-                                            }}
-                                        >
-                                            <img
-                                                src={profileData || women}
-                                                alt="Profile"
-                                                width="100%"
-                                                height="100%"
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </Box>
-                                    </Box>
-
-
-                                </div> */}
-
-                                {/* Profile Completion Details */}
-                                {/* <div>
-                                    <p className="text-gray-700 font-medium text-center mb-2">{profileStatus?.profileCompletion}% Completed</p>
-                                    <Button
-                                        variant="contained"
-                                        sx={{
-                                            textTransform: 'none',
-                                            backgroundColor: '#00B251',
-                                            color: 'white',
-                                            '&:hover': {
-                                                backgroundColor: '#00B251',
-                                            },
-                                        }}
-                                        onClick={() => navigate('/profile')}
-                                    >
-                                        Complete Your Profile
-                                    </Button>
-                                </div> */}
-                            </div>
-                        </div>
-                    )}
-
-
-                    {/* Announcements */}
-                    <div className="mb-8 bg-white p-4 rounded-lg shadow md">
-
-                        {/* <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-lg font-semibold">Announcements</h2>
-                            <button className="text-[#00B251] hover:underline text-sm">View all</button>
-                        </div> */}
-
-                        {/* Announcements List */}
-                        {/* <div className="space-y-2">
-                            {[1, 2].map((item) => (
-                                <div
-                                    key={item}
-                                    className="flex items-center bg-white p-2 rounded-md shadow-sm border border-gray-200"
-                                >
-                                   
-                                    <div className="w-26 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                                        <img
-                                            src={accoumentimg}
-                                            alt="Announcement"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-
-                                   
-                                    <div className="ml-3">
-                                        <h3 className="font-medium text-sm text-gray-900">
-                                            Pradhan Mantri Fasal Bima Yojana...
-                                        </h3>
-                                        <p className="text-xs text-gray-600 mt-1 leading-tight">
-                                            Aims to provide insurance and coverage support for many farmers...
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div> */}
+                        <h2 className="text-[#0000FF] text-[18px] font-semibold mb-2">Hello {userData.name}!</h2>
+                        <p className="text-[#8A8A8A] text-[12px]">Good Morning! You have new messages. It's a lot of work today! So let's get started.</p>
                     </div>
                 </div>
 
-                {/* Custom Slider Banner */}
-                {/* <div className='md:px-10'>
-                    <div className="relative rounded-2xl overflow-hidden shadow-lg ">
-                        <div className="relative rounded-2xl overflow-hidden shadow-lg ">
-                            <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                                {slides.map((slide, index) => (
-                                    <div
-                                        key={index}
-                                        className="min-w-full"
-                                        style={{
-                                            backgroundImage: `url(${slide?.image})`,
-                                            height: '400px',
-                                            backgroundSize: 'cover',
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'end',
-                                        }}
-                                    >
-                                        <div className="text-black text-center w-1/2">
-                                            <h2 className="text-xl font-semibold mb-4 text-center">{slide?.title}</h2>
-                                            <button
-                                                style={{  textTransform: 'none', backgroundColor: slide?.buttonColor }}
-                                                className="text-white px-6 py-2 rounded-lg"
-                                                onClick={() => navigate(slide?.navigateTo)} // Navigate to the route
-                                            >
-                                                {slide?.buttonText}
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
+                {/* Stats Column */}
+                <div className="col-span-1 flex flex-col gap-6 ">
+                    {/* Employees Card */}
+                    <div className="bg-white rounded-xl shadow-md ">
+                    <div className="p-6 ">
+                        <div className="flex items-center mb-4">
+                            <div className="bg-indigo-100 p-3 rounded-lg mr-4">
+                                <GroupsOutlinedIcon style={{ color: '#6366f1', fontSize: 24 }} />
+                            </div>
+                            <h3 className="text-xl font-semibold text-gray-800">Total Employee</h3>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-4xl font-bold text-gray-900">{userData.employees}</h2>
+                            <div className="bg-green-100 text-green-600 py-1 px-3 rounded-full flex items-center">
+                                <ArrowUpwardIcon style={{ fontSize: 16, marginRight: 4 }} />
+                                <span>{userData.employeeGrowth}%</span>
                             </div>
                         </div>
-                    </div>
-                </div> */}
+                        </div>
+                        <Divider className='w-full'/>                       
+                        <p className="text-gray-400 mt-4 px-6 pb-3">Update: {userData.lastUpdate}</p>                        
+                   </div>
 
-                {/* Custom Dot Indicators */}
-                {/* <div className='mt-4'>
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-2 ">
-                        {slides.map((_, index) => (
-                            <button
-                                key={index}
-                                onClick={() => setCurrentSlide(index)}
-                                className={`h-2 rounded-full transition-all duration-300 ${currentSlide === index ? 'w-8 bg-[#00B251]' : 'w-2 bg-gray-300'}`}
-                            />
-                        ))}
-                    </div>
-                </div> */}
-
-                {/* <div className="flex items-center justify-center py-4 mt-20 text-gray-500">
-                    <span className="mr-2 text-sm">Powered by</span>
-                    <div className="relative h-8">
-                        <img
-                            src="/api/placeholder/120/40"
-                            alt="AgriSarthi Logo"
-                            className="h-full object-contain"
-                        />
-                    </div>
-                </div> */}
-
-                {/* {modalOpen && (
-                    <Dialog
-                        open={modalOpen}
-                        fullWidth
-                        maxWidth="lg"
-                        onClose={() => setModalOpen(false)}
-                        sx={{
-                            '& .MuiDialog-paper': {
-                                borderRadius: '20px',
-                                backgroundColor: '#F2F2F2',
-                                width: '90vw',
-                                maxWidth: '900px',
-                                minWidth: '300px',
-                                height: '80vh',
-                                maxHeight: '90vh',
-                                minHeight: '400px',
-                                margin: 'auto',
-                                display: 'flex',  // Makes content fit inside
-                                flexDirection: 'column', // Stacks content properly
-                            },
-                        }}
-                    >
-                       
-                        <Stack sx={{ flexGrow: 1, overflowY: 'auto', p: 2 }}>
-                           
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    top: '40px',
-                                    right: '40px',
-                                    zIndex: 1,
-                                    color: '#B1B1B1'
-                                }}
-                            >
-                                <button variant="outlined" onClick={() => setModalOpen(false)}>Skip</button>
+                    {/* Applicants Card */}
+                    <div className="bg-white rounded-xl shadow-md ">
+                    <div className=" p-6">
+                        <div className="flex items-center mb-4">
+                            <div className="bg-indigo-100 p-3 rounded-lg mr-4">
+                                <BusinessCenterOutlinedIcon style={{ color: '#6366f1', fontSize: 24 }} />
                             </div>
-
-                          
-                            <Stack spacing={2} sx={{ flexGrow: 1, overflowY: 'auto', maxHeight: '70vh' }}>
-                                {TABS?.map((item) => currentIndex === item?.key && item?.component)}
-                            </Stack>
-                        </Stack>
-
-                      
-                        <Stack
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="center"
-                            sx={{
-                                borderTop: '1px solid #ddd', // Adds subtle separation
-                                p: 2,
-                                background: '#F2F2F2',
-                            }}
-                        >
-                           
-                            <div style={{ width: '10%' }}>
-                                {currentIndex > 1 && (
-                                    <Button
-                                        onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 1))}
-                                        sx={{ textTransform: "none", color: "#6B6B6B", fontWeight: "bold" }}
-                                        disabled={currentIndex === 1}
-                                        startIcon={<ArrowBackIos fontSize='small' />}
-                                    >
-                                        Previous
-                                    </Button>
-                                )}
+                            <h3 className="text-xl font-semibold text-gray-800">Total Applicant</h3>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-4xl font-bold text-gray-900">{userData.applicants}</h2>
+                            <div className="bg-green-100 text-green-600 py-1 px-3 rounded-full flex items-center">
+                                <ArrowUpwardIcon style={{ fontSize: 16, marginRight: 4 }} />
+                                <span>{userData.applicantGrowth}%</span>
                             </div>
+                        </div>
+                        </div>
+                        <Divider className='w-full'/>
+                        <p className="text-gray-400 mt-4 px-6 pb-3">Update: {userData.lastUpdate}</p>
+                    </div>
+                </div>
 
-                            
-                            <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ width: '80%' }}>
-                                {TABS.map((item) => (
-                                    <IconButton
-                                        onClick={() => setCurrentIndex(item?.key)}
-                                        sx={{
-                                            color: currentIndex === item?.key ? '#fff' : '#000',
-                                            height: 30,
-                                            fontSize: 16,
-                                            py: 2,
-                                            px: 1.5,
-                                            backgroundColor: currentIndex === item?.key ? '#00B251' : '',
-                                            '&:hover': { color: '#000' },
-                                        }}
-                                    >
-                                        {item?.key}
-                                    </IconButton>
-                                ))}
-                            </Stack>
-
-                           
-                            <div style={{ width: '10%' }}>
-                                {currentIndex < 5 && (
-                                    <Button
-                                        onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, 5))}
-                                        sx={{ textTransform: "none", color: "#00B251", fontWeight: "bold" }}
-                                        disabled={currentIndex === 5}
-                                        endIcon={<ArrowForwardIos fontSize='small' />}
-                                    >
-                                        Next
-                                    </Button>
-                                )}
+                {/* Right Column */}
+                <div className="col-span-1 flex flex-col gap-6">
+                    {/* Calendar Card */}
+                    <Card className="rounded-xl shadow-md">
+                        <CardContent>
+                            <div className="flex justify-between items-center mb-2">
+                                <h3 className="font-semibold text-[16px]">Holidays</h3>
+                                <CalendarMonth className="text-[#7152F3]" />
                             </div>
-                        </Stack>
-                    </Dialog>
-                )} */}
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DateCalendar className="w-full" />
+                            </LocalizationProvider>
+                            <ul className="mt-4 text-sm text-gray-700">
+                                <li><strong>Friday, 15 April 2025</strong><br />Jayanti</li>
+                                <li className="mt-2"><strong>Monday, 18 April 2025</strong><br />Jayanti</li>
+                                <li className="mt-2"><strong>Friday, 22 April 2025</strong><br />Jayanti</li>
+                            </ul>
+                        </CardContent>
+                    </Card>
+
+                    {/* What's New Card */}
+                    <Card className="rounded-xl shadow-md">
+                        <CardContent>
+                            <div className="flex justify-between items-center mb-2">
+                                <h3 className="font-semibold">What’s New</h3>
+                                <span className="text-[14px] text-[#0000FF] flex items-center gap-1 cursor-pointer">
+                                    View all <ArrowForwardIos fontSize="inherit" />
+                                </span>
+                            </div>
+                            {[1, 2].map((item) => (
+                                <div key={item} className="mb-4">
+                                    <div className="bg-gray-200 h-16 rounded mb-2"></div>
+                                    <p className="text-[14px] text-[#0000FF] font-medium">
+                                        New Feature Update <span className="text-gray-400 ml-2 text-[14px]">• 3 hours ago</span>
+                                    </p>
+                                    <p className="text-[14px] text-black mt-1">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </p>
+                                </div>
+                            ))}
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
-
+        </div>
         </>
     );
-};
-
-export default DashboardHeader;
+}

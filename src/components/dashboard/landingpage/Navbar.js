@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
 import logo from '../../../assets/earnlogo.png';
 import { Button } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // Define your buttons and routes
+    const navItems = [
+        { label: 'Home', path: '/' },
+        { label: 'Contact Us', path: '/contact' },
+        { label: 'FAQs', path: '/faq' },
+    ];
+
 
     return (
         <nav className="bg-white w-full">
@@ -16,21 +28,31 @@ const Navbar = () => {
 
                     {/* Center: Navigation Links (Desktop Only) */}
                     <div className="hidden md:flex flex-grow justify-center space-x-4">
-                        <a href="#" className="text-black font-medium px-3 py-2 hover:text-blue-800">
-                            Home
-                        </a>
-                        <a href="#" className="text-black font-medium px-3 py-2 hover:text-blue-600">
-                            Contact Us
-                        </a>
-                        <a href="#" className="text-black font-medium px-3 py-2 hover:text-blue-600">
-                            FAQs
-                        </a>
+                        {navItems.map((item) => (
+                            <Button
+                                key={item.path}
+                                onClick={() => navigate(item.path)}
+                                sx={{
+                                    color: location.pathname === item.path ? '#0000FF' : 'black',
+                                    fontWeight: 500,
+                                    px: 2,
+                                    py: 1,
+                                    textTransform: 'none',
+                                    '&:hover': {
+                                        color: '#0000FF',
+                                    },
+                                }}
+                            >
+                                {item.label}
+                            </Button>
+                        ))}
                     </div>
 
                     {/* Right: Login Button (Desktop Only) */}
                     <div className="hidden md:flex">
-    
+
                         <Button
+                         onClick={() => navigate('/login')}
                             sx={{
                                 background: 'linear-gradient(to bottom, #0000ff, #00bfff)', // solid blue to sky blue
                                 color: 'white',
@@ -84,19 +106,19 @@ const Navbar = () => {
             {/* Mobile Menu */}
             <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden`}>
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a href="#" className="text-black font-medium block px-3 py-2 hover:bg-gray-50">
+                    <a  className="text-black font-medium block px-3 py-2 hover:bg-gray-50">
                         Home
                     </a>
-                    <a href="#" className="text-black font-medium block px-3 py-2 hover:bg-gray-50 hover:text-blue-600">
+                    <a  className="text-black font-medium block px-3 py-2 hover:bg-gray-50 hover:text-blue-600">
                         Contact Us
                     </a>
-                    <a href="#" className="text-black font-medium block px-3 py-2 hover:bg-gray-50 hover:text-blue-600">
+                    <a  className="text-black font-medium block px-3 py-2 hover:bg-gray-50 hover:text-blue-600">
                         FAQs
                     </a>
                     <div className="px-3 py-3">
-                    <Button
+                        <Button
                             sx={{
-                                background: 'linear-gradient(to bottom, #0000ff, #00bfff)', // solid blue to sky blue
+                                background: 'linear-gradient(to bottom, #0000ff, #00bfff)', 
                                 color: 'white',
                                 px: 8,
                                 py: 1.5,

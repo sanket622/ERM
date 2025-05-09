@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import React, {  useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { PasswordResetAPIView } from '../Api_url';
-import img1 from '../../assets/unsplash_01vS-aVPaVA.png'
-import img2 from '../../assets/unsplash_IQVFVH0ajag.png'
-import img3 from '../../assets/unsplash_ZSZ6wzNU12Q.png'
-import img4 from '../../assets/unsplash_ajZibDGpPew.png'
-import logo from '../../assets/agri.png'
-
-const images = [img1, img2, img3, img4];
-
-
+import logo from '../../assets/earnlogo.png'
+import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
+import backgroundimg from '../../assets/1.png'
 
 const NewPassword = () => {
 
@@ -29,152 +20,191 @@ const NewPassword = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    useEffect(() => {
 
-        const interval = setInterval(() => {
-            setBgIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 2000);
-        return () => clearInterval(interval);
-    }, []);
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    //     if (newPassword !== confirmPassword) {
+    //         Swal.fire({
+    //             icon: 'warning',
+    //             title: 'Passwords Do Not Match',
+    //             text: 'Please ensure that the new password and confirm password fields match.',
+    //         });
+    //         return;
+    //     }
 
 
-        if (newPassword !== confirmPassword) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Passwords Do Not Match',
-                text: 'Please ensure that the new password and confirm password fields match.',
-            });
-            return;
-        }
+    //     if (newPassword.length < 6) {
+    //         Swal.fire({
+    //             icon: 'warning',
+    //             title: 'Password Too Short',
+    //             text: 'Your new password must be at least 6 characters long.',
+    //         });
+    //         return;
+    //     }
+
+    //     try {
+    //         setLoading(true);
+
+    //         const response = await axios.put(
+    //             PasswordResetAPIView,
+    //             {
+    //                 otp: otpValue,
+    //                 email: email,
+    //                 new_password: newPassword,
+    //                 user_type: user_type,
+
+    //             }
+    //         );
+
+    //         if (response.status === 200) {
+    //             Swal.fire({
+    //                 icon: 'success',
+    //                 title: 'Password Updated',
+    //                 text: 'Your password has been successfully updated.',
+    //             });
+
+    //             navigate('/login');
 
 
-        if (newPassword.length < 6) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Password Too Short',
-                text: 'Your new password must be at least 6 characters long.',
-            });
-            return;
-        }
-
-        try {
-            setLoading(true);
-
-            const response = await axios.put(
-                PasswordResetAPIView,
-                {
-                    otp: otpValue,
-                    email: email,
-                    new_password: newPassword,
-                    user_type: user_type,
-
-                }
-            );
-
-            if (response.status === 200) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Password Updated',
-                    text: 'Your password has been successfully updated.',
-                });
-
-                navigate('/login');
-
-
-                setNewPassword('');
-                setConfirmPassword('');
-            }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Update Failed',
-                text: error.response?.data?.message || 'An error occurred while updating your password.',
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
+    //             setNewPassword('');
+    //             setConfirmPassword('');
+    //         }
+    //     } catch (error) {
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Update Failed',
+    //             text: error.response?.data?.message || 'An error occurred while updating your password.',
+    //         });
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     return (
         <div
-        className="min-h-screen flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url('https://apis.agrisarathi.com/media/home%20_page_animation%20(1).gif')`, width: '100%',}}
-      >
-            <div className="absolute top-4 left-4 z-10">
+        className=" flex items-center justify-center bg-cover bg-center"
+        style={{
+            backgroundImage: `url(${backgroundimg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',        
+            width: '100%',
+            height: '100vh',
+          }}              
+    >
+        <div className="absolute top-4 left-4 z-10">
 
-                <img src={logo} alt="Logo" className="w-60 h-auto" />
-            </div>
+            <img src={logo} alt="Logo" className="w-[178px] h-auto" />
+        </div>
 
-            <div className="w-full h-screen flex items-center justify-end px-4   ">
-                {/* Right side for Login Form */}
-                <div className="w-full md:w-1/3 md:px-10 md:mr-10 bg-black bg-opacity-25 backdrop-blur-md p-5 rounded-2xl shadow-lg flex justify-center flex-col">
-                    <h1 className="md:text-4xl text-xl font-bold text-white text-center mb-4">
-                        Reset Password
-                    </h1>
-                    <form className="grid grid-cols-1 gap-4" onSubmit={handleSubmit}>
-                        <div>
-                            <label className="block text-white font-medium mb-1">
-                                New Password
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type={showPassword ? "text" : "password"}  // Dynamically toggle type
-                                    placeholder="Enter Your New Password"
-                                    value={newPassword}
-                                    onChange={(e) => setNewPassword(e.target.value)}
-                                    className="w-full p-1.5 border rounded-md"
-                                    required
-                                />
+        <div className="w-full h-screen flex items-center justify-end px-4   ">
+            {/* Right side for Login Form */}
+            <div className="w-[631px] h-[682px] md:px-10 md:mr-10 bg-white bg-opacity-25 backdrop-blur-[34px] p-5 rounded-2xl shadow-lg flex justify-center flex-col">
+                <h1 className="md:text-[32px] text-xl font-bold text-[#0000FF] text-center mb-4 ">Create Your Password</h1>
+                <p className="text-[20px] text-center">Set up your password to get started.</p>
 
-                                <button
-                                    type="button"
-                                    className="absolute right-3 top-3 text-gray-600 hover:text-gray-900"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                >
-                                    {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <label className="block text-white font-medium mb-1">
-                                Confirm New Password
-                            </label>
-                            <div className="relative">
-                                <input
-                                    type={showConfirmPassword ? "text" : "password"}  // Dynamically toggle type
-                                    placeholder="Confirm Your New Password"
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
-                                    className="w-full p-1.5 border rounded-md"
-                                    required
-                                />
+                <form className="grid grid-cols-1 gap-4 mt-10" >
+                   
 
-                                <button
-                                    type="button"
-                                    className="absolute right-3 top-3 text-gray-600 hover:text-gray-900"
-                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                >
-                                    {showConfirmPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
-                                </button>
-                            </div>
-                        </div>
-                        <div className="mt-4 text-center">
-                            <button
-                                type="submit"
-                                className="bg-[#00B251] text-white text-lg font-medium py-1.5 px-8 rounded-md hover:bg-[#00B251] transform hover:scale-105 transition-transform duration-300"
-                                disabled={loading}
-                            >
-                                {loading ? 'Submitting...' : 'Submit Password'}
-                            </button>
-                        </div>
-                    </form>
+                    <div>
+                        <label className="block font-medium mb-1">Create Password</label>
+                        <TextField
+                            fullWidth
+                            placeholder="Enter Your Password"
+                            size="small"                           
+                            required
+                            type={showPassword ? 'text' : 'password'}
+                            variant="outlined"
+                            sx={{
+                                backgroundColor: '#fff', 
+                                borderRadius: '4px',     
+                            }}
+                            InputProps={{
+                                style: {
+                                    backgroundColor: '#fff', 
+                                },
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                            {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <label className="block font-medium mb-1">Confirm Password</label>
+                        <TextField
+                            fullWidth
+                            placeholder="Enter Your Password"
+                            size="small"                           
+                            required
+                            type={showPassword ? 'text' : 'password'}
+                            variant="outlined"
+                            sx={{
+                                backgroundColor: '#fff', 
+                                borderRadius: '4px',     
+                            }}
+                            InputProps={{
+                                style: {
+                                    backgroundColor: '#fff', 
+                                },
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                            {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </div>
+
+                    <div className="flex justify-center mt-4">
+                         
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            fullWidth={false}
+
+                            sx={{
+                                background: '#0000FF',
+                                color: 'white',
+                                px: 12,
+                                py: 1.5,
+                                borderRadius: 2,
+                                fontsize:'16px',
+                                fontWeight: 500,
+                                textTransform: 'none',
+                                '&:hover': {
+                                    background: '#0000FF',
+                                },
+                            }}
+                        >
+                            Login
+                        </Button>
+                    </div>
+                </form>
+
+
+                {/* <div className="text-right mt-2">
+                    <button onClick={() => navigate("/forgetpassword")} className="text-[#00B251]  md:text-md">
+                        Forgot password?
+                    </button>
+                </div> */}
+
+                <div className="flex items-center justify-center space-x-2 mt-10">
+                    <p className=" text-[#838383] text-[14px]">Don’t have an account? </p>
+                    <button onClick={() => navigate("/contact")} className="text-[#0000FF] text-[14px] font-semibold">
+                        Contact us 
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
     );
 };
 

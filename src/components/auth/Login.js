@@ -5,10 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLoginApi } from "./LoginAction";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import logo from '../../assets/earnlogo.png'
-import backgroundimg from './1.png'
+import backgroundimg from '../../assets/1.png'
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
-
-
 
 const Login = () => {
     const navigate = useNavigate();

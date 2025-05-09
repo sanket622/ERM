@@ -17,6 +17,8 @@ import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import EmployerProfile from './EmployerProfile';
 import EmployerHome from '../employerprofile/EmployerHome';
+import UserManagement from '../usermanagement/UserManagement';
+import AddAccess from '../usermanagement/AddAccess';
 
 
 const DashboardLayout = () => {
@@ -43,27 +45,8 @@ const DashboardLayout = () => {
     setSidebarOpen(false);
   };
 
-  const [anchorEl, setAnchorEl] = useState(null); // For controlling the menu
-  const open = Boolean(anchorEl); // Whether the menu is open
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget); // Open menu when profile image is clicked
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null); // Close menu when an option is selected
-  };
-
-  const handleMenuItemClick = (setting) => {
-    if (setting === 'My Profile') {
-      navigate('/employerprofile');
-    } else if (setting === 'Logout') {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      navigate('/login', { replace: true });
-    }
-    handleClose(); // Close the menu after selection
-  };
 
   const TABS = [
     { label: "Dashboard", path: 'home', icon: <DashboardIcon />, outlinedIcon: <DashboardOutlinedIcon />, component: <DashboardHeader /> },
@@ -111,64 +94,46 @@ const DashboardLayout = () => {
 
   return (
     <>
-      
+
       <div className="flex" style={{ height: "100vh" }}>
+        <Navbar />
         <div
-          style={{ height: 700, paddingBottom: 5 }}
-          className={`bg-blue-900 text-white pl-6 pt-6  w-64 min-h-full fixed top-0 left-0 bottom-0 transform transition-transform md:relative md:block z-50 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+          style={{ height: 700, paddingBottom: 5, boxShadow: '2px 0 5px rgba(0, 0, 0, 0.2)' }}
+          className={`bg-white  text-black font-semibold text-[16px] pl-6 pt-6  w-[250px] min-h-full fixed top-0 left-0 bottom-0 z-0 transform transition-transform md:relative md:block ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
         >
 
-          {/* Profile Section */}
-          <div>
-            {/* Profile Picture and Text */}
-            <div className="flex items-center mb-5 py-4 cursor-pointer" onClick={handleClick}>
-              <Avatar
-                alt="Profile"
-                src={profileImage || women}
-                sx={{ width: 40, height: 40, marginRight: 2 }}
-              />
-              <span className="text-lg font-bold">{loading ? 'Loading...' : `Hi, ${userName}`}</span>
-              <ArrowDropDownIcon sx={{ mr: 2 }} />
-            </div>
-
-            {/* MUI Menu for options */}
-            <Menu
-              className='ml-20 -mt-4 '
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={() => handleMenuItemClick('My Profile')}>My Profile</MenuItem>
-              <MenuItem onClick={() => handleMenuItemClick('Logout')}>Logout</MenuItem>
-            </Menu>
-          </div>
-
           {/* Menu */}
-          <ul className="space-y-4">
-            {TABS.map((item) => (
-              <li
-                key={item.path}
-                onClick={() => {
-                  handleTabChange(item?.label);
-                  navigate(`/${item?.path}`);
-                }}
-                className={`relative min-w-full flex px-5 py-3 cursor-pointer rounded-lg transition-all gap-4 
-                   ${location.pathname.includes(item?.path) ? "bg-white text-black font-bold rounded-l-full -rounded-tr-full "
-                    : "hover:bg-green-700 rounded-l-full -rounded-tr-full"}`}
-              >
-                {/* Render the appropriate icon based on selected tab */}
-                {location.pathname.includes(item.path) ? item.icon : item.outlinedIcon}
-                {item?.label}
-              </li>
-            ))}
+          <ul className="space-y-4 mt-24">
+            {TABS.map((item) => {
+              const isActive = location.pathname.includes(item.path);
+
+              return (
+                <li
+                  key={item.path}
+                  onClick={() => {
+                    handleTabChange(item?.label);
+                    navigate(`/${item?.path}`);
+                  }}
+                  className={`relative min-w-full flex items-center px-5 py-3 cursor-pointer transition-all gap-3
+          ${isActive
+                      ? "bg-gradient-to-r from-[#C3F9FF] to-white text-[#0000FF] font-medium rounded-xl"
+                      : "hover:bg-gradient-to-r from-[#C3F9FF] to-white hover:text-black text-black rounded-xl"}`}
+                >
+                  <span className={`${isActive ? "text-[#0000FF]" : "text-black"}`}>
+                    {isActive ? item.icon : item.outlinedIcon}
+                  </span>
+                  <span>{item?.label}</span>
+                </li>
+              );
+            })}
           </ul>
+
 
         </div>
 
         <div className="flex-1 p-6 ml-0 md:ml-4 min-h-screen overflow-y-scroll" >
 
           <div style={{ width: "100%", position: 'relative' }}>
-            <Navbar />
             <div className="flex justify-end items-center">
               <button
                 className="md:hidden mt-20 text-black"
@@ -191,14 +156,15 @@ const DashboardLayout = () => {
               </button>
 
             </div>
-            <div className='mt-20'>
+            <div className='mt-14'>
               <Routes>
                 <Route path="/home" element={<DashboardHeader profileData={profileImage} />} />
                 <Route path="/member" element={<MemberHome />} />
                 <Route path="/memberdetail/:id" element={<MemberProfile />} />
                 <Route path="/employer" element={<EmployerHome />} />
                 <Route path="/employerprofile" element={<EmployerProfile />} />
-               
+                <Route path="/usermanagement" element={<UserManagement />} />
+                <Route path="/addaccess" element={<AddAccess />} />
               </Routes>
             </div>
           </div>

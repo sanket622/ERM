@@ -15,8 +15,9 @@ import {
   Work,
   AccountBalance,
 } from "@mui/icons-material";
+import AddEmployee from "./dashboard/members/AddEmployee";
 
-const MultiStepForm = () => {
+const Add = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [dob, setDob] = useState("");
   const [doj, setDoj] = useState("");
@@ -167,4 +168,4 @@ const MultiStepForm = () => {
   );
 };
 
-export default MultiStepForm;
+export default Add;

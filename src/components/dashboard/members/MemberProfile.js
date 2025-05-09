@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { GetSingleFarmerDetailsbyFPO } from '../../Api_url';
+// import { GetSingleFarmerDetailsbyFPO } from '../../Api_url';
 import img1 from "../../../assets/unsplash_IQVFVH0ajag.png";
 import img2 from "../../../assets/3.png";
 import img3 from "../../../assets/4.png";
@@ -28,36 +28,36 @@ const MemberProfile = () => {
     // Replace with your actual token
     const token = localStorage.getItem('access_token');
 
-    useEffect(() => {
-        const fetchMemberData = async () => {
-            try {
-                const response = await axios.get(GetSingleFarmerDetailsbyFPO, {
-                    headers: {
-                        Authorization: `Bearer ${token}`, 
-                    },
-                    params: {
-                        farmer_id: id,
-                    },
-                });
+    // useEffect(() => {
+    //     const fetchMemberData = async () => {
+    //         try {
+    //             const response = await axios.get(GetSingleFarmerDetailsbyFPO, {
+    //                 headers: {
+    //                     Authorization: `Bearer ${token}`, 
+    //                 },
+    //                 params: {
+    //                     farmer_id: id,
+    //                 },
+    //             });
 
-                const data = response?.data;
-                setMember(data?.farmer_data);
-                setLandRecords(data?.land_records);
-                setTotalLands(data?.total_lands);
-                setFarmerPosts(data?.farmer_posts);
-                setTotalPosts(data?.total_posts);
-                setDiseaseRecords(data?.disease_records);
-                setTotalDisease(data?.total_disease);
-            } catch (err) {
-                setError('Error fetching member data');
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+    //             const data = response?.data;
+    //             setMember(data?.farmer_data);
+    //             setLandRecords(data?.land_records);
+    //             setTotalLands(data?.total_lands);
+    //             setFarmerPosts(data?.farmer_posts);
+    //             setTotalPosts(data?.total_posts);
+    //             setDiseaseRecords(data?.disease_records);
+    //             setTotalDisease(data?.total_disease);
+    //         } catch (err) {
+    //             setError('Error fetching member data');
+    //             console.error(err);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        fetchMemberData();
-    }, [id, token]);
+    //     fetchMemberData();
+    // }, [id, token]);
 
     // Show loading or error state if needed
     if (loading) {

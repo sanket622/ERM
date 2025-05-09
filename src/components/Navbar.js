@@ -1,11 +1,22 @@
 import * as React from 'react';
-import logo from '../assets/agri.png';  
+import logo from '../assets/earnlogo.png';
 import { useNavigate } from 'react-router-dom';
-import img from '../assets/Vector (1).png'
+import img from '../assets/Vector (1).png';
 import axios from 'axios';
-import { UserProfileView } from './Api_url'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import coin from '../assets/Coin (2).png'
+import coin from '../assets/Coin (2).png';
+import { useState } from 'react';
+import { Avatar, IconButton } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import PersonIcon from '@mui/icons-material/Person';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import GroupsIcon from '@mui/icons-material/Groups';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
+import SettingsIcon from '@mui/icons-material/Settings';
+
+
 function Navbar() {
   const [weather, setWeather] = React.useState({
     temp: null,
@@ -15,66 +26,47 @@ function Navbar() {
   });
 
   const [language, setLanguage] = React.useState('en');
-  const [companyLogo, setCompanyLogo] = React.useState(null); // State to store company logo
+  const [companyLogo, setCompanyLogo] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const fetchCompanyLogo = async () => {
-    const token = localStorage.getItem('access_token');
-    try {
-      const response = await axios.get(UserProfileView, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Include token in headers
-        },
-      });
+  // const fetchWeather = async (lat, lon) => {
+  //   const API_KEY = "4675f25ce2863825d057505230a4cca0";
+  //   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
 
-      const companyLogoUrl = response.data.data.profile.company_logo;
-      if (companyLogoUrl) {
-        setCompanyLogo(companyLogoUrl);  // Set the company logo if available
-      }
-    } catch (error) {
-      console.error("Error fetching company logo:", error);
-    }
-  };
+  //   try {
+  //     const response = await fetch(url);
+  //     const data = await response.json();
 
-  const fetchWeather = async (lat, lon) => {
-    const API_KEY = "4675f25ce2863825d057505230a4cca0";
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
+  //     if (data.cod === 200) {
+  //       setWeather({
+  //         temp: Math.round(data.main.temp),
+  //         icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
+  //         description: data.weather[0].description,
+  //         location: data.name,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching weather data:", error);
+  //   }
+  // };
 
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      
-      if (data.cod === 200) {
-        setWeather({
-          temp: Math.round(data.main.temp),
-          icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
-          description: data.weather[0].description,
-          location: data.name,
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
-    }
-  };
+  // React.useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const { latitude, longitude } = position.coords;
+  //         fetchWeather(latitude, longitude);
+  //       },
+  //       (error) => {
+  //         console.error("Error getting location:", error);
+  //       }
+  //     );
+  //   } else {
+  //     console.error("Geolocation is not supported by this browser.");
+  //   }
+  // }, []);
 
-  // Get user's location and fetch weather
-  React.useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          fetchWeather(latitude, longitude);
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-    fetchCompanyLogo();
-  }, []);
-
-  const token = localStorage.getItem('access_token');
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -84,61 +76,135 @@ function Navbar() {
     }
   }, [navigate]);
 
-  // Function to toggle between English and Hindi
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'hi' : 'en');
   };
 
+  const handleClick = () => {
+    setMenuOpen((prev) => !prev); // toggle dropdown
+  };
+
+  const handleClose = () => {
+    setMenuOpen(false);
+  };
+
+  const handleMenuItemClick = (setting) => {
+    switch (setting) {
+      case 'My Profile':
+        navigate('/employerprofile');
+        break;
+      case 'User Management':
+        navigate('/usermanagement');
+        break;
+      case 'My Requests':
+        navigate('/myrequests');
+        break;
+      case 'Settings':
+        navigate('/settings');
+        break;
+      case 'Logout':
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        navigate('/login', { replace: true });
+        break;
+      default:
+        break;
+    }
+    handleClose();
+  };
+  
 
   return (
-
-    <div className=' bg-white w-["100%"] md:left-72 fixed top-0  right-0 ' style={{ zIndex: 9, }}>
-      <div className="flex justify-between items-center mb-8 w-full ">
+    <div className="bg-white w-full shadow-md fixed" style={{ zIndex: 9 }}>
+      <div className="flex justify-between items-center  w-full">
         <div className="flex items-center cursor-pointer" onClick={toggleLanguage}>
-
           <img
-            src={language === 'en' ? img : img}
-            alt={language === 'en' ? 'English' : 'Hindi'}
-            className="w-6 h-6"
+            src={logo}
+            alt=""
+            className="w-[135px] ml-4"
           />
         </div>
 
         <div className="flex items-center space-x-4">
-          <div className="bg-gray-100 rounded-full px-4 py-1 flex items-center">
-            <img className="w-5" src={coin} alt="" />
-            <span className='ml-1'>0</span>
+          <div className="relative mr-4">
+            <IconButton>
+              <NotificationsActiveOutlinedIcon className="h-8 w-8 text-black" />
+              <span className="absolute top-0 right-0   bg-red-500 text-white text-xs rounded-full h-3 w-3 flex items-center justify-center">
+                🔴
+              </span>
+            </IconButton>
+
           </div>
 
-          <div className="bg-[#E9E9E9] rounded-xl px-4 py-2 mt-2 inline-flex items-center gap-3 max-w-fit">
-            <span className="font-semibold text-black">Weather</span>
-            <div className="w-px h-10 bg-black" />
-            {weather.temp !== null ? (
-              <>
-                <div className="flex items-center gap-2">
-                  <img src={weather.icon} alt="Weather Icon" className="w-6 h-6" />
-                  <span className="font-semibold text-gray-800">{weather?.temp}°C</span>
-                  <span className="text-sm text-gray-500">{weather?.location}</span>
+          {/* Profile dropdown */}
+          <div className="relative">
+            <div
+              className="flex items-center py-6 cursor-pointer"
+              onClick={handleClick}
+            >
+              <PersonIcon />
+              <ArrowDropDownIcon sx={{ mr: 8 }} />
+            </div>
+
+            {menuOpen && (
+              <div className="absolute top-16 right-2 w-56 bg-white rounded-lg shadow-lg border z-50 mr-4">
+                {/* Triangle Pointer */}
+                <div className="absolute -top-2 right-12 w-4 h-4 bg-white rotate-45 border-t border-l border-gray-200 z-10"></div>
+
+                {/* Menu Items */}
+                <div
+                  onClick={() => handleMenuItemClick('My Profile')}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                >
+                  <PersonIcon className="text-gray-700" />
+                  <span className="text-sm text-gray-800">My Profile</span>
                 </div>
-              </>
-            ) : (
-              <span className="text-gray-600">Loading...</span>
+                <div className='px-4'>
+                  <hr />
+                </div>
+                <div
+                  onClick={() => handleMenuItemClick('User Management')}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                >
+                  <ManageAccountsIcon className="text-gray-700 " />
+                  <span className="text-sm text-gray-800">User Management</span>
+                </div>
+                <div className='px-4'>
+                  <hr />
+                </div>
+                <div
+                  onClick={() => handleMenuItemClick('My Requests')}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                >
+                  <GroupsIcon className="text-gray-700" />
+                  <span className="text-sm text-gray-800">My Requests</span>
+                </div>
+                <div className='px-4'>
+                  <hr />
+                </div>
+                
+                <div
+                  onClick={() => handleMenuItemClick('Settings')}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                >
+                  <SettingsIcon className="text-gray-700" />
+                  <span className="text-sm text-gray-800">Settings</span>
+                </div>
+                <div className='px-4'>
+                  <hr />
+                </div>
+                <div
+                  onClick={() => handleMenuItemClick('Logout')}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                >
+                  <LogoutIcon className="text-gray-700" />
+                  <span className="text-sm text-gray-800">Logout</span>
+                </div>
+               
+              </div>
             )}
           </div>
 
-          <div className="relative">
-            <NotificationsNoneIcon className="h-6 w-6" style={{color:'#00B251'}}/>
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-              2
-            </span>
-          </div>
-          <div className="w-px h-14 bg-black" />
-          <div>
-            <img
-              src={companyLogo || logo}
-              alt="AgriSarathi"
-              style={{ width: '160px', height: '70px', objectFit: 'contain', paddingTop: 2, paddingRight: 4 }}
-            />
-          </div>
         </div>
       </div>
     </div>
