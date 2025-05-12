@@ -19,6 +19,9 @@ import EmployerProfile from './EmployerProfile';
 import EmployerHome from '../employerprofile/EmployerHome';
 import UserManagement from '../usermanagement/UserManagement';
 import AddAccess from '../usermanagement/AddAccess';
+import Employees from '../employees/Employees';
+import AddEmployees from '../employees/AddEmployees';
+import EmployeeDetailsCard from '../employees/EmployeeDetailsCard';
 
 
 const DashboardLayout = () => {
@@ -50,8 +53,9 @@ const DashboardLayout = () => {
 
   const TABS = [
     { label: "Dashboard", path: 'home', icon: <DashboardIcon />, outlinedIcon: <DashboardOutlinedIcon />, component: <DashboardHeader /> },
-    { label: "Employee", path: 'member', icon: <GroupsIcon />, outlinedIcon: <GroupsOutlinedIcon />, component: <MemberHome /> },
-    { label: "Employer Profile", path: 'employer', icon: <GroupsIcon />, outlinedIcon: <GroupsOutlinedIcon />, component: <EmployerHome /> },
+    { label: "Employees", path: 'employees', icon: <GroupsIcon />, outlinedIcon: <GroupsOutlinedIcon />, component: <Employees /> },
+    // { label: "Employee", path: 'member', icon: <GroupsIcon />, outlinedIcon: <GroupsOutlinedIcon />, component: <MemberHome /> },
+    // { label: "Employer Profile", path: 'employer', icon: <GroupsIcon />, outlinedIcon: <GroupsOutlinedIcon />, component: <EmployerHome /> },
     // { label: "Purchase", path: 'purchase', icon: <StorefrontIcon />, outlinedIcon: <StorefrontOutlinedIcon />, component: <PurchaseHome /> },
     // { label: "Inventory", path: 'inventory', icon: <InventoryIcon />, outlinedIcon: <Inventory2OutlinedIcon />, component: <InventoryHome /> },
     // { label: "Sales", path: 'sale', icon: <ShoppingCartIcon />, outlinedIcon: <ShoppingCartOutlinedIcon />, component: <Item /> },
@@ -165,6 +169,9 @@ const DashboardLayout = () => {
                 <Route path="/employerprofile" element={<EmployerProfile />} />
                 <Route path="/usermanagement" element={<UserManagement />} />
                 <Route path="/addaccess" element={<AddAccess />} />
+                <Route path="/employees" element={<Employees />} />
+                <Route path="/addemployees" element={<AddEmployees />} />
+                <Route path="/employeedetails" element={<EmployeeDetailsCard />} />
               </Routes>
             </div>
           </div>
