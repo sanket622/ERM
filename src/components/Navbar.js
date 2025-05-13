@@ -147,7 +147,7 @@ function Navbar() {
             </div>
 
             {menuOpen && (
-              <div className="absolute top-16 right-2 w-56 bg-white rounded-lg shadow-lg border z-50 mr-4">
+              <div className="absolute top-16 right-2 w-52 bg-white rounded-lg shadow-lg border z-50 mr-4">
                 {/* Triangle Pointer */}
                 <div className="absolute -top-2 right-12 w-4 h-4 bg-white rotate-45 border-t border-l border-gray-200 z-10"></div>
 

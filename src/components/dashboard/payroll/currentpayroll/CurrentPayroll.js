@@ -5,7 +5,10 @@ import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper
 import { useNavigate } from 'react-router';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
-import FilterDialog from './FilterDialog';
+import HelpIcon from '@mui/icons-material/Help';
+import AddPayrollDialog from './AddPayrollDialog'; 
+
+
 import FileUploadModal from './FileUploadModal';
 
 // Define SVG icons as React components
@@ -50,12 +53,14 @@ const styles = `
   }
 `;
 
-const Employees = () => {
+const CurrentPayroll = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [filterDialogOpen, setFilterDialogOpen] = useState(false);
     const [fileUploadDialog, setFileUploadDialog] = useState(false);
+    const [addPayrollOpen, setAddPayrollOpen] = useState(false);
+
 
 
     const navigate = useNavigate();
@@ -83,20 +88,20 @@ const Employees = () => {
 
     const handleCloseFilterDialog = () => {
         setFilterDialogOpen(false);
-    };  
+    };
     const handleOpenFileDialog = () => {
         setFileUploadDialog(true);
     };
 
     const handleCloseFileDialog = () => {
         setFileUploadDialog(false);
-    };  
+    };
 
     return (
         <>
             <div className="p-6 max-w-full">
                 <style>{styles}</style>
-                <h1 className="text-[24px] font-semibold mb-4">Employees Management</h1>
+                <h1 className="text-[24px] font-semibold mb-4">Current Payroll</h1>
 
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
                     <div className="p-4 flex justify-between items-center">
@@ -111,20 +116,21 @@ const Employees = () => {
                             />
                         </div>
                         <div className='mb-4'>
+                            <IconButton sx={{mr:3}}> <HelpIcon fontSize='large'sx={{ color: '#CDCDCD' }}/> </IconButton>
                             <Button onClick={handleOpenFileDialog} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#BDF4FA', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#BDF4FA' } }}>Upload Excel</Button>
                             <Button
-                             onClick={() => navigate('/addemployees')}
-                             startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#0000FF' } }}>Add New Employee</Button>
-                            <Button onClick={handleOpenFilterDialog} startIcon={<TuneOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#fff', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#fff' } }}>Filter</Button>
+                                 onClick={() => setAddPayrollOpen(true)}
+                                startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#0000FF' } }}>Add Payroll</Button>
+                            {/* <Button onClick={handleOpenFilterDialog} startIcon={<TuneOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#fff', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#fff' } }}>Filter</Button> */}
                         </div>
                     </div>
-                    
+
                     <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }}
                     >
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status', 'View'].map(header => (
+                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status',].map(header => (
                                         <TableCell key={header} sx={{ fontSize: '14px', color: '#7E7E7E', }}>
                                             {header}
                                         </TableCell>
@@ -142,19 +148,13 @@ const Employees = () => {
                                         <TableCell>{user.roleAccess}</TableCell>
                                         <TableCell>{user.timestamp}</TableCell>
                                         <TableCell>{user.status}</TableCell>
-                                        <TableCell>
-                                            <div style={{ display: 'flex', gap: '10px' }}>
-                                                <IconButton style={{ color: '#5577FD', padding: '6px' }}>
-                                                    <VisibilityOutlinedIcon />
-                                                </IconButton>
-                                            </div>
-                                        </TableCell>
+
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    
+
                     <div className="px-6 py-4 flex justify-between items-center bg-white">
                         <div className="flex items-center text-gray-500">
                             <span className="mr-2 text-sm">Showing</span>
@@ -200,11 +200,12 @@ const Employees = () => {
                     </div>
                 </div>
             </div>
-            <FilterDialog open={filterDialogOpen} onClose={handleCloseFilterDialog} />
-            <FileUploadModal open={fileUploadDialog} onClose={handleCloseFileDialog}  />
+            <FileUploadModal open={fileUploadDialog} onClose={handleCloseFileDialog} />
+            <AddPayrollDialog open={addPayrollOpen} onClose={() => setAddPayrollOpen(false)} />
+
         </>
 
     );
 };
 
-export default Employees;
+export default CurrentPayroll;

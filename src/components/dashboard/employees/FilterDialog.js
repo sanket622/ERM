@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import {
-    Dialog, DialogTitle, DialogContent, DialogActions, Button,
-    Checkbox, FormControlLabel, FormGroup, FormLabel, TextField,
-    Box, IconButton,
-    Typography
-} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Checkbox, FormControlLabel, FormGroup, FormLabel, Box, Typography } from '@mui/material';
 import TextFieldComponent from '../../subcompotents/TextFieldComponent';
 
 const FilterDialog = ({ open, onClose }) => {
-
     const [contractTypes, setContractTypes] = useState([]);
     const [paymentCycles, setPaymentCycles] = useState([]);
     const [employmentStatuses, setEmploymentStatuses] = useState([]);
