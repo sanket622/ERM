@@ -6,12 +6,9 @@ import { useNavigate } from 'react-router';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 import HelpIcon from '@mui/icons-material/Help';
-import AddPayrollDialog from './AddPayrollDialog';
+import AddPayrollDialog from './AddBasePayrollDialog';
 import Tooltip from '@mui/material/Tooltip';
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
-
-
-
 import FileUploadModal from './FileUploadModal';
 
 // Define SVG icons as React components
@@ -56,7 +53,7 @@ const styles = `
   }
 `;
 
-const CurrentPayroll = () => {
+const BasePayroll = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -98,11 +95,13 @@ const CurrentPayroll = () => {
         setFileUploadDialog(false);
     };
 
+    const days = [1, 2, 3, 4];
+
     return (
         <>
             <div className="p-6 max-w-full">
                 <style>{styles}</style>
-                <h1 className="text-[24px] font-semibold mb-4">Current Payroll</h1>
+                <h1 className="text-[24px] font-semibold mb-4">Base Payroll</h1>
 
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
                     <div className="p-4 flex justify-between items-center">
@@ -131,38 +130,73 @@ const CurrentPayroll = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status',].map(header => (
-                                        <TableCell key={header} sx={{ fontSize: '14px', color: '#7E7E7E', }}>
-                                            {header}
+                                    <TableCell>Sno.</TableCell>
+                                    <TableCell>Employee ID</TableCell>
+                                    <TableCell>Employee Name</TableCell>
+                                    {days.map(day => (
+                                        <TableCell key={day} colSpan={2} align="center">
+                                            DAY {day}
                                         </TableCell>
                                     ))}
                                 </TableRow>
+                                <TableRow>
+                                    <TableCell />
+                                    <TableCell />
+                                    <TableCell />
+                                    {days.map(day => (
+                                        <>
+                                            <TableCell
+                                                key={`status-${day}`}
+                                                className="!border-r border-gray-300 text-sm font-medium"
+                                            >
+                                                Status
+                                            </TableCell>
+                                            <TableCell
+                                                key={`income-${day}`}
+                                                className="text-sm font-medium"
+                                            >
+                                                Daily Income
+                                            </TableCell>
+                                        </>
+                                    ))}
+                                </TableRow>
                             </TableHead>
-                            <TableBody>
-                                {userData.map((user, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{user.sno}</TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center space-x-1">
-                                                <Tooltip title="There seems to be an issue with the details provided—please contact Customer Associate for help." arrow componentsProps={{ tooltip: { sx: { backgroundColor: '#FF7C7C', color: 'white', fontSize: '14px', '& .MuiTooltip-arrow': { color: '#FF7C7C' } } } }}>
-                                                    <IconButton size="small" sx={{ p: 0.5 }}>
-                                                        <ReportOutlinedIcon sx={{ fontSize: 20, color: '#FF0000' }} />
-                                                    </IconButton>
-                                                </Tooltip>
-                                                <span>{user.name}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>{user.roleType}</TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>{user.phoneNumber}</TableCell>
-                                        <TableCell>{user.roleAccess}</TableCell>
-                                        <TableCell>{user.timestamp}</TableCell>
-                                        <TableCell>{user.status}</TableCell>
 
-                                    </TableRow>
-                                ))}
+                            <TableBody>
+                                {Array(10)
+                                    .fill()
+                                    .map((_, idx) => (
+                                        <TableRow key={idx}>
+                                            <TableCell>01</TableCell>
+                                            <TableCell>AA372</TableCell>
+                                            <TableCell>Rishab Thakur</TableCell>
+                                            {days.map(day => {
+                                                const isAbsent = day === 2;
+                                                return (
+                                                    <>
+                                                        <TableCell
+                                                            key={`status-val-${day}-${idx}`}
+                                                            className="!border-r border-gray-300"
+                                                        >
+                                                            <span
+                                                                className={`text-white text-xs font-medium px-2 py-1 rounded-full ${isAbsent ? 'bg-red-400' : 'bg-green-500'
+                                                                    }`}
+                                                            >
+                                                                {isAbsent ? 'Absent' : 'Present'}
+                                                            </span>
+                                                        </TableCell>
+                                                        <TableCell key={`income-val-${day}-${idx}`}>
+                                                            {isAbsent ? '₹0' : '₹1000'}
+                                                        </TableCell>
+                                                    </>
+                                                );
+                                            })}
+                                        </TableRow>
+                                    ))}
                             </TableBody>
                         </Table>
+
+
                     </TableContainer>
 
                     <div className="px-6 py-4 flex justify-between items-center bg-white">
@@ -218,4 +252,4 @@ const CurrentPayroll = () => {
     );
 };
 
-export default CurrentPayroll;
+export default BasePayroll;

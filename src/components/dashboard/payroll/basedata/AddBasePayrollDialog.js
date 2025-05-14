@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextFieldComponent from '../../../subcompotents/TextFieldComponent';
 import AutocompleteFieldComponent from '../../../subcompotents/AutocompleteFieldComponent';
 
-const AddPayrollDialog = ({ open, onClose }) => {
+const AddBasePayrollDialog = ({ open, onClose }) => {
     const [formData, setFormData] = React.useState({
         employeeName: '',
         employeeId: '',
@@ -19,12 +19,12 @@ const AddPayrollDialog = ({ open, onClose }) => {
     };
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ sx: { borderRadius: '20px' } }}>
+        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ sx: { borderRadius: '20px',} }}>
             <DialogContent className='space-y-4' sx={{ pt: 4, pb: 2, }}>
                 {/* Header Section */}
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
                     <Typography variant="h6" fontWeight="bold">
-                        Add Current Payroll
+                        Add Base Payroll
                     </Typography>
                     <IconButton onClick={onClose}>
                         <CloseIcon />
@@ -47,40 +47,24 @@ const AddPayrollDialog = ({ open, onClose }) => {
                     />
                 </Box>
 
-                <Box display="flex" gap={2} mb={2}>
-                    <TextFieldComponent
-                        fullWidth
-                        label="Phone Number"
-                        variant="outlined"
-                        value={formData.phoneNumber}
-                        onChange={handleChange('phoneNumber')}
-                    />
-                    <TextFieldComponent
-                        fullWidth
-                        label="Work Location"
-                        variant="outlined"
-                        value={formData.workLocation}
-                        onChange={handleChange('workLocation')}
-                    />
-                </Box>
-
                 <Box display="flex" gap={2}>
-                    <TextFieldComponent
-                        fullWidth
-                        label="Pay Period"
-                        variant="outlined"
-                        value={formData.payPeriod}
-                        onChange={handleChange('payPeriod')}
-                    />
                     <AutocompleteFieldComponent
-                        label="Daily Income"
+                        label="Attendance Status"
                         onChange={handleChange('dailyIncome')}
                         options={[
                             { label: "100", value: "100" },
                             { label: "200", value: "200" },
                         ]}
                     />
+                    <TextFieldComponent
+                        fullWidth
+                        label="Net Salary"
+                        variant="outlined"
+                        value={formData.employeeId}
+                        onChange={handleChange('employeeId')}
+                    />
                 </Box>
+
             </DialogContent>
             <DialogActions sx={{ pr: 4, pb: 3, mt: 4, mb: 2 }}>
                 <Button onClick={onClose} variant="outlined" sx={{ width: '14%', mr: 1, py: 1, color: 'black', borderColor: 'lightgrey', borderRadius: 3, '&:hover': { borderColor: 'lightgrey', backgroundColor: 'rgba(0, 0, 0, 0.04)' } }} >
@@ -94,4 +78,4 @@ const AddPayrollDialog = ({ open, onClose }) => {
     );
 };
 
-export default AddPayrollDialog;
+export default AddBasePayrollDialog;

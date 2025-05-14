@@ -23,6 +23,9 @@ import axios from 'axios';
 import CurrencyRupeeOutlinedIcon from '@mui/icons-material/CurrencyRupeeOutlined';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import CurrentPayroll from '../payroll/currentpayroll/CurrentPayroll';
+import HistoricalPayroll from '../payroll/historicaldata/HistoricalPayroll';
+import BasePayroll from '../payroll/basedata/BasePayroll';
+
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
@@ -31,7 +34,7 @@ const DashboardLayout = () => {
   const [userName, setUserName] = useState('User');
   const [profileImage, setProfileImage] = useState(women);
   const [loading, setLoading] = useState(true);
-  const [payrollOpen, setPayrollOpen] = useState(true);
+  const [payrollOpen, setPayrollOpen] = useState(false);
 
   const TABS = [
     { label: "Dashboard", path: 'home', icon: <DashboardIcon />, outlinedIcon: <DashboardOutlinedIcon />, component: <DashboardHeader /> },
@@ -161,8 +164,8 @@ const DashboardLayout = () => {
               <Route path="/addemployees" element={<AddEmployees />} />
               <Route path="/employeedetails" element={<EmployeeDetailsCard />} />
               <Route path="/payroll/current" element={<CurrentPayroll/>} />
-              <Route path="/payroll/historical" element={<div>Historical Payroll Page</div>} />
-              <Route path="/payroll/base" element={<div>Base Payroll Page</div>} />
+              <Route path="/payroll/historical" element={<HistoricalPayroll/>} />
+              <Route path="/payroll/base" element={<BasePayroll/>} />
               <Route path="/reports" element={<div>Reports</div>} />
               <Route path="/settings" element={<div>Settings</div>} />
             </Routes>

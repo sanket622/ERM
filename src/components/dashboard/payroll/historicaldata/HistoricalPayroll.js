@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 import HelpIcon from '@mui/icons-material/Help';
-import AddPayrollDialog from './AddPayrollDialog';
+import AddPayrollDialog from './AddHistoricalPayrollDialog';
 import Tooltip from '@mui/material/Tooltip';
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 
@@ -56,7 +56,7 @@ const styles = `
   }
 `;
 
-const CurrentPayroll = () => {
+const HistoricalPayroll = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -102,7 +102,7 @@ const CurrentPayroll = () => {
         <>
             <div className="p-6 max-w-full">
                 <style>{styles}</style>
-                <h1 className="text-[24px] font-semibold mb-4">Current Payroll</h1>
+                <h1 className="text-[24px] font-semibold mb-4">Historical Payroll</h1>
 
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
                     <div className="p-4 flex justify-between items-center">
@@ -142,16 +142,7 @@ const CurrentPayroll = () => {
                                 {userData.map((user, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{user.sno}</TableCell>
-                                        <TableCell>
-                                            <div className="flex items-center space-x-1">
-                                                <Tooltip title="There seems to be an issue with the details provided—please contact Customer Associate for help." arrow componentsProps={{ tooltip: { sx: { backgroundColor: '#FF7C7C', color: 'white', fontSize: '14px', '& .MuiTooltip-arrow': { color: '#FF7C7C' } } } }}>
-                                                    <IconButton size="small" sx={{ p: 0.5 }}>
-                                                        <ReportOutlinedIcon sx={{ fontSize: 20, color: '#FF0000' }} />
-                                                    </IconButton>
-                                                </Tooltip>
-                                                <span>{user.name}</span>
-                                            </div>
-                                        </TableCell>
+                                       <TableCell>{user.name}</TableCell>
                                         <TableCell>{user.roleType}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>{user.phoneNumber}</TableCell>
@@ -218,4 +209,4 @@ const CurrentPayroll = () => {
     );
 };
 
-export default CurrentPayroll;
+export default HistoricalPayroll;
