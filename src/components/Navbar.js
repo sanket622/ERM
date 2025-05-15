@@ -15,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
 
 
 function Navbar() {
@@ -99,6 +100,9 @@ function Navbar() {
       case 'My Requests':
         navigate('/myrequests');
         break;
+      case 'Help Center':
+        navigate('/helpcenter');
+        break;
       case 'Settings':
         navigate('/settings');
         break;
@@ -178,6 +182,16 @@ function Navbar() {
                 >
                   <GroupsIcon className="text-gray-700" />
                   <span className="text-sm text-gray-800">My Requests</span>
+                </div>
+                <div className='px-4'>
+                  <hr />
+                </div>
+                <div
+                  onClick={() => handleMenuItemClick('Help Center')}
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                >
+                  <ContactPageIcon className="text-gray-700" />
+                  <span className="text-sm text-gray-800">Help Center</span>
                 </div>
                 <div className='px-4'>
                   <hr />
