@@ -5,64 +5,31 @@ import TextFieldComponent from '../../../subcompotents/TextFieldComponent';
 import AutocompleteFieldComponent from '../../../subcompotents/AutocompleteFieldComponent';
 
 const AddBasePayrollDialog = ({ open, onClose }) => {
-    const [formData, setFormData] = React.useState({
-        employeeName: '',
-        employeeId: '',
-        phoneNumber: '',
-        workLocation: '',
-        payPeriod: '',
-        dailyIncome: '',
-    });
+    const [formData, setFormData] = React.useState({ employeeName: '', employeeId: '', phoneNumber: '', workLocation: '', payPeriod: '', dailyIncome: '' });
 
     const handleChange = (field) => (e) => {
         setFormData({ ...formData, [field]: e.target.value });
     };
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ sx: { borderRadius: '20px',} }}>
+        <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ sx: { borderRadius: '20px', } }}>
             <DialogContent className='space-y-4' sx={{ pt: 4, pb: 2, }}>
                 {/* Header Section */}
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-                    <Typography variant="h6" fontWeight="bold">
-                        Add Base Payroll
-                    </Typography>
-                    <IconButton onClick={onClose}>
-                        <CloseIcon />
-                    </IconButton>
+                    <Typography variant="h6" fontWeight="bold"> Add Base Payroll   </Typography>
+                    <IconButton onClick={onClose}> <CloseIcon /> </IconButton>
                 </Box>
 
                 {/* Form Fields */}
                 <Box display="flex" gap={2} mb={2}>
-                    <TextFieldComponent
-                        label="Employee Name"
-                        value={formData.employeeName}
-                        onChange={handleChange('employeeName')}
-                    />
-                    <TextFieldComponent
-                        fullWidth
-                        label="Employee ID"
-                        variant="outlined"
-                        value={formData.employeeId}
-                        onChange={handleChange('employeeId')}
-                    />
+                    <TextFieldComponent label="Employee Name" value={formData.employeeName} onChange={handleChange('employeeName')} />
+                    <TextFieldComponent fullWidth label="Employee ID" variant="outlined" value={formData.employeeId} onChange={handleChange('employeeId')} />
+
                 </Box>
 
                 <Box display="flex" gap={2}>
-                    <AutocompleteFieldComponent
-                        label="Attendance Status"
-                        onChange={handleChange('dailyIncome')}
-                        options={[
-                            { label: "100", value: "100" },
-                            { label: "200", value: "200" },
-                        ]}
-                    />
-                    <TextFieldComponent
-                        fullWidth
-                        label="Net Salary"
-                        variant="outlined"
-                        value={formData.employeeId}
-                        onChange={handleChange('employeeId')}
-                    />
+                    <AutocompleteFieldComponent label="Attendance Status" onChange={handleChange('dailyIncome')} options={[{ label: "100", value: "100" }, { label: "200", value: "200" }]} />
+                    <TextFieldComponent fullWidth label="Net Salary" variant="outlined" value={formData.employeeId} onChange={handleChange('employeeId')} />
                 </Box>
 
             </DialogContent>

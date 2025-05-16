@@ -29,34 +29,12 @@ const ChevronRightIcon = () => (
 );
 
 
-// Add these styles for animations to the component
-const styles = `
-  @keyframes scale-in {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  
-  @keyframes fade-in-up {
-    0% { transform: translateY(10px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-  
-  .animate-scale-in {
-    animation: scale-in 0.2s ease-out forwards;
-  }
-  
-  .animate-fade-in-up {
-    animation: fade-in-up 0.3s ease-out forwards;
-  }
-`;
-
 const Employees = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [filterDialogOpen, setFilterDialogOpen] = useState(false);
     const [fileUploadDialog, setFileUploadDialog] = useState(false);
-
 
     const navigate = useNavigate();
     const userData = Array(10).fill().map((_, index) => ({
@@ -83,19 +61,18 @@ const Employees = () => {
 
     const handleCloseFilterDialog = () => {
         setFilterDialogOpen(false);
-    };  
+    };
     const handleOpenFileDialog = () => {
         setFileUploadDialog(true);
     };
 
     const handleCloseFileDialog = () => {
         setFileUploadDialog(false);
-    };  
+    };
 
     return (
         <>
             <div className="p-6 max-w-full">
-                <style>{styles}</style>
                 <h1 className="text-[24px] font-semibold mb-4">Employees Management</h1>
 
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
@@ -113,12 +90,12 @@ const Employees = () => {
                         <div className='mb-4'>
                             <Button onClick={handleOpenFileDialog} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#BDF4FA', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#BDF4FA' } }}>Upload Excel</Button>
                             <Button
-                             onClick={() => navigate('/addemployees')}
-                             startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#0000FF' } }}>Add New Employee</Button>
+                                onClick={() => navigate('/addemployees')}
+                                startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#0000FF' } }}>Add New Employee</Button>
                             <Button onClick={handleOpenFilterDialog} startIcon={<TuneOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#fff', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#fff' } }}>Filter</Button>
                         </div>
                     </div>
-                    
+
                     <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }}
                     >
                         <Table>
@@ -154,7 +131,7 @@ const Employees = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    
+
                     <div className="px-6 py-4 flex justify-between items-center bg-white">
                         <div className="flex items-center text-gray-500">
                             <span className="mr-2 text-sm">Showing</span>
@@ -162,46 +139,22 @@ const Employees = () => {
                                 <span className="text-sm">10</span>
                             </div>
                         </div>
-
                         <div className="text-sm text-gray-500">
                             Showing 1 to 10 out of 60 records
                         </div>
-
                         <div className="flex items-center space-x-2">
-                            <Pagination
-                                count={15}
-                                page={page + 1}
-                                onChange={(event, value) => handleChangePage(value - 1)}
-                                size="small"
-                                shape="rounded"
-                                variant="outlined"
+                            <Pagination count={15} page={page + 1} onChange={(e, v) => handleChangePage(v - 1)} size="small" shape="rounded" variant="outlined"
                                 renderItem={(item) => (
-                                    <PaginationItem
-                                        components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }}
-                                        {...item}
-                                        sx={{
-                                            minWidth: 32,
-                                            height: 32,
-                                            borderRadius: '8px',
-                                            fontSize: '0.75rem',
-                                            px: 0,
-                                            color: item.selected ? '#0000FF' : 'black',
-                                            borderColor: item.selected ? '#0000FF' : 'transparent',
-                                            '&:hover': {
-                                                borderColor: '#0000FF',
-                                                backgroundColor: 'transparent',
-                                            },
-                                            fontWeight: item.selected ? 600 : 400,
-                                        }}
-                                    />
+                                    <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#0000FF' : 'black', borderColor: item.selected ? '#0000FF' : 'transparent', '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />
                                 )}
                             />
                         </div>
                     </div>
                 </div>
             </div>
+
             <FilterDialog open={filterDialogOpen} onClose={handleCloseFilterDialog} />
-            <FileUploadModal open={fileUploadDialog} onClose={handleCloseFileDialog}  />
+            <FileUploadModal open={fileUploadDialog} onClose={handleCloseFileDialog} />
         </>
 
     );

@@ -62,7 +62,7 @@ const ApiReferenceSectionModern = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto py-16 px-6 bg-white">
+    <div className="w-full max-w-7xl mx-auto py-4 px-6 bg-white">
       {/* Simple Hero Section */}
       <div className="mb-16">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">API Reference</h1>
@@ -139,7 +139,7 @@ const ApiReferenceSectionModern = () => {
       </div>
       
       {/* Simple Footer CTA */}
-      <div className="mt-16 text-center bg-gray-50 p-12 rounded-lg">
+      <div className="mt-16 text-center bg-gray-50 px-12 rounded-lg">
         <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to get started?</h3>
         <p className="text-gray-600 max-w-xl mx-auto mb-8">
           Our API is designed to be easy to integrate. Get your API keys now and start building.

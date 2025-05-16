@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import { Button, IconButton, Pagination, PaginationItem } from '@mui/material';
+import { Button, IconButton, Pagination, PaginationItem, Tooltip } from '@mui/material';
 import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@mui/material';
 import { useNavigate } from 'react-router';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
-import HelpIcon from '@mui/icons-material/Help';
-import AddPayrollDialog from './AddHistoricalPayrollDialog';
-import Tooltip from '@mui/material/Tooltip';
+import FilterDialog from './FilterDialog';
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 
-
-
-import FileUploadModal from './FileUploadModal';
 
 // Define SVG icons as React components
 const SearchIcon = () => (
@@ -34,16 +29,12 @@ const ChevronRightIcon = () => (
     </svg>
 );
 
-
-const HistoricalPayroll = () => {
+const OutstandingLoans = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [filterDialogOpen, setFilterDialogOpen] = useState(false);
     const [fileUploadDialog, setFileUploadDialog] = useState(false);
-    const [addPayrollOpen, setAddPayrollOpen] = useState(false);
-
-    const navigate = useNavigate();
 
     const userData = Array(10).fill().map((_, index) => ({
         sno: '01',
@@ -62,20 +53,19 @@ const HistoricalPayroll = () => {
         setPage(newPage);
     };
 
-    const handleOpenFileDialog = () => {
-        setFileUploadDialog(true);
+    const handleOpenFilterDialog = () => {
+        setFilterDialogOpen(true);
     };
 
-    const handleCloseFileDialog = () => {
-        setFileUploadDialog(false);
+    const handleCloseFilterDialog = () => {
+        setFilterDialogOpen(false);
     };
 
     return (
         <>
             <div className="p-6 max-w-full">
-                <h1 className="text-[24px] font-semibold mb-4">Historical Payroll</h1>
-
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
+                <h1 className="text-[24px] font-semibold mb-4">Outstanding Loan</h1>
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 ">
                     <div className="p-4 flex justify-between items-center">
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
@@ -88,12 +78,7 @@ const HistoricalPayroll = () => {
                             />
                         </div>
                         <div className='mb-4'>
-                            <IconButton sx={{ mr: 3 }}> <HelpIcon fontSize='large' sx={{ color: '#CDCDCD' }} /> </IconButton>
-                            <Button onClick={handleOpenFileDialog} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#BDF4FA', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#BDF4FA' } }}>Upload Excel</Button>
-                            <Button
-                                onClick={() => setAddPayrollOpen(true)}
-                                startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#0000FF' } }}>Add Payroll</Button>
-                            {/* <Button onClick={handleOpenFilterDialog} startIcon={<TuneOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#fff', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#fff' } }}>Filter</Button> */}
+                            <Button onClick={handleOpenFilterDialog} startIcon={<TuneOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#fff', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#fff' } }}>Filter</Button>
                         </div>
                     </div>
 
@@ -102,7 +87,7 @@ const HistoricalPayroll = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status',].map(header => (
+                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status', 'View'].map(header => (
                                         <TableCell key={header} sx={{ fontSize: '14px', color: '#7E7E7E', }}>
                                             {header}
                                         </TableCell>
@@ -113,14 +98,29 @@ const HistoricalPayroll = () => {
                                 {userData.map((user, index) => (
                                     <TableRow key={index}>
                                         <TableCell>{user.sno}</TableCell>
-                                        <TableCell>{user.name}</TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center space-x-1">
+                                                <Tooltip title="There seems to be an issue with the details provided—please contact Customer Associate for help." arrow componentsProps={{ tooltip: { sx: { backgroundColor: '#FF7C7C', color: 'white', fontSize: '14px', '& .MuiTooltip-arrow': { color: '#FF7C7C' } } } }}>
+                                                    <IconButton size="small" sx={{ p: 0.5 }}>
+                                                        <ReportOutlinedIcon sx={{ fontSize: 20, color: '#FF0000' }} />
+                                                    </IconButton>
+                                                </Tooltip>
+                                                <span>{user.name}</span>
+                                            </div>
+                                        </TableCell>
                                         <TableCell>{user.roleType}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>{user.phoneNumber}</TableCell>
                                         <TableCell>{user.roleAccess}</TableCell>
                                         <TableCell>{user.timestamp}</TableCell>
                                         <TableCell>{user.status}</TableCell>
-
+                                        <TableCell>
+                                            <div style={{ display: 'flex', gap: '10px' }}>
+                                                <IconButton style={{ color: '#5577FD', padding: '6px' }}>
+                                                    <VisibilityOutlinedIcon />
+                                                </IconButton>
+                                            </div>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -149,12 +149,10 @@ const HistoricalPayroll = () => {
                     </div>
                 </div>
             </div>
-            <FileUploadModal open={fileUploadDialog} onClose={handleCloseFileDialog} />
-            <AddPayrollDialog open={addPayrollOpen} onClose={() => setAddPayrollOpen(false)} />
 
+            <FilterDialog open={filterDialogOpen} onClose={handleCloseFilterDialog} />
         </>
+    )
+}
 
-    );
-};
-
-export default HistoricalPayroll;
+export default OutstandingLoans;

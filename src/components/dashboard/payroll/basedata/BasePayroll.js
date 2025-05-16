@@ -31,28 +31,6 @@ const ChevronRightIcon = () => (
     </svg>
 );
 
-
-// Add these styles for animations to the component
-const styles = `
-  @keyframes scale-in {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  
-  @keyframes fade-in-up {
-    0% { transform: translateY(10px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-  
-  .animate-scale-in {
-    animation: scale-in 0.2s ease-out forwards;
-  }
-  
-  .animate-fade-in-up {
-    animation: fade-in-up 0.3s ease-out forwards;
-  }
-`;
-
 const BasePayroll = () => {
 
     const [page, setPage] = useState(0);
@@ -100,7 +78,6 @@ const BasePayroll = () => {
     return (
         <>
             <div className="p-6 max-w-full">
-                <style>{styles}</style>
                 <h1 className="text-[24px] font-semibold mb-4">Base Payroll</h1>
 
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
@@ -118,13 +95,10 @@ const BasePayroll = () => {
                         <div className='mb-4'>
                             <IconButton sx={{ mr: 3 }}> <HelpIcon fontSize='large' sx={{ color: '#CDCDCD' }} /> </IconButton>
                             <Button onClick={handleOpenFileDialog} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#BDF4FA', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#BDF4FA' } }}>Upload Excel</Button>
-                            <Button
-                                onClick={() => setAddPayrollOpen(true)}
-                                startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#0000FF' } }}>Add Payroll</Button>
+                            <Button onClick={() => setAddPayrollOpen(true)} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#0000FF' } }}>Add Payroll</Button>
                             {/* <Button onClick={handleOpenFilterDialog} startIcon={<TuneOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#fff', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#fff' } }}>Filter</Button> */}
                         </div>
                     </div>
-
                     <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }}
                     >
                         <Table>
@@ -145,18 +119,8 @@ const BasePayroll = () => {
                                     <TableCell />
                                     {days.map(day => (
                                         <>
-                                            <TableCell
-                                                key={`status-${day}`}
-                                                className="!border-r border-gray-300 text-sm font-medium"
-                                            >
-                                                Status
-                                            </TableCell>
-                                            <TableCell
-                                                key={`income-${day}`}
-                                                className="text-sm font-medium"
-                                            >
-                                                Daily Income
-                                            </TableCell>
+                                            <TableCell key={`status-${day}`} className="!border-r border-gray-300 text-sm font-medium">Status</TableCell>
+                                            <TableCell key={`income-${day}`} className="text-sm font-medium">Daily Income</TableCell>
                                         </>
                                     ))}
                                 </TableRow>
@@ -174,20 +138,8 @@ const BasePayroll = () => {
                                                 const isAbsent = day === 2;
                                                 return (
                                                     <>
-                                                        <TableCell
-                                                            key={`status-val-${day}-${idx}`}
-                                                            className="!border-r border-gray-300"
-                                                        >
-                                                            <span
-                                                                className={`text-white text-xs font-medium px-2 py-1 rounded-full ${isAbsent ? 'bg-red-400' : 'bg-green-500'
-                                                                    }`}
-                                                            >
-                                                                {isAbsent ? 'Absent' : 'Present'}
-                                                            </span>
-                                                        </TableCell>
-                                                        <TableCell key={`income-val-${day}-${idx}`}>
-                                                            {isAbsent ? '₹0' : '₹1000'}
-                                                        </TableCell>
+                                                        <TableCell key={`status-val-${day}-${idx}`} className="!border-r border-gray-300"><span className={`text-white text-xs font-medium px-2 py-1 rounded-full ${isAbsent ? 'bg-red-400' : 'bg-green-500'}`}>{isAbsent ? 'Absent' : 'Present'}</span></TableCell>
+                                                        <TableCell key={`income-val-${day}-${idx}`}>{isAbsent ? '₹0' : '₹1000'}</TableCell>
                                                     </>
                                                 );
                                             })}
@@ -195,8 +147,6 @@ const BasePayroll = () => {
                                     ))}
                             </TableBody>
                         </Table>
-
-
                     </TableContainer>
 
                     <div className="px-6 py-4 flex justify-between items-center bg-white">
@@ -206,38 +156,11 @@ const BasePayroll = () => {
                                 <span className="text-sm">10</span>
                             </div>
                         </div>
-
-                        <div className="text-sm text-gray-500">
-                            Showing 1 to 10 out of 60 records
-                        </div>
-
+                        <div className="text-sm text-gray-500"> Showing 1 to 10 out of 60 records</div>
                         <div className="flex items-center space-x-2">
-                            <Pagination
-                                count={15}
-                                page={page + 1}
-                                onChange={(event, value) => handleChangePage(value - 1)}
-                                size="small"
-                                shape="rounded"
-                                variant="outlined"
+                            <Pagination count={15} page={page + 1} onChange={(e, v) => handleChangePage(v - 1)} size="small" shape="rounded" variant="outlined"
                                 renderItem={(item) => (
-                                    <PaginationItem
-                                        components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }}
-                                        {...item}
-                                        sx={{
-                                            minWidth: 32,
-                                            height: 32,
-                                            borderRadius: '8px',
-                                            fontSize: '0.75rem',
-                                            px: 0,
-                                            color: item.selected ? '#0000FF' : 'black',
-                                            borderColor: item.selected ? '#0000FF' : 'transparent',
-                                            '&:hover': {
-                                                borderColor: '#0000FF',
-                                                backgroundColor: 'transparent',
-                                            },
-                                            fontWeight: item.selected ? 600 : 400,
-                                        }}
-                                    />
+                                    <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#0000FF' : 'black', borderColor: item.selected ? '#0000FF' : 'transparent', '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />
                                 )}
                             />
                         </div>

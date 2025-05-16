@@ -55,18 +55,7 @@ const Activelog = () => {
     const handleOpenFilterDialog = () => {
         setFilterDialogOpen(true);
     };
-
-    const handleCloseFilterDialog = () => {
-        setFilterDialogOpen(false);
-    };
-    const handleOpenFileDialog = () => {
-        setFileUploadDialog(true);
-    };
-
-    const handleCloseFileDialog = () => {
-        setFileUploadDialog(false);
-    };
-
+    
     return (
         <div>
             <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100 ">
@@ -129,38 +118,13 @@ const Activelog = () => {
                             <span className="text-sm">10</span>
                         </div>
                     </div>
-
                     <div className="text-sm text-gray-500">
                         Showing 1 to 10 out of 60 records
                     </div>
-
                     <div className="flex items-center space-x-2">
-                        <Pagination
-                            count={15}
-                            page={page + 1}
-                            onChange={(event, value) => handleChangePage(value - 1)}
-                            size="small"
-                            shape="rounded"
-                            variant="outlined"
+                    <Pagination count={15} page={page + 1} onChange={(e, v) => handleChangePage(v - 1)} size="small" shape="rounded" variant="outlined"
                             renderItem={(item) => (
-                                <PaginationItem
-                                    components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }}
-                                    {...item}
-                                    sx={{
-                                        minWidth: 32,
-                                        height: 32,
-                                        borderRadius: '8px',
-                                        fontSize: '0.75rem',
-                                        px: 0,
-                                        color: item.selected ? '#0000FF' : 'black',
-                                        borderColor: item.selected ? '#0000FF' : 'transparent',
-                                        '&:hover': {
-                                            borderColor: '#0000FF',
-                                            backgroundColor: 'transparent',
-                                        },
-                                        fontWeight: item.selected ? 600 : 400,
-                                    }}
-                                />
+                                <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#0000FF' : 'black', borderColor: item.selected ? '#0000FF' : 'transparent', '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />
                             )}
                         />
                     </div>

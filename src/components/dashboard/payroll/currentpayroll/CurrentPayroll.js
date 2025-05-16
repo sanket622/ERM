@@ -34,28 +34,6 @@ const ChevronRightIcon = () => (
     </svg>
 );
 
-
-// Add these styles for animations to the component
-const styles = `
-  @keyframes scale-in {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  
-  @keyframes fade-in-up {
-    0% { transform: translateY(10px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-  
-  .animate-scale-in {
-    animation: scale-in 0.2s ease-out forwards;
-  }
-  
-  .animate-fade-in-up {
-    animation: fade-in-up 0.3s ease-out forwards;
-  }
-`;
-
 const CurrentPayroll = () => {
 
     const [page, setPage] = useState(0);
@@ -76,20 +54,17 @@ const CurrentPayroll = () => {
             index === 3 ? 'Payroll, Repayment' :
                 index === 4 ? 'Employee Management' : 'Payroll Management',
         timestamp: '14/04/24 at 18:13',
-        status: 'Activate'
+        status: 'Activate',
+        date1: '1200',
+        date2: '2800',
+        date3: '5600',
+
     }));
 
     const handleChangePage = (newPage) => {
         setPage(newPage);
     };
 
-    const handleOpenFilterDialog = () => {
-        setFilterDialogOpen(true);
-    };
-
-    const handleCloseFilterDialog = () => {
-        setFilterDialogOpen(false);
-    };
     const handleOpenFileDialog = () => {
         setFileUploadDialog(true);
     };
@@ -101,7 +76,6 @@ const CurrentPayroll = () => {
     return (
         <>
             <div className="p-6 max-w-full">
-                <style>{styles}</style>
                 <h1 className="text-[24px] font-semibold mb-4">Current Payroll</h1>
 
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
@@ -131,7 +105,7 @@ const CurrentPayroll = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status',].map(header => (
+                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status', '01/02/24', '02/02/24', '03/02/24'].map(header => (
                                         <TableCell key={header} sx={{ fontSize: '14px', color: '#7E7E7E', }}>
                                             {header}
                                         </TableCell>
@@ -158,6 +132,9 @@ const CurrentPayroll = () => {
                                         <TableCell>{user.roleAccess}</TableCell>
                                         <TableCell>{user.timestamp}</TableCell>
                                         <TableCell>{user.status}</TableCell>
+                                        <TableCell>{user.date1}</TableCell>
+                                        <TableCell>{user.date2}</TableCell>
+                                        <TableCell>{user.date3}</TableCell>
 
                                     </TableRow>
                                 ))}
@@ -178,38 +155,16 @@ const CurrentPayroll = () => {
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Pagination
-                                count={15}
-                                page={page + 1}
-                                onChange={(event, value) => handleChangePage(value - 1)}
-                                size="small"
-                                shape="rounded"
-                                variant="outlined"
+                            <Pagination count={15} page={page + 1} onChange={(e, v) => handleChangePage(v - 1)} size="small" shape="rounded" variant="outlined"
                                 renderItem={(item) => (
-                                    <PaginationItem
-                                        components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }}
-                                        {...item}
-                                        sx={{
-                                            minWidth: 32,
-                                            height: 32,
-                                            borderRadius: '8px',
-                                            fontSize: '0.75rem',
-                                            px: 0,
-                                            color: item.selected ? '#0000FF' : 'black',
-                                            borderColor: item.selected ? '#0000FF' : 'transparent',
-                                            '&:hover': {
-                                                borderColor: '#0000FF',
-                                                backgroundColor: 'transparent',
-                                            },
-                                            fontWeight: item.selected ? 600 : 400,
-                                        }}
-                                    />
+                                    <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#0000FF' : 'black', borderColor: item.selected ? '#0000FF' : 'transparent', '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />
                                 )}
                             />
                         </div>
                     </div>
                 </div>
             </div>
+
             <FileUploadModal open={fileUploadDialog} onClose={handleCloseFileDialog} />
             <AddPayrollDialog open={addPayrollOpen} onClose={() => setAddPayrollOpen(false)} />
 

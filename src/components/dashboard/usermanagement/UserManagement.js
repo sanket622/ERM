@@ -14,28 +14,6 @@ const SearchIcon = () => (
     </svg>
 );
 
-// const EditIcon = () => (
-//   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-//     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-//     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-//   </svg>
-// );
-
-// const DeleteIcon = () => (
-//   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-//     <path d="M3 6h18"></path>
-//     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-//     <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-//   </svg>
-// );
-
-const AddIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="12" y1="5" x2="12" y2="19"></line>
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-    </svg>
-);
-
 const ChevronLeftIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="15 18 9 12 15 6"></polyline>
@@ -70,26 +48,6 @@ const CheckCircleIcon = () => (
     </svg>
 );
 
-// Add these styles for animations to the component
-const styles = `
-  @keyframes scale-in {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  
-  @keyframes fade-in-up {
-    0% { transform: translateY(10px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-  
-  .animate-scale-in {
-    animation: scale-in 0.2s ease-out forwards;
-  }
-  
-  .animate-fade-in-up {
-    animation: fade-in-up 0.3s ease-out forwards;
-  }
-`;
 
 const UserManagement = () => {
     const navigate = useNavigate();
@@ -148,16 +106,9 @@ const UserManagement = () => {
         setTimeout(() => setSuccessMessage(''), 3000);
     };
 
-    const handleActivate = () => {
-        // Logic to activate user would go here
-        setActivateModal(false);
-        setSuccessMessage('User has been activated successfully');
-        setTimeout(() => setSuccessMessage(''), 3000);
-    };
-
     return (
         <div className="p-6 max-w-full">
-            <style>{styles}</style>
+
             <h1 className="text-[24px] font-semibold mb-4">User Management</h1>
 
             <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
@@ -172,9 +123,7 @@ const UserManagement = () => {
                             className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
                         />
                     </div>
-
-                    <Button  onClick={() => navigate('/addaccess')} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>Add Access</Button>
-
+                    <Button onClick={() => navigate('/addaccess')} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>Add Access</Button>
                 </div>
 
                 <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }}
@@ -182,8 +131,8 @@ const UserManagement = () => {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps','Status', 'View'].map(header => (
-                                    <TableCell key={header} sx={{ fontSize: '14px',  color: '#7E7E7E',  }}>
+                                {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status', 'View'].map(header => (
+                                    <TableCell key={header} sx={{ fontSize: '14px', color: '#7E7E7E', }}>
                                         {header}
                                     </TableCell>
                                 ))}
@@ -205,7 +154,7 @@ const UserManagement = () => {
                                             <IconButton style={{ color: 'green', padding: '6px' }}>
                                                 <EditIcon />
                                             </IconButton>
-                                            <IconButton onClick={() => openDeleteModal(user)} style={{ color: 'red', padding: '6px'}}>
+                                            <IconButton onClick={() => openDeleteModal(user)} style={{ color: 'red', padding: '6px' }}>
                                                 <DeleteIcon />
                                             </IconButton>
                                             <button onClick={() => openActivateModal(user)} style={{ background: '#22C900', color: 'white', padding: '4px 8px', fontSize: '12px', borderRadius: '4px' }}>
@@ -235,32 +184,9 @@ const UserManagement = () => {
                     </div>
 
                     <div className="flex items-center space-x-2">
-                        <Pagination
-                            count={15} 
-                            page={page + 1} 
-                            onChange={(event, value) => handleChangePage(value - 1)}
-                            size="small"
-                            shape="rounded"
-                            variant="outlined"
+                        <Pagination count={15} page={page + 1} onChange={(e, v) => handleChangePage(v - 1)} size="small" shape="rounded" variant="outlined"
                             renderItem={(item) => (
-                                <PaginationItem
-                                    components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }}
-                                    {...item}
-                                    sx={{
-                                        minWidth: 32,
-                                        height: 32,
-                                        borderRadius: '8px',
-                                        fontSize: '0.75rem',
-                                        px: 0,
-                                        color: item.selected ? '#0000FF' : 'black',
-                                        borderColor: item.selected ? '#0000FF' : 'transparent',
-                                        '&:hover': {
-                                            borderColor: '#0000FF',
-                                            backgroundColor: 'transparent',
-                                        },
-                                        fontWeight: item.selected ? 600 : 400,
-                                    }}
-                                />
+                                <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#0000FF' : 'black', borderColor: item.selected ? '#0000FF' : 'transparent', '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />
                             )}
                         />
                     </div>
@@ -272,10 +198,7 @@ const UserManagement = () => {
                 <div className="fixed bottom-4 right-4 bg-green-50 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg flex items-center space-x-3 animate-fade-in-up">
                     <CheckCircleIcon />
                     <p>{successMessage}</p>
-                    <button
-                        onClick={() => setSuccessMessage('')}
-                        className="ml-4 text-green-700 hover:text-green-900"
-                    >
+                    <button onClick={() => setSuccessMessage('')}  className="ml-4 text-green-700 hover:text-green-900" >
                         <CloseIcon />
                     </button>
                 </div>
@@ -303,10 +226,7 @@ const UserManagement = () => {
                         </div>
 
                         <div className="p-4 flex space-x-3 justify-end bg-white">
-                            <button
-                                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none   "
-                                onClick={() => setDeleteModal(false)}
-                            >
+                            <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none" onClick={() => setDeleteModal(false)} >
                                 Cancel
                             </button>
                             <button

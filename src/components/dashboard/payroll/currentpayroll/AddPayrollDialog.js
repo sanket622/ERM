@@ -33,53 +33,21 @@ const AddPayrollDialog = ({ open, onClose }) => {
 
                 {/* Form Fields */}
                 <Box display="flex" gap={2} mb={2}>
-                    <TextFieldComponent
-                        label="Employee Name"
-                        value={formData.employeeName}
-                        onChange={handleChange('employeeName')}
-                    />
-                    <TextFieldComponent
-                        fullWidth
-                        label="Employee ID"
-                        variant="outlined"
-                        value={formData.employeeId}
-                        onChange={handleChange('employeeId')}
-                    />
+                    <TextFieldComponent label="Employee Name" value={formData.employeeName} onChange={handleChange('employeeName')} />
+                    <TextFieldComponent fullWidth label="Employee ID" variant="outlined" value={formData.employeeId} onChange={handleChange('employeeId')} />
+
                 </Box>
 
                 <Box display="flex" gap={2} mb={2}>
-                    <TextFieldComponent
-                        fullWidth
-                        label="Phone Number"
-                        variant="outlined"
-                        value={formData.phoneNumber}
-                        onChange={handleChange('phoneNumber')}
-                    />
-                    <TextFieldComponent
-                        fullWidth
-                        label="Work Location"
-                        variant="outlined"
-                        value={formData.workLocation}
-                        onChange={handleChange('workLocation')}
-                    />
+                    <TextFieldComponent fullWidth label="Phone Number" variant="outlined" value={formData.phoneNumber} onChange={handleChange('phoneNumber')} />
+                    <TextFieldComponent fullWidth label="Work Location" variant="outlined" value={formData.workLocation} onChange={handleChange('workLocation')} />
+
                 </Box>
 
                 <Box display="flex" gap={2}>
-                    <TextFieldComponent
-                        fullWidth
-                        label="Pay Period"
-                        variant="outlined"
-                        value={formData.payPeriod}
-                        onChange={handleChange('payPeriod')}
-                    />
-                    <AutocompleteFieldComponent
-                        label="Daily Income"
-                        onChange={handleChange('dailyIncome')}
-                        options={[
-                            { label: "100", value: "100" },
-                            { label: "200", value: "200" },
-                        ]}
-                    />
+                    <TextFieldComponent fullWidth label="Pay Period" variant="outlined" value={formData.payPeriod} onChange={handleChange('payPeriod')} />
+                    <AutocompleteFieldComponent label="Daily Income" onChange={handleChange('dailyIncome')} options={[{ label: "100", value: "100" }, { label: "200", value: "200" }]} />
+
                 </Box>
             </DialogContent>
             <DialogActions sx={{ pr: 4, pb: 3, mt: 4, mb: 2 }}>

@@ -19,54 +19,9 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 
 
 function Navbar() {
-  const [weather, setWeather] = React.useState({
-    temp: null,
-    icon: null,
-    description: "",
-    location: "",
-  });
-
+  
   const [language, setLanguage] = React.useState('en');
-  const [companyLogo, setCompanyLogo] = React.useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // const fetchWeather = async (lat, lon) => {
-  //   const API_KEY = "4675f25ce2863825d057505230a4cca0";
-  //   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
-
-  //   try {
-  //     const response = await fetch(url);
-  //     const data = await response.json();
-
-  //     if (data.cod === 200) {
-  //       setWeather({
-  //         temp: Math.round(data.main.temp),
-  //         icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
-  //         description: data.weather[0].description,
-  //         location: data.name,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching weather data:", error);
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         const { latitude, longitude } = position.coords;
-  //         fetchWeather(latitude, longitude);
-  //       },
-  //       (error) => {
-  //         console.error("Error getting location:", error);
-  //       }
-  //     );
-  //   } else {
-  //     console.error("Geolocation is not supported by this browser.");
-  //   }
-  // }, []);
 
   const navigate = useNavigate();
 
@@ -82,7 +37,7 @@ function Navbar() {
   };
 
   const handleClick = () => {
-    setMenuOpen((prev) => !prev); // toggle dropdown
+    setMenuOpen((prev) => !prev); 
   };
 
   const handleClose = () => {

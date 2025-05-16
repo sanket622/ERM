@@ -30,6 +30,10 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
 import EMSPortalHelpPage from '../help/EMSPortalHelpPage';
 import Settings from '../settings/Settings';
+import OutstandingLoans from '../ewa/outstandingloan/OutstandingLoans';
+import EmployeeLoanInfo from '../ewa/outstandingloan/EmployeeLoanInfo';
+import Repayment from '../ewa/repayment/Repayment';
+import Analytics from '../analytics/Analytics';
 
 
 const DashboardLayout = () => {
@@ -226,13 +230,13 @@ const DashboardLayout = () => {
               <Route path="/payroll/current" element={<CurrentPayroll />} />
               <Route path="/payroll/historical" element={<HistoricalPayroll />} />
               <Route path="/payroll/base" element={<BasePayroll />} />
-              <Route path="/ewa/outstandingloans" element={<div>Outstanding Loans</div>} />
+              <Route path="/ewa/outstandingloans" element={<OutstandingLoans/>} />
+              <Route path="/ewa/employeeloaninfo" element={<EmployeeLoanInfo/>} />
               <Route path="/ewa/disbursementrequests" element={<div>Disbursement Requests</div>} />
               <Route path="/ewa/lienmanagement" element={<div>Lien Management</div>} />
               <Route path="/ewa/delinquencymanagement" element={<div>Delinquency Management</div>} />
-              <Route path="/ewa/repayment" element={<div>Repayment</div>} />
-
-              <Route path="/analytics" element={<div>Analytics</div>} />
+              <Route path="/ewa/repayment" element={<Repayment/>} />
+              <Route path="/analytics" element={<Analytics/>} />
             </Routes>
           </div>
         </div>

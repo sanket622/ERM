@@ -14,14 +14,8 @@ import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlin
 
 
 export default function Dashboard() {
-    const [userData] = useState({
-        name: 'Abhiraj',
-        employees: 560,
-        employeeGrowth: 12,
-        applicants: 1050,
-        applicantGrowth: 5,
-        lastUpdate: 'April 14, 2025',
-    });
+    const [userData] = useState({ name: 'Abhiraj', employees: 560, employeeGrowth: 12, applicants: 1050, applicantGrowth: 5, lastUpdate: 'April 14, 2025' });
+
     return (
         <>
         <h1 className='text-3xl font-semibold mb-4'>Dashboard</h1>

@@ -31,7 +31,7 @@ const AutocompleteFieldComponent = ({
             borderColor: '#0000FF',
           },
           '& .MuiOutlinedInput-notchedOutline': {
-            borderRadius: '10px', // <- Add this to target the border outline
+            borderRadius: '10px', 
           },
         },
         '& .MuiInputLabel-root.Mui-focused': {
