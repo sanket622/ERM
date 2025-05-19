@@ -22,33 +22,12 @@ const FilterDialog = ({ open, onClose }) => {
                 <DialogTitle sx={{ p: 0, mb: 1, fontSize: 24, fontWeight: 'bold' }}> Filter </DialogTitle>
                 <DialogContent sx={{ p: 0 }}>
                     <Box sx={{ ml: 2 }}>
-                        <Typography variant="subtitle1" sx={{ mt: 2, fontWeight: 500 }}>Status</Typography>
+                        <Typography variant="subtitle1" sx={{ mt: 2, fontWeight: 500 }}>Mode</Typography>
                         <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
                             {[
-                                { value: 'active', label: 'Active' },
-                                { value: 'settled', label: 'Settled' },
-                                { value: 'delinquent', label: 'Delinquent' },
-                            ].map((option, idx) => (
-                                <FormControlLabel
-                                    key={idx}
-                                    control={
-                                        <Checkbox
-                                            checked={contractTypes.includes(option.value)}
-                                            onChange={() => handleToggle(option.value, contractTypes, setContractTypes)}
-                                            sx={{ color: '', '&.Mui-checked': { color: '#0000FF' } }}
-                                        />
-                                    }
-                                    label={option.label}
-                                />
-                            ))}
-                        </FormGroup>
-
-                        <Typography variant="subtitle1" sx={{ mt: 2, fontWeight: 500 }}>Payment Cycle</Typography>
-                        <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
-                            {[
-                                { value: 'monthly', label: 'Monthly' },
-                                { value: 'monthly+variable', label: 'Monthly + Variable' },
-                                { value: 'fullyVariable', label: 'Fully Variable' },
+                                { value: 'lien', label: 'Lien' },
+                                { value: 'enach', label: 'E-NACH' },
+                                
                             ].map((option, idx) => (
                                 <FormControlLabel
                                     key={idx}

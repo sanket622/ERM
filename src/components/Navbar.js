@@ -89,7 +89,7 @@ function Navbar() {
             <IconButton>
               <NotificationsActiveOutlinedIcon className="h-8 w-8 text-black" />
               <span className="absolute top-0 right-0   bg-red-500 text-white text-xs rounded-full h-3 w-3 flex items-center justify-center">
-                🔴
+                
               </span>
             </IconButton>
 

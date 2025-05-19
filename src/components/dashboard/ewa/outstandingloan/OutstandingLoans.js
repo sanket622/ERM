@@ -38,15 +38,18 @@ const OutstandingLoans = () => {
 
     const userData = Array(10).fill().map((_, index) => ({
         sno: '01',
-        name: 'Abhiraj Shrivastava',
-        roleType: 'Developer',
-        email: 'abcd@gmail.com',
-        phoneNumber: '9876543210',
-        roleAccess: index === 2 ? 'Repayment' :
-            index === 3 ? 'Payroll, Repayment' :
-                index === 4 ? 'Employee Management' : 'Payroll Management',
-        timestamp: '14/04/24 at 18:13',
-        status: 'Activate'
+        name: 'Abhiraj',
+        LoanID: '1234567',
+        DueDate: '15/06/24',
+        LoanAmount: '₹25000',
+        Interest: '6%',
+        // roleAccess: index === 2 ? 'Repayment' :
+        //     index === 3 ? 'Payroll, Repayment' :
+        //         index === 4 ? 'Employee Management' : 'Payroll Management',
+        // timestamp: '14/04/24 at 18:13',
+        PaymentCycle: 'Monthly',
+        OutstandingBalance: '₹2500',
+       
     }));
 
     const handleChangePage = (newPage) => {
@@ -87,7 +90,7 @@ const OutstandingLoans = () => {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status', 'View'].map(header => (
+                                    {['Sno.','Employee Name', 'Loan ID', 'Due Date', 'Loan Amount', 'Interest', 'Payment Cycle', 'Outstanding Balance'].map(header => (
                                         <TableCell key={header} sx={{ fontSize: '14px', color: '#7E7E7E', }}>
                                             {header}
                                         </TableCell>
@@ -108,19 +111,20 @@ const OutstandingLoans = () => {
                                                 <span>{user.name}</span>
                                             </div>
                                         </TableCell>
-                                        <TableCell>{user.roleType}</TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>{user.phoneNumber}</TableCell>
-                                        <TableCell>{user.roleAccess}</TableCell>
-                                        <TableCell>{user.timestamp}</TableCell>
-                                        <TableCell>{user.status}</TableCell>
-                                        <TableCell>
+                                        <TableCell>{user.LoanID}</TableCell>
+                                        <TableCell>{user.DueDate}</TableCell>
+                                        <TableCell>{user.LoanAmount}</TableCell>
+                                        <TableCell>{user.Interest}</TableCell>
+                                        <TableCell>{user.PaymentCycle}</TableCell>
+                                        <TableCell>{user.OutstandingBalance}</TableCell>
+                                        
+                                        {/* <TableCell>
                                             <div style={{ display: 'flex', gap: '10px' }}>
                                                 <IconButton style={{ color: '#5577FD', padding: '6px' }}>
                                                     <VisibilityOutlinedIcon />
                                                 </IconButton>
                                             </div>
-                                        </TableCell>
+                                        </TableCell> */}
                                     </TableRow>
                                 ))}
                             </TableBody>

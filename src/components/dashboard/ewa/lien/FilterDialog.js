@@ -63,6 +63,26 @@ const FilterDialog = ({ open, onClose }) => {
                                 />
                             ))}
                         </FormGroup>
+                        {/* <Typography variant="subtitle1" sx={{ mt: 2, fontWeight: 500 }}>Loan Type</Typography>
+                        <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
+                            {[
+                                { value: 'disbursement', label: 'Disbursement' },
+                                { value: 'wageadvance', label: 'Wage Advance' },
+
+                            ].map((option, idx) => (
+                                <FormControlLabel
+                                    key={idx}
+                                    control={
+                                        <Checkbox
+                                            checked={employmentStatuses.includes(option.value)}
+                                            onChange={() => handleToggle(option.value, employmentStatuses, setEmploymentStatuses)}
+                                            sx={{ color: '', '&.Mui-checked': { color: '#0000FF' } }}
+                                        />
+                                    }
+                                    label={option.label}
+                                />
+                            ))}
+                        </FormGroup> */}
                     </Box>
                 </DialogContent>
 
