@@ -16,6 +16,9 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import NotificationsActiveOutlinedIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
+import { useDispatch } from 'react-redux';
+import { logout } from '../redux/auth/authSlice'; 
+
 
 
 function Navbar() {
@@ -25,13 +28,7 @@ function Navbar() {
 
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    const accessToken = localStorage.getItem('access_token');
-    if (!accessToken) {
-      navigate('/login');
-    }
-  }, [navigate]);
-
+  
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'hi' : 'en');
   };
@@ -43,6 +40,8 @@ function Navbar() {
   const handleClose = () => {
     setMenuOpen(false);
   };
+
+  const dispatch = useDispatch();
 
   const handleMenuItemClick = (setting) => {
     switch (setting) {
@@ -62,8 +61,7 @@ function Navbar() {
         navigate('/settings');
         break;
       case 'Logout':
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        dispatch(logout());
         navigate('/login', { replace: true });
         break;
       default:
@@ -71,6 +69,7 @@ function Navbar() {
     }
     handleClose();
   };
+  
   
 
   return (

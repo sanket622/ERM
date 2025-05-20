@@ -35,6 +35,7 @@ import EmployeeLoanInfo from '../ewa/outstandingloan/EmployeeLoanInfo';
 import Repayment from '../ewa/repayment/Repayment';
 import Analytics from '../analytics/Analytics';
 import LienManagement from '../ewa/lien/LienManagement';
+import DelinquencyManagement from '../ewa/delinquency/DelinquencyManagement';
 
 
 const DashboardLayout = () => {
@@ -216,7 +217,7 @@ const DashboardLayout = () => {
 
           <div className="mt-14">
             <Routes>
-              <Route path="/home" element={<DashboardHeader profileData={profileImage} />} />
+              <Route path="/home" element={<DashboardHeader/>} />
               <Route path="/member" element={<MemberHome />} />
               <Route path="/memberdetail/:id" element={<MemberProfile />} />
               <Route path="/employer" element={<EmployerHome />} />
@@ -235,7 +236,7 @@ const DashboardLayout = () => {
               <Route path="/ewa/employeeloaninfo" element={<EmployeeLoanInfo/>} />
               <Route path="/ewa/disbursementrequests" element={<div>Disbursement Requests</div>} />
               <Route path="/ewa/lienmanagement" element={<LienManagement/>} />
-              <Route path="/ewa/delinquencymanagement" element={<div>Delinquency Management</div>} />
+              <Route path="/ewa/delinquencymanagement" element={<DelinquencyManagement/>} />
               <Route path="/ewa/repayment" element={<Repayment/>} />
               <Route path="/analytics" element={<Analytics/>} />
             </Routes>

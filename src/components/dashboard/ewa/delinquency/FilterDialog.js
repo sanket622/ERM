@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Checkbox, FormControlLabel, FormGroup, FormLabel, Box, Typography } from '@mui/material';
-
+import {
+    Dialog, DialogTitle, DialogContent, DialogActions, Button,
+    Checkbox, FormControlLabel, FormGroup, Box, Typography, Slider
+} from '@mui/material';
 
 const FilterDialog = ({ open, onClose }) => {
     const [contractTypes, setContractTypes] = useState([]);
-    const [paymentCycles, setPaymentCycles] = useState([]);
-    const [employmentStatuses, setEmploymentStatuses] = useState([]);
+    const [amountRange, setAmountRange] = useState([0, 1000000]);
 
     const handleToggle = (value, selected, setSelected) => {
         setSelected(prev =>
@@ -15,19 +16,24 @@ const FilterDialog = ({ open, onClose }) => {
         );
     };
 
+    const handleAmountChange = (event, newValue) => {
+        setAmountRange(newValue);
+    };
+
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm"
-            PaperProps={{ sx: { borderRadius: 6, }, }} >
+            PaperProps={{ sx: { borderRadius: 6 } }}>
             <Box p={3}>
                 <DialogTitle sx={{ p: 0, mb: 1, fontSize: 24, fontWeight: 'bold' }}> Filter </DialogTitle>
                 <DialogContent sx={{ p: 0 }}>
+                    {/* Status Section */}
                     <Box sx={{ ml: 2 }}>
                         <Typography variant="subtitle1" sx={{ mt: 2, fontWeight: 500 }}>Status</Typography>
                         <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
                             {[
-                                { value: 'active', label: 'Active' },
+                                { value: 'graceperiod', label: 'Grace Period' },
                                 { value: 'settled', label: 'Settled' },
-                                { value: 'delinquent', label: 'Delinquent' },
+                                { value: 'overdue', label: 'Overdue' },
                             ].map((option, idx) => (
                                 <FormControlLabel
                                     key={idx}
@@ -35,57 +41,51 @@ const FilterDialog = ({ open, onClose }) => {
                                         <Checkbox
                                             checked={contractTypes.includes(option.value)}
                                             onChange={() => handleToggle(option.value, contractTypes, setContractTypes)}
-                                            sx={{ color: '', '&.Mui-checked': { color: '#0000FF' } }}
-                                        />
-                                    }
-                                    label={option.label}
-                                />
-                            ))}
-                        </FormGroup>
-
-                        <Typography variant="subtitle1" sx={{ mt: 2, fontWeight: 500 }}>Payment Cycle</Typography>
-                        <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
-                            {[
-                                { value: 'monthly', label: 'Monthly' },
-                                { value: 'monthly+variable', label: 'Monthly + Variable' },
-                                { value: 'fullyVariable', label: 'Fully Variable' },
-                            ].map((option, idx) => (
-                                <FormControlLabel
-                                    key={idx}
-                                    control={
-                                        <Checkbox
-                                            checked={paymentCycles.includes(option.value)}
-                                            onChange={() => handleToggle(option.value, paymentCycles, setPaymentCycles)}
-                                            sx={{ color: '', '&.Mui-checked': { color: '#0000FF' } }}
-                                        />
-                                    }
-                                    label={option.label}
-                                />
-                            ))}
-                        </FormGroup>
-                        <Typography variant="subtitle1" sx={{ mt: 2, fontWeight: 500 }}>Loan Type</Typography>
-                        <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
-                            {[
-                                { value: 'disbursement', label: 'Disbursement' },
-                                { value: 'wageadvance', label: 'Wage Advance' },
-
-                            ].map((option, idx) => (
-                                <FormControlLabel
-                                    key={idx}
-                                    control={
-                                        <Checkbox
-                                            checked={employmentStatuses.includes(option.value)}
-                                            onChange={() => handleToggle(option.value, employmentStatuses, setEmploymentStatuses)}
-                                            sx={{ color: '', '&.Mui-checked': { color: '#0000FF' } }}
-                                        />
+                                            sx={{ '&.Mui-checked': { color: '#0000FF' } }}
+                                        />    
                                     }
                                     label={option.label}
                                 />
                             ))}
                         </FormGroup>
                     </Box>
+
+                    {/* Amount Slider Section */}
+                    <Box sx={{ mt: 4, ml: 2, mr: 2, px:3 }}>
+                        <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 500 }}>Outstanding Amount</Typography>
+                        <Slider
+                            value={amountRange}
+                            onChange={handleAmountChange}
+                            valueLabelDisplay="auto"
+                            min={0}
+                            max={1000000}
+                            step={100}
+                            sx={{ color: '#0000FF' }}
+                        />
+                        <Box display="flex" justifyContent="space-between">
+                            <Typography variant="body2">Min: {amountRange[0]}</Typography>
+                            <Typography variant="body2">Max: {amountRange[1]}</Typography>
+                        </Box>
+                    </Box>
+                    <Box sx={{ mt: 4, ml: 2, mr: 2, px:3 }}>
+                        <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 500 }}>Total Outstanding</Typography>
+                        <Slider
+                            value={amountRange}
+                            onChange={handleAmountChange}
+                            valueLabelDisplay="auto"
+                            min={0}
+                            max={1000000}
+                            step={100}
+                            sx={{ color: '#0000FF' }}
+                        />
+                        <Box display="flex" justifyContent="space-between">
+                            <Typography variant="body2">Min: {amountRange[0]}</Typography>
+                            <Typography variant="body2">Max: {amountRange[1]}</Typography>
+                        </Box>
+                    </Box>
                 </DialogContent>
 
+                {/* Actions */}
                 <DialogActions sx={{ p: 0, mt: 4 }}>
                     <Box display="flex" width="100%" justifyContent="center" className="gap-6">
                         <Button

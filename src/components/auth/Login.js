@@ -1,35 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoginApi } from "./LoginAction";
+import { setCredentials } from "../../redux/auth/authSlice";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import logo from '../../assets/earnlogo.png'
-import backgroundimg from '../../assets/1.png'
+import axios from "axios";
+import logo from '../../assets/earnlogo.png';
+import backgroundimg from '../../assets/1.png';
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
+import { useSnackbar } from 'notistack';
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const userLoginLoading = useSelector((state) => state.user.userLoginLoading);
-    const { login } = useLoginApi();
+    const { enqueueSnackbar } = useSnackbar();
+
+    const auth = useSelector((state) => state.auth);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [bgIndex, setBgIndex] = useState(0);
+    const [loading, setLoading] = useState(false);
 
-    const isFormValid = email && password
+    const isFormValid = email && password;
 
-
-    // Regular expression for email validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     useEffect(() => {
-        const accessToken = localStorage.getItem("access_token");
-        if (accessToken) {
+        if (auth?.accessToken) {
             navigate("/home");
         }
-    }, [navigate]);
+    }, [auth?.accessToken, navigate]);
+
+    useEffect(() => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+    }, []);
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -44,42 +51,40 @@ const Login = () => {
             return;
         }
 
-        const data = {
-            email: email,
-            password: password,
-            user_type: "employer",
-        };
-
         try {
-            await login(data);
+            setLoading(true);
+            const response = await axios.post("http://api.earnplus.net/api/v1/employer/auth/loginEmployer", {
+                email,
+                password
+            });
+
+            const { user, accessToken, refreshToken, message } = response?.data?.data;
+
+            dispatch(setCredentials({ user, accessToken, refreshToken }));
+
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+
+            enqueueSnackbar(message || "Login successful!", { variant: "success", anchorOrigin: { vertical: 'top', horizontal: 'center' }, });
+
+            navigate("/home");
         } catch (error) {
-            Swal.fire("Login Failed", "Please check your credentials and try again.", "error");
+            const errMsg = error?.response?.data?.message || "Login failed!";
+            enqueueSnackbar(errMsg, { variant: "error", anchorOrigin: { vertical: 'top', horizontal: 'center' }, });
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div
-            className=" flex items-center justify-center bg-cover bg-center"
-            style={{
-                backgroundImage: `url(${backgroundimg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',        
-                width: '100%',
-                height: '100vh',
-              }}              
-        >
+        <div className="flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: `url(${backgroundimg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', width: '100%', height: '100vh' }}>
             <div className="absolute top-4 left-4 z-10">
-
                 <img src={logo} alt="Logo" className="w-[178px] h-auto" />
             </div>
-
-            <div className="w-full h-screen flex items-center justify-end px-4   ">
-                {/* Right side for Login Form */}
+            <div className="w-full h-screen flex items-center justify-end px-4">
                 <div className="w-[631px] h-[682px] md:px-10 md:mr-10 bg-white bg-opacity-25 backdrop-blur-[34px] p-5 rounded-2xl shadow-lg flex justify-center flex-col">
-                    <h1 className="md:text-[32px] text-xl font-bold text-[#0000FF] text-center mb-4 ">Your Security, Our Priority</h1>
+                    <h1 className="md:text-[32px] text-xl font-bold text-[#0000FF] text-center mb-4">Your Security, Our Priority</h1>
                     <p className="text-[20px] text-center">Log in securely to access your account.</p>
-
                     <form className="grid grid-cols-1 gap-4 mt-10" onSubmit={handleLogin}>
                         <div>
                             <label className="block font-medium mb-1">Email ID</label>
@@ -89,22 +94,12 @@ const Login = () => {
                                 size="small"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                required
                                 type="email"
                                 variant="outlined"
-                                sx={{
-                                    backgroundColor: '#fff', // Set white background
-                                    borderRadius: '4px',     // Optional: match your design
-                                }}
-                                InputProps={{
-                                    style: {
-                                        backgroundColor: '#fff', // Extra assurance inside the input
-                                    },
-                                }}
+                                sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
+                                InputProps={{ style: { backgroundColor: '#fff' } }}
                             />
                         </div>
-
-
                         <div>
                             <label className="block font-medium mb-1">Password</label>
                             <TextField
@@ -113,19 +108,11 @@ const Login = () => {
                                 size="small"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                required
                                 type={showPassword ? 'text' : 'password'}
                                 variant="outlined"
-
-                                sx={{
-                                    backgroundColor: '#fff', // Set white background
-                                    borderRadius: '4px',     // Optional: match your design
-                                }}
-
+                                sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
                                 InputProps={{
-                                    style: {
-                                        backgroundColor: '#fff', // Extra assurance inside the input
-                                    },
+                                    style: { backgroundColor: '#fff' },
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
@@ -136,45 +123,31 @@ const Login = () => {
                                 }}
                             />
                         </div>
-
                         <div className="flex justify-center mt-4">
-                             
                             <Button
                                 type="submit"
                                 variant="contained"
-                                fullWidth={false}
-
-                                disabled={userLoginLoading || !isFormValid}
+                                disabled={loading || !isFormValid}
                                 sx={{
                                     background: '#0000FF',
                                     color: 'white',
                                     px: 12,
                                     py: 1.5,
                                     borderRadius: 2,
-                                    fontsize:'16px',
+                                    fontSize: '16px',
                                     fontWeight: 500,
                                     textTransform: 'none',
-                                    '&:hover': {
-                                        background: '#0000FF',
-                                    },
+                                    '&:hover': { background: '#0000FF' }
                                 }}
                             >
-                                {userLoginLoading ? 'Logging In...' : 'Log In'}
+                                {loading ? 'Logging In...' : 'Log In'}
                             </Button>
                         </div>
                     </form>
-
-
-                    {/* <div className="text-right mt-2">
-                        <button onClick={() => navigate("/forgetpassword")} className="text-[#00B251]  md:text-md">
-                            Forgot password?
-                        </button>
-                    </div> */}
-
                     <div className="flex items-center justify-center space-x-2 mt-10">
-                        <p className=" text-[#838383] text-[14px]">Don’t have an account? </p>
+                        <p className="text-[#838383] text-[14px]">Don’t have an account?</p>
                         <button onClick={() => navigate("/contact")} className="text-[#0000FF] text-[14px] font-semibold">
-                            Contact us 
+                            Contact us
                         </button>
                     </div>
                 </div>

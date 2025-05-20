@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { store } from './redux/Store'
-import { Provider } from "react-redux";
 import "./App.css"
 import Login from "./components/auth/Login";
 import NewPassword from "./components/auth/NewPassword";
@@ -24,14 +22,7 @@ function App() {
   }, [])
 
   return (
-    <>
-      <div>
-        <Toaster
-          position="top-center"         
-        />
-      </div>     
-
-      <Provider store={store}>
+    <>      
         <BrowserRouter>
           <Routes>           
             <Route path="/login" element={<Login />} />           
@@ -44,7 +35,6 @@ function App() {
             <Route path="/profileinformation" element={<MultiStepForm />} />                       
           </Routes>
         </BrowserRouter>
-      </Provider>
      
     </>
   );
