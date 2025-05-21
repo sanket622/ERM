@@ -9,14 +9,16 @@ const AddEmployees = () => {
     const [tabIndex, setTabIndex] = useState(0);
     const [dob, setDob] = useState("");
     const [doj, setDoj] = useState("");
-
-    // Autocomplete states
     const [maritalStatus, setMaritalStatus] = useState(null);
     const [gender, setGender] = useState(null);
     const [nationality, setNationality] = useState(null);
     const [city, setCity] = useState(null);
     const [state, setState] = useState(null);
     const [zipCode, setZipCode] = useState(null);
+    const [contractType, setContractType] = useState('');
+    const [monthlySalary, setMonthlySalary] = useState('');
+
+
 
     const handleTabChange = (event, newValue) => setTabIndex(newValue);
 
@@ -24,7 +26,6 @@ const AddEmployees = () => {
         <>
             <div className="max-w-6xl mt-16">
                 <p className="text-[24px] font-semibold">Add Employees</p>
-
                 <div className="  bg-white rounded-xl border p-6 mt-6">
                     <Tabs value={tabIndex} onChange={handleTabChange} variant="fullWidth" textColor="inherit" indicatorColor="primary" className="border-b" sx={{ '& .MuiTab-root': { color: '#000' }, '& .Mui-selected': { color: '#0000FF' }, '& .MuiTabs-indicator': { backgroundColor: '#0000FF' } }} >
                         <Tab icon={<Person />} iconPosition="start" label="Personal Information" />
@@ -71,7 +72,8 @@ const AddEmployees = () => {
                             <TextFieldComponent label="Job Title (optional)" fullWidth size="small" />
                             <TextFieldComponent label="Department (optional)" fullWidth size="small" />
                             <TextFieldComponent label="Work Location" fullWidth size="small" className="md:col-span-2" />
-                            <TextFieldComponent label="Contract Type" fullWidth size="small" />
+                            <AutocompleteFieldComponent label="Contract Type" value={contractType} onChange={setContractType} options={[{ label: "type 1", value: "type 1" }, { label: "type 2", value: "type 2" }, { label: "type 3", value: "type 3" }]} fullWidth size="small" />
+                            {contractType?.value === 'type 1' && <TextFieldComponent label="Monthly Salary Amount" value={monthlySalary} onChange={setMonthlySalary} fullWidth size="small" />}
                             <TextFieldComponent label="Payment Cycle" fullWidth size="small" />
                             <Box className="flex justify-end col-span-1 md:col-span-2 mt-4 space-x-2">
                                 <Button variant="outlined" sx={{ width: '10%', py: 1, color: 'black', borderColor: 'lightgrey', borderRadius: 3, '&:hover': { borderColor: 'lightgrey', backgroundColor: 'rgba(0, 0, 0, 0.04)' } }} >

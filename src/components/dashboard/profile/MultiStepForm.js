@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import {
     Box,
     Button,
@@ -11,6 +13,9 @@ import {
 } from '@mui/material';
 import TextFieldComponent from '../../subcompotents/TextFieldComponent';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import AutocompleteFieldComponent from '../../subcompotents/AutocompleteFieldComponent';
+import { useSnackbar } from 'notistack';
+
 
 const steps = [
     'Tell Us About Your Organization',
@@ -41,6 +46,13 @@ const salaryTypes = [
 const MultiStepForm = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [formData, setFormData] = useState({});
+    const [countries, setCountries] = useState([]);
+    const [states1, setStates1] = useState([]);
+    const [districts1, setDistricts1] = useState([]);
+    const [states2, setStates2] = useState([]);
+    const [districts2, setDistricts2] = useState([]);
+    const { enqueueSnackbar } = useSnackbar();
+
 
     const handleNext = () => setActiveStep(prev => prev + 1);
     const handleBack = () => setActiveStep(prev => prev - 1);
@@ -48,11 +60,199 @@ const MultiStepForm = () => {
         setFormData({ ...formData, [field]: value });
     };
 
+    const handleCountryChange = (newValue, step) => {
+        const countryId = newValue ? newValue.id : '';
+        if (step === 0) {
+            setFormData((prev) => ({
+                ...prev,
+                country: countryId,
+                state: '',
+                district: '',
+            }));
+            fetchStates(countryId, 0);
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                country2: countryId,
+                state2: '',
+                district2: '',
+            }));
+            fetchStates(countryId, 1);
+        }
+    };
+
+    const handleStateChange = (newValue, step) => {
+        const stateId = newValue ? newValue.id : '';
+        if (step === 0) {
+            setFormData((prev) => ({
+                ...prev,
+                state: stateId,
+                district: '',
+            }));
+            fetchDistricts(stateId, 0);
+        } else {
+            setFormData((prev) => ({
+                ...prev,
+                state2: stateId,
+                district2: '',
+            }));
+            fetchDistricts(stateId, 1);
+        }
+    };
+
+
+    useEffect(() => {
+        axios
+            .get('https://api.earnplus.net/api/v1/associate/location/getAllCountries', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((response) => {
+                if (response.data.success) {
+                    const formattedCountries = response.data.data.map((country) => ({
+                        id: country.id,
+                        label: country.countryName,
+                    }));
+                    setCountries(formattedCountries);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching countries:', error);
+            });
+    }, []);
+
+
+
+    const fetchStates = (countryId, step) => {
+        axios
+            .get(`https://api.earnplus.net/api/v1/associate/location/getStatesByCountry/${countryId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((response) => {
+                if (response.data.success) {
+                    const formattedStates = response.data.data.map((state) => ({
+                        id: state.id,
+                        label: state.stateName,
+                    }));
+                    if (step === 0) {
+                        setStates1(formattedStates);
+                    } else {
+                        setStates2(formattedStates);
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error(`Error fetching states for step ${step}:`, error);
+            });
+    };
+
+
+    const fetchDistricts = (stateId, step) => {
+        axios
+            .get(`https://api.earnplus.net/api/v1/associate/location/getDistrictsByState/${stateId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            })
+            .then((response) => {
+                if (response.data.success) {
+                    const formattedDistricts = response.data.data.map((district) => ({
+                        id: district.id,
+                        label: district.districtName,
+                    }));
+                    if (step === 0) {
+                        setDistricts1(formattedDistricts);
+                    } else {
+                        setDistricts2(formattedDistricts);
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error(`Error fetching districts for step ${step}:`, error);
+            });
+    };
+
+    const handleSubmit = async () => {
+        const headers = {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        };
+      
+        try {
+          if (activeStep === 0) {
+            const payload = {
+              industryType: formData.industryType,
+              businessLocation: formData.businessLocation,
+              businessDescription: formData.businessDescription,
+              establishmentDate: new Date(formData.establishmentDate).toISOString(),
+              country: formData.country,
+              state: formData.state,
+              district: formData.district,
+              pincode: formData.pincode || '000000',
+            };
+      
+            await axios.patch(
+              'https://api.earnplus.net/api/v1/employer/auth/EmployerProfileCompletion',
+              payload,
+              { headers }
+            );
+            enqueueSnackbar('Step 1 submitted successfully!', { variant: 'success' });
+          }
+      
+          if (activeStep === 1) {
+            const payload = {
+              workspaceName: formData.workspace,
+              noOfEmployees: parseInt(formData.totalEmployees, 10) || 0,
+              address: formData.address,
+              country: formData.country2,
+              state: formData.state2,
+              district: formData.district2,
+            };
+      
+            await axios.patch(
+              'https://api.earnplus.net/api/v1/employer/auth/addEmployerWorkLocation',
+              payload,
+              { headers }
+            );
+            enqueueSnackbar('Step 2 submitted successfully!', { variant: 'success' });
+          }
+      
+          if (activeStep === 2) {
+            const payload = {
+              noticePeriod: parseInt(formData['field-0'], 10),
+              probationPeriod: parseInt(formData['field-1'], 10),
+              annualLeaves: parseInt(formData['field-2'], 10),
+              sickLeaves: parseInt(formData['field-3'], 10),
+              casualLeaves: parseInt(formData['field-4'], 10),
+              maternityLeaves: parseInt(formData['field-5'], 10),
+              overtimePolicy: formData['policy-0'],
+              registrationPolicy: formData['policy-1'],
+              remoteworkPolicy: formData['policy-2'],
+              otherPolicies: formData['policy-3'],
+            };
+      
+            await axios.patch(
+              'https://api.earnplus.net/api/v1/employer/auth/addEmployerCompanyPolicy',
+              payload,
+              { headers }
+            );
+            enqueueSnackbar('Step 3 submitted successfully!', { variant: 'success' });
+          }
+      
+          setActiveStep((prev) => prev + 1);
+        } catch (error) {
+          console.error('Error submitting step data:', error);
+          enqueueSnackbar('Submission failed. Please try again.', { variant: 'error' });
+        }
+      };
+      
     const renderStepContent = () => {
         const labelStyle = { color: '#696969', fontSize: '16px', display: 'block', marginBottom: '6px', fontWeight: 500 };
 
         switch (activeStep) {
-            case 0:
+            case 3:
                 return (
                     <Box className="space-y-4 mt-10">
                         <Box><label style={labelStyle} htmlFor="businessName">Business Name</label><TextFieldComponent id="businessName" name="businessName" placeholder="Enter your business name" value={formData.businessName || ''} onChange={e => handleChange('businessName', e.target.value)} /></Box>
@@ -65,11 +265,36 @@ const MultiStepForm = () => {
                             <Box><label style={labelStyle} htmlFor="pan">PAN No.</label><TextFieldComponent id="pan" name="pan" placeholder="Enter PAN number" value={formData.pan || ''} onChange={e => handleChange('pan', e.target.value)} /></Box>
                             <Box><label style={labelStyle} htmlFor="gst">GST No.</label><TextFieldComponent id="gst" name="gst" placeholder="Enter GST number" value={formData.gst || ''} onChange={e => handleChange('gst', e.target.value)} /></Box>
                         </Box>
-                        <Box><label style={labelStyle} htmlFor="country">Country</label><TextFieldComponent id="country" name="country" placeholder="Enter country" value={formData.country || ''} onChange={e => handleChange('country', e.target.value)} /></Box>
                         <Box className="grid grid-cols-2 gap-4">
-                            <Box><label style={labelStyle} htmlFor="state">State</label><TextFieldComponent id="state" name="state" placeholder="Enter state" value={formData.state || ''} onChange={e => handleChange('state', e.target.value)} /></Box>
-                            <Box><label style={labelStyle} htmlFor="district">District</label><TextFieldComponent id="district" name="district" placeholder="Enter district" value={formData.district || ''} onChange={e => handleChange('district', e.target.value)} /></Box>
+                            <Box>
+                                <label style={labelStyle} htmlFor="country">Country</label>
+                                <AutocompleteFieldComponent
+                                    label="Select Country"
+                                    options={countries}
+                                    value={countries.find((country) => country.id === formData.country) || null}
+                                    onChange={(newValue) => handleCountryChange(newValue, 0)}
+                                />
+                            </Box>
+                            <Box>
+                                <label style={labelStyle} htmlFor="state">State</label>
+                                <AutocompleteFieldComponent
+                                    label="Select State"
+                                    options={states1}
+                                    value={states1.find((state) => state.id === formData.state) || null}
+                                    onChange={(newValue) => handleStateChange(newValue, 0)}
+                                />
+                            </Box>
+                            <Box>
+                                <label style={labelStyle} htmlFor="district">District</label>
+                                <AutocompleteFieldComponent
+                                    label="Select District"
+                                    options={districts1}
+                                    value={districts1.find((district) => district.id === formData.district) || null}
+                                    onChange={(newValue) => setFormData((prev) => ({ ...prev, district: newValue ? newValue.id : '' }))}
+                                />
+                            </Box>
                         </Box>
+
                     </Box>
                 );
 
@@ -78,12 +303,44 @@ const MultiStepForm = () => {
                     <Box className="space-y-4 mt-10">
                         <Box><label style={labelStyle} htmlFor="workspace">Name of Workspace</label><TextFieldComponent id="workspace" name="workspace" placeholder="Enter workspace name" value={formData.workspace || ''} onChange={e => handleChange('workspace', e.target.value)} /></Box>
                         <Box><label style={labelStyle} htmlFor="totalEmployees">Total Employees (optional)</label><TextFieldComponent id="totalEmployees" name="totalEmployees" placeholder="Select range" select options={[{ id: '1-10', name: '1-10' }, { id: '11-50', name: '11-50' }]} value={formData.totalEmployees || ''} onChange={e => handleChange('totalEmployees', e.target.value)} /></Box>
-                        <Box><label style={labelStyle} htmlFor="country2">Country</label><TextFieldComponent id="country2" name="country2" placeholder="Enter country" value={formData.country2 || ''} onChange={e => handleChange('country2', e.target.value)} /></Box>
-                        <Box className="grid grid-cols-2 gap-4">
-                            <Box><label style={labelStyle} htmlFor="state2">State</label><TextFieldComponent id="state2" name="state2" placeholder="Enter state" value={formData.state2 || ''} onChange={e => handleChange('state2', e.target.value)} /></Box>
-                            <Box><label style={labelStyle} htmlFor="district2">District</label><TextFieldComponent id="district2" name="district2" placeholder="Enter district" value={formData.district2 || ''} onChange={e => handleChange('district2', e.target.value)} /></Box>
-                        </Box>
                         <Box><label style={labelStyle} htmlFor="address">Address</label><TextFieldComponent id="address" name="address" placeholder="Enter full address" multiline value={formData.address || ''} onChange={e => handleChange('address', e.target.value)} /></Box>
+                        <Box className="grid grid-cols-2 gap-4">
+                            <Box>
+                                <label style={labelStyle} htmlFor="country2">Country</label>
+                                <AutocompleteFieldComponent
+                                    label="Select Country"
+                                    options={countries}
+                                    value={countries.find((country) => country.id === formData.country2) || null}
+                                    onChange={(newValue) => handleCountryChange(newValue, 1)}
+                                />
+                            </Box>
+
+                            <Box>
+                                <label style={labelStyle} htmlFor="state2">State</label>
+                                <AutocompleteFieldComponent
+                                    label="Select State"
+                                    options={states2}
+                                    value={states2.find((state) => state.id === formData.state2) || null}
+                                    onChange={(newValue) => handleStateChange(newValue, 1)}
+                                />
+                            </Box>
+
+                            <Box>
+                                <label style={labelStyle} htmlFor="district2">District</label>
+                                <AutocompleteFieldComponent
+                                    label="Select District"
+                                    options={districts2}
+                                    value={districts2.find((district) => district.id === formData.district2) || null}
+                                    onChange={(newValue) =>
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            district2: newValue ? newValue.id : '',
+                                        }))
+                                    }
+                                />
+                            </Box>
+                        </Box>
+                     
                         <Box className="text-center"><Button variant='text' color="primary" sx={{ textTransform: 'none' }}>+ Add Location</Button></Box>
                     </Box>
                 );
@@ -102,7 +359,7 @@ const MultiStepForm = () => {
                     </Box>
                 );
 
-            case 3:
+            case 0:
                 return (
                     <Box className="space-y-4 mt-10">
                         <RadioGroup value={formData.salaryType} onChange={e => handleChange('salaryType', e.target.value)}>
@@ -170,11 +427,11 @@ const MultiStepForm = () => {
                         </Box>
                         <Box className="mt-10 flex justify-center gap-4">
                             {activeStep < steps.length - 1 ? (
-                                <Button onClick={handleNext} variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
+                                <Button onClick={handleSubmit}  variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
                                     Next
                                 </Button>
                             ) : (
-                                <Button type="submit" variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
+                                <Button  type="submit" variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
                                     Submit
                                 </Button>
                             )}
@@ -182,7 +439,6 @@ const MultiStepForm = () => {
                     </Box>
                 </Box>
             </div>
-
         </>
     );
 };

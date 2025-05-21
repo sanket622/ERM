@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../../redux/auth/authSlice";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -40,42 +39,54 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+    
         if (!email || !password) {
-            Swal.fire("Error", "Please fill in both email and password.", "error");
+            enqueueSnackbar("Please fill in both email and password.", {
+                variant: "error",
+                anchorOrigin: { vertical: 'top', horizontal: 'center' }
+            });
             return;
         }
-
+    
         if (!emailRegex.test(email)) {
-            Swal.fire("Invalid Email", "Please enter a valid email address.", "error");
+            enqueueSnackbar("Please enter a valid email address.", {
+                variant: "error",
+                anchorOrigin: { vertical: 'top', horizontal: 'center' }
+            });
             return;
         }
 
         try {
             setLoading(true);
-            const response = await axios.post("http://api.earnplus.net/api/v1/employer/auth/loginEmployer", {
+            const response = await axios.post("https://api.earnplus.net/api/v1/employer/auth/loginEmployer", {
                 email,
                 password
             });
-
+    
             const { user, accessToken, refreshToken, message } = response?.data?.data;
-
+    
             dispatch(setCredentials({ user, accessToken, refreshToken }));
-
+    
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
-
-            enqueueSnackbar(message || "Login successful!", { variant: "success", anchorOrigin: { vertical: 'top', horizontal: 'center' }, });
-
+    
+            enqueueSnackbar(message || "Login successful!", {
+                variant: "success",
+                anchorOrigin: { vertical: 'top', horizontal: 'center' }
+            });
+    
             navigate("/home");
         } catch (error) {
             const errMsg = error?.response?.data?.message || "Login failed!";
-            enqueueSnackbar(errMsg, { variant: "error", anchorOrigin: { vertical: 'top', horizontal: 'center' }, });
+            enqueueSnackbar(errMsg, {
+                variant: "error",
+                anchorOrigin: { vertical: 'top', horizontal: 'center' }
+            });
         } finally {
             setLoading(false);
         }
     };
-
+    
     return (
         <div className="flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: `url(${backgroundimg})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', width: '100%', height: '100vh' }}>
             <div className="absolute top-4 left-4 z-10">

@@ -51,7 +51,6 @@ export default function WelcomePage() {
                     </div>
                 </div>
             </section>
-
         </div>
     );
 }
