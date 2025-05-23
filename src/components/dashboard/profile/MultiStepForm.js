@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-import {
-    Box,
-    Button,
-    Radio,
-    RadioGroup,
-    FormControlLabel,
-    Typography,
-    Card,
-    IconButton
-} from '@mui/material';
+import { Box, Button, RadioGroup, Typography, Card, IconButton, Checkbox} from '@mui/material';
 import TextFieldComponent from '../../subcompotents/TextFieldComponent';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import AutocompleteFieldComponent from '../../subcompotents/AutocompleteFieldComponent';
 import { useSnackbar } from 'notistack';
-
 
 const steps = [
     'Tell Us About Your Organization',
@@ -23,25 +12,6 @@ const steps = [
     'Define Your Company Policies',
     'Provide Details of Your Employees'
 ];
-
-const salaryTypes = [
-    {
-        label: 'Type 1 (Fixed Monthly)',
-        description: 'Fixed – Employees receive a predetermined salary based on days worked. Payment follows a set cycle (e.g. Monthly), ensuring predictable earnings unaffected by productivity or hours worked.',
-        color: '#0000FF'
-    },
-    {
-        label: 'Type 2 (Fixed & Variable Monthly)',
-        description: 'Fixed + Variable – Guarantees a base salary plus additional pay tied to performance (e.g. units made or sold). Effort directly impacts earnings.',
-        color: '#0000FF'
-    },
-    {
-        label: 'Type 3 (Fully Variable)',
-        description: 'Variable – No fixed salary. Income depends on tasks completed (e.g., deliveries or fills). Earnings fluctuate with demand, incentives, or surge pricing.',
-        color: '#0000FF'
-    }
-];
-
 
 const MultiStepForm = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -51,11 +21,13 @@ const MultiStepForm = () => {
     const [districts1, setDistricts1] = useState([]);
     const [states2, setStates2] = useState([]);
     const [districts2, setDistricts2] = useState([]);
+    const [contractTypes, setContractTypes] = useState([]);
+    const [selectedContractTypeIds, setSelectedContractTypeIds] = useState([]);
+
     const { enqueueSnackbar } = useSnackbar();
 
-
-    const handleNext = () => setActiveStep(prev => prev + 1);
     const handleBack = () => setActiveStep(prev => prev - 1);
+
     const handleChange = (field, value) => {
         setFormData({ ...formData, [field]: value });
     };
@@ -100,7 +72,6 @@ const MultiStepForm = () => {
         }
     };
 
-
     useEffect(() => {
         axios
             .get('https://api.earnplus.net/api/v1/associate/location/getAllCountries', {
@@ -121,8 +92,6 @@ const MultiStepForm = () => {
                 console.error('Error fetching countries:', error);
             });
     }, []);
-
-
 
     const fetchStates = (countryId, step) => {
         axios
@@ -175,79 +144,94 @@ const MultiStepForm = () => {
             });
     };
 
+    useEffect(() => {
+        axios.get('https://api.earnplus.net/api/v1/associate/contract/getAllContractTypes', {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+        })
+            .then((response) => {
+                if (response.data.success) {
+                    setContractTypes(response.data.data);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching contract types:', error);
+            });
+    }, []);
+
+    const toggleContractSelection = (id) => {
+        setSelectedContractTypeIds((prevSelected) =>
+            prevSelected.includes(id)
+                ? prevSelected.filter((item) => item !== id)
+                : [...prevSelected, id]
+        );
+    };
+
     const handleSubmit = async () => {
-        const headers = {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        };
-      
+        const headers = { Authorization: `Bearer ${localStorage.getItem('accessToken')}`, };
         try {
-          if (activeStep === 0) {
-            const payload = {
-              industryType: formData.industryType,
-              businessLocation: formData.businessLocation,
-              businessDescription: formData.businessDescription,
-              establishmentDate: new Date(formData.establishmentDate).toISOString(),
-              country: formData.country,
-              state: formData.state,
-              district: formData.district,
-              pincode: formData.pincode || '000000',
-            };
-      
-            await axios.patch(
-              'https://api.earnplus.net/api/v1/employer/auth/EmployerProfileCompletion',
-              payload,
-              { headers }
-            );
-            enqueueSnackbar('Step 1 submitted successfully!', { variant: 'success' });
-          }
-      
-          if (activeStep === 1) {
-            const payload = {
-              workspaceName: formData.workspace,
-              noOfEmployees: parseInt(formData.totalEmployees, 10) || 0,
-              address: formData.address,
-              country: formData.country2,
-              state: formData.state2,
-              district: formData.district2,
-            };
-      
-            await axios.patch(
-              'https://api.earnplus.net/api/v1/employer/auth/addEmployerWorkLocation',
-              payload,
-              { headers }
-            );
-            enqueueSnackbar('Step 2 submitted successfully!', { variant: 'success' });
-          }
-      
-          if (activeStep === 2) {
-            const payload = {
-              noticePeriod: parseInt(formData['field-0'], 10),
-              probationPeriod: parseInt(formData['field-1'], 10),
-              annualLeaves: parseInt(formData['field-2'], 10),
-              sickLeaves: parseInt(formData['field-3'], 10),
-              casualLeaves: parseInt(formData['field-4'], 10),
-              maternityLeaves: parseInt(formData['field-5'], 10),
-              overtimePolicy: formData['policy-0'],
-              registrationPolicy: formData['policy-1'],
-              remoteworkPolicy: formData['policy-2'],
-              otherPolicies: formData['policy-3'],
-            };
-      
-            await axios.patch(
-              'https://api.earnplus.net/api/v1/employer/auth/addEmployerCompanyPolicy',
-              payload,
-              { headers }
-            );
-            enqueueSnackbar('Step 3 submitted successfully!', { variant: 'success' });
-          }
-      
-          setActiveStep((prev) => prev + 1);
+            if (activeStep === 3) {
+                const payload = {
+                    industryType: formData.industryType,
+                    businessLocation: formData.businessLocation,
+                    businessDescription: formData.businessDescription,
+                    establishmentDate: new Date(formData.establishmentDate).toISOString(),
+                    country: formData.country,
+                    state: formData.state,
+                    district: formData.district,
+                    pincode: formData.pincode || '000000',
+                };
+                await axios.patch('https://api.earnplus.net/api/v1/employer/auth/EmployerProfileCompletion',
+                    payload, { headers });
+                enqueueSnackbar('Submitted successfully!', { variant: 'success' });
+            }
+            if (activeStep === 1) {
+                const payload = {
+                    workspaceName: formData.workspace,
+                    noOfEmployees: parseInt(formData.totalEmployees, 10) || 0,
+                    address: formData.address,
+                    country: formData.country2,
+                    state: formData.state2,
+                    district: formData.district2,
+                };
+                await axios.patch('https://api.earnplus.net/api/v1/employer/auth/addEmployerWorkLocation',
+                    payload, { headers }
+                );
+                enqueueSnackbar('Submitted successfully!', { variant: 'success' });
+            }
+
+            if (activeStep === 2) {
+                const payload = {
+                    noticePeriod: parseInt(formData['field-0'], 10),
+                    probationPeriod: parseInt(formData['field-1'], 10),
+                    annualLeaves: parseInt(formData['field-2'], 10),
+                    sickLeaves: parseInt(formData['field-3'], 10),
+                    casualLeaves: parseInt(formData['field-4'], 10),
+                    maternityLeaves: parseInt(formData['field-5'], 10),
+                    overtimePolicy: formData['policy-0'],
+                    registrationPolicy: formData['policy-1'],
+                    remoteworkPolicy: formData['policy-2'],
+                    otherPolicies: formData['policy-3'],
+                };
+                await axios.patch('https://api.earnplus.net/api/v1/employer/auth/addEmployerCompanyPolicy',
+                    payload, { headers });
+                enqueueSnackbar('Submitted successfully!', { variant: 'success' });
+            }
+            if (activeStep === 0) {
+                const payload = { contractTypeId: selectedContractTypeIds, };
+                await axios.patch('https://api.earnplus.net/api/v1/employer/auth/addEmployerContractType',
+                    payload, { headers }
+                );
+                enqueueSnackbar('Submitted successfully!', { variant: 'success' });
+            }
+            setActiveStep((prev) => prev + 1);
         } catch (error) {
-          console.error('Error submitting step data:', error);
-          enqueueSnackbar('Submission failed. Please try again.', { variant: 'error' });
+            console.error('Error submitting step data:', error);
+            enqueueSnackbar('Submission failed. Please try again.', { variant: 'error' });
         }
-      };
-      
+    };
+
     const renderStepContent = () => {
         const labelStyle = { color: '#696969', fontSize: '16px', display: 'block', marginBottom: '6px', fontWeight: 500 };
 
@@ -340,7 +324,7 @@ const MultiStepForm = () => {
                                 />
                             </Box>
                         </Box>
-                     
+
                         <Box className="text-center"><Button variant='text' color="primary" sx={{ textTransform: 'none' }}>+ Add Location</Button></Box>
                     </Box>
                 );
@@ -362,19 +346,56 @@ const MultiStepForm = () => {
             case 0:
                 return (
                     <Box className="space-y-4 mt-10">
-                        <RadioGroup value={formData.salaryType} onChange={e => handleChange('salaryType', e.target.value)}>
+                        <RadioGroup value="" onChange={() => { }}> {/* Empty just for structure */}
                             <Box className="grid grid-cols-2 gap-4">
-                                {salaryTypes.map(type => (
-                                    <Card key={type.label} variant="outlined" sx={{ height: '100%', minHeight: 200, display: 'flex', flexDirection: 'column', borderRadius: 2, boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: 'none' }}>
-                                        <Box sx={{ backgroundColor: formData.salaryType === type.label ? type.color : '#F2F2F4', padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Typography fontWeight="600" sx={{ color: formData.salaryType === type.label ? 'white' : 'black' }}>{type.label}</Typography>
-                                            <FormControlLabel value={type.label} control={<Radio sx={{ color: formData.salaryType === type.label ? 'white' : 'rgba(0, 0, 0, 0.54)', '&.Mui-checked': { color: 'white' } }} />} label="" />
-                                        </Box>
-                                        <Box sx={{ backgroundColor: '#fff', padding: '16px' }}>
-                                            <Typography sx={{ fontSize: '14px', color: '#696969' }}>{type.description}</Typography>
-                                        </Box>
-                                    </Card>
-                                ))}
+                                {contractTypes.map((type) => {
+                                    const isSelected = selectedContractTypeIds.includes(type.id);
+                                    return (
+                                        <Card
+                                            key={type.id}
+                                            variant="outlined"
+                                            sx={{
+                                                height: '100%',
+                                                minHeight: 200,
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                borderRadius: 2,
+                                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                            }}
+                                            onClick={() => toggleContractSelection(type.id)}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    backgroundColor: isSelected ? '#0000FF' : '#F2F2F4',
+                                                    padding: '12px 16px',
+                                                    display: 'flex',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'center',
+                                                }}
+                                            >
+                                                <Typography fontWeight="600" sx={{ color: isSelected ? 'white' : 'black' }}>
+                                                    {type.name}
+                                                </Typography>
+                                                <Checkbox
+                                                    checked={isSelected}
+                                                    onChange={() => toggleContractSelection(type.id)}
+                                                    sx={{
+                                                        color: isSelected ? 'white' : 'rgba(0, 0, 0, 0.54)',
+                                                        '&.Mui-checked': { color: 'white' },
+                                                    }}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                />
+                                            </Box>
+                                            <Box sx={{ backgroundColor: '#fff', padding: '16px' }}>
+                                                <Typography sx={{ fontSize: '14px', color: '#696969' }}>
+                                                    {type.description}
+                                                </Typography>
+                                            </Box>
+                                        </Card>
+                                    );
+                                })}
                             </Box>
                         </RadioGroup>
                     </Box>
@@ -418,20 +439,16 @@ const MultiStepForm = () => {
                                     <ArrowBackIosNewIcon className='text-black' />
                                 </IconButton>
                             )}
-                            <Typography sx={{ marginLeft: 4 }} variant="h4" className="text-[#313131] ">
-                                {steps[activeStep]}
-                            </Typography>
+                            <Typography sx={{ marginLeft: 4 }} variant="h4" className="text-[#313131] "> {steps[activeStep]}  </Typography>
                         </Box>
-                        <Box className="mt-4 ">
-                            {renderStepContent()}
-                        </Box>
+                        <Box className="mt-4 "> {renderStepContent()}  </Box>
                         <Box className="mt-10 flex justify-center gap-4">
                             {activeStep < steps.length - 1 ? (
-                                <Button onClick={handleSubmit}  variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
+                                <Button onClick={handleSubmit} variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
                                     Next
                                 </Button>
                             ) : (
-                                <Button  type="submit" variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
+                                <Button type="submit" variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
                                     Submit
                                 </Button>
                             )}

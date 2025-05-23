@@ -9,29 +9,29 @@ const AutocompleteFieldComponent = ({
   fullWidth = true,
   size = "small",
   className = "",
+  isMulti = false,
+  placeholder = "",
+  getOptionLabel = (option) => option?.label || '',
 }) => {
   return (
     <Autocomplete
+      multiple={isMulti}
       className={className}
       fullWidth={fullWidth}
       size={size}
       options={options}
       value={value}
       onChange={(event, newValue) => onChange(newValue)}
-      getOptionLabel={(option) =>
-        typeof option === "string" ? option : option.label
-      }
-      isOptionEqualToValue={(option, value) =>
-        option.value === value?.value
-      }
-      renderInput={(params) => <TextField {...params} label={label} />}
+      getOptionLabel={getOptionLabel}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      renderInput={(params) => <TextField {...params} label={label} placeholder={placeholder} />}
       sx={{
         '& .MuiOutlinedInput-root': {
           '&.Mui-focused fieldset': {
             borderColor: '#0000FF',
           },
           '& .MuiOutlinedInput-notchedOutline': {
-            borderRadius: '10px', 
+            borderRadius: '10px',
           },
         },
         '& .MuiInputLabel-root.Mui-focused': {

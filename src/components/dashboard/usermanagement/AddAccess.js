@@ -1,78 +1,245 @@
-import React, { useState } from 'react';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import TextFieldComponent from '../../subcompotents/TextFieldComponent';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, IconButton, InputAdornment } from '@mui/material';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { useNavigate } from 'react-router';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import { enqueueSnackbar } from 'notistack';
+
+import {
+    updateField,
+    setRoleType,
+    setRoleAccess,
+    setErrors,
+    resetForm,
+} from '../../../redux/usermanagement/emailAccessSlice';
+
+import AutocompleteFieldComponent from '../../subcompotents/AutocompleteFieldComponent';
+import TextFieldComponent from '../../subcompotents/TextFieldComponent';
 
 export default function EmailAccessForm() {
+    const dispatch = useDispatch();
+    const formData = useSelector(state => state.emailAccess.formData);
+    const errors = useSelector(state => state.emailAccess.errors);
 
-    const navigate = useNavigate();
-
-    const [formData, setFormData] = useState({ roleType: '', name: '', email: '', phoneNumber: '', password: '', confirmPassword: '', roleAccess: '' });
+    const [roleTypeOptions, setRoleTypeOptions] = useState([]);
+    const [roleAccessOptions, setRoleAccessOptions] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     const labelStyle = { color: '#696969', fontSize: '16px', display: 'block', marginBottom: '6px', fontWeight: 500 };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+    const validate = () => {
+        const newErrors = {};
+        if (!formData.roleType) newErrors.roleType = 'Role Type is required';
+        if (!formData.name) newErrors.name = 'Name is required';
+        if (!formData.email) newErrors.email = 'Email is required';
+        if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone Number is required';
+        if (!formData.password) newErrors.password = 'Password is required';
+        if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
+        if (!formData.roleAccess.length) newErrors.roleAccess = 'Role Access is required';
+
+        dispatch(setErrors(newErrors));
+        return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Form data submitted:', formData);
+    const handleSubmit = async () => {
+        if (!validate()) return;
+
+        const headers = { Authorization: `Bearer ${localStorage.getItem('accessToken')}` };
+        try {
+            const payload = {
+                role: formData.roleType,
+                name: formData.name,
+                email: formData.email,
+                mobile: formData.phoneNumber,
+                password: formData.password,
+                modules: formData.roleAccess,
+            };
+
+            await axios.post(
+                'https://api.earnplus.net/api/v1/employer/employerSubAdmin/createEmployerSubAdmin',
+                payload,
+                { headers }
+            );
+
+            enqueueSnackbar('Employer SubAdmin created successfully!', { variant: 'success' });
+            dispatch(resetForm());
+        } catch (error) {
+            console.error('Error submitting data:', error);
+            enqueueSnackbar('User with this mobile number or Email already exists!', { variant: 'error' });
+        }
     };
 
-    const roleTypeOptions = [
-        { value: "admin", label: "Administrator" },
-        { value: "manager", label: "Manager" },
-        { value: "user", label: "Standard User" }
-    ];
+    useEffect(() => {
+        const fetchRoles = async () => {
+            try {
+                const res = await axios.get('https://api.earnplus.net/api/v1/employer/roleModule/getAllEmployerRoles',
+                    { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+                );
+                if (res?.data?.success) {
+                    const roleOptions = res.data.data.map(role => ({
+                        id: role.id,
+                        label: role.roleName,
+                    }));
+                    setRoleTypeOptions(roleOptions);
+                }
+            } catch (err) {
+                console.error('Error fetching roles:', err);
+            }
+        };
+        fetchRoles();
+    }, []);
 
-    const roleAccessOptions = [
-        { value: "full", label: "Full Access" },
-        { value: "read", label: "Read Only" },
-        { value: "write", label: "Write Only" },
-        { value: "limited", label: "Limited Access" }
-    ];
+    useEffect(() => {
+        if (!formData.roleType) return;
+
+        const fetchModules = async () => {
+            try {
+                const res = await axios.get(
+                    `https://api.earnplus.net/api/v1/employer/roleModule/getModulesByEmployerRole/${formData.roleType}`,
+                    { headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
+                );
+                if (res?.data?.success) {
+                    const accessOptions = res.data.data.map(module => ({
+                        id: module.id,
+                        label: module.moduleName,
+                    }));
+                    setRoleAccessOptions(accessOptions);
+                }
+            } catch (err) {
+                console.error('Error fetching modules:', err);
+            }
+        };
+        fetchModules();
+    }, [formData.roleType]);
+
+    const handleRoleAccessChange = (selectedOptions) => {
+        const selectedIds = Array.isArray(selectedOptions)
+            ? selectedOptions.map(option => option.id)
+            : [];
+        dispatch(setRoleAccess(selectedIds));
+    };
+
 
     return (
         <div className="max-w-3xl mx-auto py-8 px-4">
-            <div className="flex items-center justify-between mb-10">
-                {/* <IconButton
-                    onClick={() => navigate(-1)}
-                    className="flex items-center text-[#313131] ]"
-                >
-                    <ArrowBackIosNewIcon  />
-                    <span className="text-[18px] ml-1 ">Back</span>
-                </IconButton> */}
-                <h1 className="text-[32px] font-medium text-[#313131] text-center flex-1">
-                    Assign Email Access for Your Team
-                </h1>
-                <div className="w-[60px]" />
-            </div>
+            <h1 className="text-[32px] font-medium text-[#313131] text-center mb-10">
+                Assign Email Access for Your Team
+            </h1>
 
             <Box className="space-y-4 mt-10">
-                <Box><label style={labelStyle} htmlFor="roleType">Role Type</label><TextFieldComponent id="roleType" name="roleType" placeholder="Select your Email type" options={roleTypeOptions} value={formData.roleType} onChange={handleChange} /></Box>
-                <Box><label style={labelStyle} htmlFor="name">Name</label><TextFieldComponent id="name" name="name" type="text" value={formData.name} onChange={handleChange} placeholder="Enter the Name of the person" /></Box>
-                <Box><label style={labelStyle} htmlFor="email">Email</label><TextFieldComponent id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Enter the Email ID of the person" /></Box>
-                <Box><label style={labelStyle} htmlFor="phoneNumber">Phone Number</label><TextFieldComponent id="phoneNumber" name="phoneNumber" type="tel" value={formData.phoneNumber} onChange={handleChange} placeholder="Enter phone number" /></Box>
-                <Box><label style={labelStyle} htmlFor="password">Create Password</label><TextFieldComponent id="password" name="password" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleChange} placeholder="Create your password" InputProps={{ style: { backgroundColor: '#fff' }, endAdornment: (<InputAdornment position="end"><IconButton onClick={() => setShowPassword(!showPassword)} edge="end">{showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}</IconButton></InputAdornment>) }} /></Box>
-                <Box><label style={labelStyle} htmlFor="confirmPassword">Confirm Password</label><TextFieldComponent id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} placeholder="Re-enter your password" InputProps={{ style: { backgroundColor: '#fff' }, endAdornment: (<InputAdornment position="end"><IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)} edge="end">{showConfirmPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}</IconButton></InputAdornment>) }} /></Box>
-                <Box><label style={labelStyle} htmlFor="roleAccess">Role Access</label><TextFieldComponent id="roleAccess" name="roleAccess" placeholder="Select access you want to give" options={roleAccessOptions} value={formData.roleAccess} onChange={handleChange} /></Box>
+                <Box>
+                    <label style={labelStyle}>Role Type</label>
+                    <AutocompleteFieldComponent
+                        options={roleTypeOptions}
+                        value={roleTypeOptions.find(c => c.id === formData.roleType) || null}
+                        onChange={v => dispatch(setRoleType(v ? v.id : ''))}
+                    />
+                    {errors.roleType && <p className="text-red-600">{errors.roleType}</p>}
+                </Box>
+
+                <Box>
+                    <label style={labelStyle}>Role Access</label>
+                    <AutocompleteFieldComponent
+                        options={roleAccessOptions}
+                        isMulti
+                        placeholder="Select access you want to give"
+                        value={roleAccessOptions.filter(opt => formData.roleAccess.includes(opt.id))}
+                        onChange={handleRoleAccessChange}
+                    />
+
+                    {errors.roleAccess && <p className="text-red-600">{errors.roleAccess}</p>}
+                </Box>
+
+                {['name', 'email', 'phoneNumber'].map(field => (
+                    <Box key={field}>
+                        <label style={labelStyle}>{field === 'phoneNumber' ? 'Phone Number' : field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                        <TextFieldComponent
+                            name={field}
+                            type={field === 'email' ? 'email' : field === 'phoneNumber' ? 'tel' : 'text'}
+                            value={formData[field]}
+                            onChange={e => dispatch(updateField({ field: e.target.name, value: e.target.value }))}
+                            placeholder={`Enter ${field}`}
+                        />
+                        {errors[field] && <p className="text-red-600">{errors[field]}</p>}
+                    </Box>
+                ))}
+
+                {['password', 'confirmPassword'].map(field => (
+                    <Box key={field}>
+                        <label style={labelStyle}>
+                            {field === 'password' ? 'Create Password' : 'Confirm Password'}
+                        </label>
+                        <TextFieldComponent
+                            name={field}
+                            type={
+                                field === 'password'
+                                    ? showPassword ? 'text' : 'password'
+                                    : showConfirmPassword ? 'text' : 'password'
+                            }
+                            value={formData[field]}
+                            onChange={e => dispatch(updateField({ field: e.target.name, value: e.target.value }))}
+                            placeholder={field === 'password' ? 'Create your password' : 'Re-enter your password'}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={() =>
+                                                field === 'password'
+                                                    ? setShowPassword(!showPassword)
+                                                    : setShowConfirmPassword(!showConfirmPassword)
+                                            }
+                                        >
+                                            {((field === 'password' && showPassword) || (field === 'confirmPassword' && showConfirmPassword)) ? (
+                                                <AiOutlineEyeInvisible />
+                                            ) : (
+                                                <AiOutlineEye />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        {errors[field] && <p className="text-red-600">{errors[field]}</p>}
+                    </Box>
+                ))}
             </Box>
 
             <Box className="flex justify-center space-x-4 mt-10">
-                <Button variant="contained" fullWidth={false} sx={{ background: '#ffff', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '14px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#fff' } }}>Cancel</Button>
-                <Button variant='contained' fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '14px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>Done</Button>
+                <Button
+                    variant="contained"
+                    sx={{
+                        background: '#ffff',
+                        color: 'black',
+                        px: 4,
+                        py: 1,
+                        borderRadius: 2,
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        textTransform: 'none',
+                        '&:hover': { background: '#fff' },
+                    }}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    onClick={handleSubmit}
+                    variant="contained"
+                    sx={{
+                        background: '#0000FF',
+                        color: 'white',
+                        px: 4,
+                        py: 1,
+                        borderRadius: 2,
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        textTransform: 'none',
+                        '&:hover': { background: '#0000FF' },
+                    }}
+                >
+                    Done
+                </Button>
             </Box>
-
         </div>
     );
 }

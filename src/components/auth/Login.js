@@ -34,6 +34,8 @@ const Login = () => {
     useEffect(() => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem('userId');
+    
     }, []);
 
 
@@ -69,12 +71,14 @@ const Login = () => {
     
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
+            localStorage.setItem("userId", user.id);
+
+            
     
             enqueueSnackbar(message || "Login successful!", {
                 variant: "success",
                 anchorOrigin: { vertical: 'top', horizontal: 'center' }
-            });
-    
+            });    
             navigate("/home");
         } catch (error) {
             const errMsg = error?.response?.data?.message || "Login failed!";
