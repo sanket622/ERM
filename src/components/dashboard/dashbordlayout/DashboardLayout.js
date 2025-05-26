@@ -228,7 +228,8 @@ const DashboardLayout = () => {
               <Route path="/addaccess" element={<AddAccess />} />
               <Route path="/employees" element={<Employees />} />
               <Route path="/addemployees" element={<AddEmployees />} />
-              <Route path="/employeedetails" element={<EmployeeDetailsCard />} />
+              <Route path="/employees/:id" element={<EmployeeDetailsCard />} />
+
               <Route path="/payroll/current" element={<CurrentPayroll />} />
               <Route path="/payroll/historical" element={<HistoricalPayroll />} />
               <Route path="/payroll/base" element={<BasePayroll />} />

@@ -16,7 +16,7 @@ const FilterDialog = ({ open, onClose }) => {
     };
 
     return (
-        <Dialog open={open} onClose={onClose} fullWidth maxWidth="md" PaperProps={{ sx: {   borderRadius: 6, }, }} >
+        <Dialog open={open} onClose={onClose} fullWidth maxWidth="md" PaperProps={{ sx: { borderRadius: 6, }, }} >
             <Box p={3}>
                 <DialogTitle sx={{ p: 0, mb: 3, fontSize: 24, fontWeight: 'bold' }}> Filter </DialogTitle>
                 <DialogContent sx={{ p: 0 }}>
@@ -41,8 +41,8 @@ const FilterDialog = ({ open, onClose }) => {
 
                 <DialogActions sx={{ p: 0, mt: 2 }}>
                     <Box display="flex" width="100%" justifyContent="center" className="gap-6">
-                    <Button variant="outlined" onClick={onClose} sx={{ width: '20%', py: 1.5, color: 'black', borderColor: 'lightgrey', borderRadius: 3, '&:hover': { borderColor: 'lightgrey', backgroundColor: 'rgba(0, 0, 0, 0.04)' } }}>Cancel</Button>
-                    <Button variant="contained" sx={{ width: '20%', py: 1.5, backgroundColor: '#0000FF', borderRadius: 3, '&:hover': { backgroundColor: '#0000FF' } }}>Apply</Button>
+                        <Button variant="outlined" onClick={onClose} sx={{ width: '20%', py: 1.5, color: 'black', borderColor: 'lightgrey', borderRadius: 3, '&:hover': { borderColor: 'lightgrey', backgroundColor: 'rgba(0, 0, 0, 0.04)' } }}>Cancel</Button>
+                        <Button variant="contained" sx={{ width: '20%', py: 1.5, backgroundColor: '#0000FF', borderRadius: 3, '&:hover': { backgroundColor: '#0000FF' } }}>Apply</Button>
                     </Box>
                 </DialogActions>
             </Box>
