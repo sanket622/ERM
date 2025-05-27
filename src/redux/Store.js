@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../redux/auth/authSlice';
 import emailAccessReducer from './usermanagement/emailAccessSlice';
 import employeeReducer from './employee/employeeSlice';
+import payrollReducer from './historicalpayroll/payrollSlice';
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         emailAccess: emailAccessReducer,
         employee: employeeReducer,
+        payroll: payrollReducer,
     },
 });

@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   payrollData: [],
   loading: false,
+  payrollLoading: false,
   error: null,
 };
 
@@ -26,6 +27,9 @@ const payrollSlice = createSlice({
     addPayroll: (state, action) => {
       state.payrollData.push(action.payload);
     },
+    setPayrollLoading: (state, action) => {
+        state.payrollLoading = action.payload
+    }
   },
 });
 

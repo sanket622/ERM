@@ -33,7 +33,7 @@ const EmployeeDetailsCard = () => {
       setLoading(true);
       try {
         const token = localStorage.getItem('accessToken');
-        const response = await axios.get(`/api/v1/employer/auth/getEmployeeProfile/${id}`, {
+        const response = await axios.get(`https://api.earnplus.net/api/v1/employer/auth/getEmployeeProfile/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
   

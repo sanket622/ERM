@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Button, IconButton, Pagination, PaginationItem } from '@mui/material';
 import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@mui/material';
 import { useNavigate } from 'react-router';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 import HelpIcon from '@mui/icons-material/Help';
 import AddPayrollDialog from './AddHistoricalPayrollDialog';
 import Tooltip from '@mui/material/Tooltip';
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPayrollData, createPayrollEntry } from '../../../../redux/historicalpayroll/payrollSlice';
 
 import FileUploadModal from './FileUploadModal';
 
-// Define SVG icons as React components
+// SVG Icons same as before...
+
 const SearchIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="11" cy="11" r="8"></circle>
@@ -34,41 +34,40 @@ const ChevronRightIcon = () => (
     </svg>
 );
 
-
 const HistoricalPayroll = () => {
-
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [filterDialogOpen, setFilterDialogOpen] = useState(false);
     const [fileUploadDialog, setFileUploadDialog] = useState(false);
     const [addPayrollOpen, setAddPayrollOpen] = useState(false);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [search, setSearch] = useState('');
 
     const navigate = useNavigate();
 
-    const userData = Array(10).fill().map((_, index) => ({
-        sno: '01',
-        name: 'Abhiraj Shrivastava',
-        roleType: 'Developer',
-        email: 'abcd@gmail.com',
-        phoneNumber: '9876543210',
-        roleAccess: index === 2 ? 'Repayment' :
-            index === 3 ? 'Payroll, Repayment' :
-                index === 4 ? 'Employee Management' : 'Payroll Management',
-        timestamp: '14/04/24 at 18:13',
-        status: 'Activate'
-    }));
+    const dispatch = useDispatch();
+    const {
+        data: payrollData,
+        total: totalCount = 0,
+        page: reduxPage = 0,
+        limit: rowsPerPage = 10
+    } = useSelector(state => state.payroll);
+
+    const [page, setPage] = useState(reduxPage);
+
+    // Debounce search with 500ms delay
+    useEffect(() => {
+        const delayDebounce = setTimeout(() => {
+            dispatch(fetchPayrollData({ page, limit: rowsPerPage, search: search.trim() || undefined }));
+        }, 500);
+
+        return () => clearTimeout(delayDebounce);
+    }, [dispatch, page, rowsPerPage, search]);
 
     const handleChangePage = (newPage) => {
         setPage(newPage);
     };
 
-    const handleOpenFileDialog = () => {
-        setFileUploadDialog(true);
-    };
-
-    const handleCloseFileDialog = () => {
-        setFileUploadDialog(false);
-    };
+    const handleOpenFileDialog = () => setFileUploadDialog(true);
+    const handleCloseFileDialog = () => setFileUploadDialog(false);
 
     return (
         <>
@@ -84,45 +83,91 @@ const HistoricalPayroll = () => {
                             <input
                                 type="text"
                                 placeholder="Search"
+                                value={search}
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                    setPage(0); // Reset to first page when search changes
+                                }}
                                 className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
                             />
                         </div>
                         <div className='mb-4'>
-                            <IconButton sx={{ mr: 3 }}> <HelpIcon fontSize='large' sx={{ color: '#CDCDCD' }} /> </IconButton>
-                            <Button onClick={handleOpenFileDialog} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#BDF4FA', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#BDF4FA' } }}>Upload Excel</Button>
+                            <IconButton sx={{ mr: 3 }}>
+                                <HelpIcon fontSize='large' sx={{ color: '#CDCDCD' }} />
+                            </IconButton>
                             <Button
-                                onClick={() => setAddPayrollOpen(true)}
-                                startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', marginRight: 4, '&:hover': { background: '#0000FF' } }}>Add Payroll</Button>
-                            {/* <Button onClick={handleOpenFilterDialog} startIcon={<TuneOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#fff', color: 'black', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#fff' } }}>Filter</Button> */}
+                                onClick={handleOpenFileDialog}
+                                startIcon={<AddCircleOutlineOutlinedIcon />}
+                                type="submit"
+                                variant="contained"
+                                fullWidth={false}
+                                sx={{
+                                    background: '#BDF4FA',
+                                    color: 'black',
+                                    px: 4,
+                                    py: 1,
+                                    borderRadius: 2,
+                                    fontSize: '16px',
+                                    fontWeight: 500,
+                                    textTransform: 'none',
+                                    marginRight: 4,
+                                    '&:hover': { background: '#BDF4FA' }
+                                }}
+                            >
+                                Upload Excel
+                            </Button>
                         </div>
                     </div>
 
-                    <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }}
+                    <TableContainer
+                        component={Paper}
+                        sx={{
+                            overflowX: 'auto',
+                            borderRadius: 2,
+                            '&::-webkit-scrollbar': { height: '8px' },
+                            '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' },
+                            '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' }
+                        }}
                     >
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    {['Sno.', 'Name', 'Role Type', 'Email', 'Phone Number', 'Role Access', 'Timestamps', 'Status',].map(header => (
-                                        <TableCell key={header} sx={{ fontSize: '14px', color: '#7E7E7E', }}>
+                                    {['S.No.', 'Employee Name', 'Employee ID', 'Custom Employee ID', 'Email', 'Phone Number', 'Income', 'Start Date', 'End Date', 'Action'].map(header => (
+                                        <TableCell key={header} sx={{ fontSize: '14px', color: '#7E7E7E' }}>
                                             {header}
                                         </TableCell>
                                     ))}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {userData.map((user, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{user.sno}</TableCell>
-                                        <TableCell>{user.name}</TableCell>
-                                        <TableCell>{user.roleType}</TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>{user.phoneNumber}</TableCell>
-                                        <TableCell>{user.roleAccess}</TableCell>
-                                        <TableCell>{user.timestamp}</TableCell>
-                                        <TableCell>{user.status}</TableCell>
-
-                                    </TableRow>
-                                ))}
+                                {payrollData.map((employee, index) => {
+                                    const payroll = employee.EmployeeHistoricalPayroll?.[0] || {};
+                                    return (
+                                        <TableRow key={employee.id}>
+                                            <TableCell>{index + 1 + page * rowsPerPage}</TableCell>
+                                            <TableCell>{employee.employeeName}</TableCell>
+                                            <TableCell>{employee.employeeId}</TableCell>
+                                            <TableCell>{employee.customEmployeeId}</TableCell>
+                                            <TableCell>{employee.email}</TableCell>
+                                            <TableCell>{employee.mobile}</TableCell>
+                                            <TableCell>{payroll.income || 'N/A'}</TableCell>
+                                            <TableCell>{payroll.startDate ? new Date(payroll.startDate).toLocaleDateString() : 'N/A'}</TableCell>
+                                            <TableCell>{payroll.endDate ? new Date(payroll.endDate).toLocaleDateString() : 'N/A'}</TableCell>
+                                            <TableCell>
+                                                <Button
+                                                    variant="outlined"
+                                                    size="small"
+                                                    onClick={() => {
+                                                        setSelectedEmployee(employee);
+                                                        setAddPayrollOpen(true);
+                                                    }}
+                                                >
+                                                    Add Payroll
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -131,29 +176,62 @@ const HistoricalPayroll = () => {
                         <div className="flex items-center text-gray-500">
                             <span className="mr-2 text-sm">Showing</span>
                             <div className="border border-gray-300 rounded px-2 py-1 flex items-center">
-                                <span className="text-sm">10</span>
+                                <span className="text-sm">{rowsPerPage}</span>
                             </div>
                         </div>
 
                         <div className="text-sm text-gray-500">
-                            Showing 1 to 10 out of 60 records
+                            Showing {page * rowsPerPage + 1} to{' '}
+                            {Math.min((page + 1) * rowsPerPage, totalCount)} out of {totalCount} records
                         </div>
 
                         <div className="flex items-center space-x-2">
-                            <Pagination count={15} page={page + 1} onChange={(e, v) => handleChangePage(v - 1)} size="small" shape="rounded" variant="outlined"
+                            <Pagination
+                                count={Math.ceil(totalCount / rowsPerPage)}
+                                page={page + 1}
+                                onChange={(e, v) => handleChangePage(v - 1)}
+                                size="small"
+                                shape="rounded"
+                                variant="outlined"
                                 renderItem={(item) => (
-                                    <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#0000FF' : 'black', borderColor: item.selected ? '#0000FF' : 'transparent', '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />
+                                    <PaginationItem
+                                        components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }}
+                                        {...item}
+                                        sx={{
+                                            minWidth: 32,
+                                            height: 32,
+                                            borderRadius: '8px',
+                                            fontSize: '0.75rem',
+                                            px: 0,
+                                            color: item.selected ? '#0000FF' : 'black',
+                                            borderColor: item.selected ? '#0000FF' : 'transparent',
+                                            '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' },
+                                            fontWeight: item.selected ? 600 : 400,
+                                        }}
+                                    />
                                 )}
                             />
                         </div>
                     </div>
+
                 </div>
             </div>
+
             <FileUploadModal open={fileUploadDialog} onClose={handleCloseFileDialog} />
-            <AddPayrollDialog open={addPayrollOpen} onClose={() => setAddPayrollOpen(false)} />
-
+            <AddPayrollDialog
+                open={addPayrollOpen}
+                onClose={() => {
+                    setAddPayrollOpen(false);
+                    setSelectedEmployee(null);
+                }}
+                onSuccess={() => {
+                    setAddPayrollOpen(false);
+                    setSelectedEmployee(null);
+                    dispatch(fetchPayrollData({ page, limit: rowsPerPage, search: search.trim() || undefined }));
+                }}
+                prefillData={{ customEmployeeId: selectedEmployee?.customEmployeeId }}
+            />
         </>
-
     );
 };
 

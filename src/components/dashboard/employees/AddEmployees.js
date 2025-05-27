@@ -32,6 +32,7 @@ const AddEmployees = () => {
         contractTypes,
         paymentCycles,
         errors,
+        loading
     } = useSelector((state) => state.employee);
 
     const [tabIndex, setTabIndex] = useState(0);
@@ -125,16 +126,24 @@ const AddEmployees = () => {
             enqueueSnackbar('Please fix validation errors before submitting.', { variant: 'error' });
             return;
         }
+    
         try {
-            await dispatch(submitEmployee(formData)).unwrap();
-            enqueueSnackbar('Employee added successfully!', { variant: 'success' });
-            setTabIndex(0);
+            const response = await dispatch(submitEmployee(formData)); // no .unwrap()
+            const data = response?.payload;
+    
+            if (data?.success) {
+                enqueueSnackbar(data?.message || 'Employee added successfully!', { variant: 'success' });
+                setTabIndex(0);         
+                dispatch(resetForm()); 
+            } else {
+                enqueueSnackbar(`Failed to add employee: ${data?.message || 'Unknown error'}`, { variant: 'error' });
+            }
         } catch (err) {
-            const message = typeof err === 'string' ? err : err?.response?.data?.message || 'Unknown error';
+            const message = typeof err === 'string' ? err : err?.message || 'Unknown error';
             enqueueSnackbar(`Failed to add employee: ${message}`, { variant: 'error' });
         }
     };
-
+    
     return (
         <div className="max-w-6xl mt-16">
             <p className="text-[24px] font-semibold">Add Employees</p>

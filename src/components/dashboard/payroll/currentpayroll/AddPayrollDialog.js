@@ -10,11 +10,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import TextFieldComponent from '../../../subcompotents/TextFieldComponent';
-import AutocompleteFieldComponent from '../../../subcompotents/AutocompleteFieldComponent';
-
 const AddPayrollDialog = ({ open, onClose, formData = {}, onChange, onSubmit }) => {
-
-
     return (
         <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth PaperProps={{ sx: { borderRadius: '20px' } }}>
             <DialogContent className='space-y-4' sx={{ pt: 4, pb: 2 }}>
@@ -74,9 +70,13 @@ const AddPayrollDialog = ({ open, onClose, formData = {}, onChange, onSubmit }) 
                         label="Date"
                         type="date"
                         InputLabelProps={{ shrink: true }}
-                        value={formData.date ? formData.date.slice(0, 10) : ''} // format YYYY-MM-DD
+                        value={formData.date ? formData.date.slice(0, 10) : ''}
                         onChange={onChange('date')}
+                        inputProps={{
+                            max: new Date().toISOString().split('T')[0] 
+                        }}
                     />
+
                 </Box>
 
 

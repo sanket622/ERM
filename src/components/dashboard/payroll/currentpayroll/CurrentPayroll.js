@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Button, IconButton, Pagination, PaginationItem, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper, Tooltip } from '@mui/material';
-import { useNavigate } from 'react-router';
 import HelpIcon from '@mui/icons-material/Help';
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
-
 import FileUploadModal from './FileUploadModal';
 import AddPayrollDialog from './AddPayrollDialog';
 import { enqueueSnackbar } from 'notistack';
@@ -48,20 +46,19 @@ const CurrentPayroll = () => {
     const fetchUsers = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('/api/v1/employee/payroll/getCurrentPayrolls', {
+            const response = await axios.get('https://api.earnplus.net/api/v1/employee/payroll/getCurrentPayrolls', {
                 params: { page: page + 1, limit: rowsPerPage, search: search.trim() || undefined, },
                 headers: { Authorization: `Bearer ${token}` },
             });
 
             if (response?.data?.success) {
                 const apiData = response.data.data;
-                // The data format contains payroll array, let's flatten it for table rows
                 const rows = apiData.data.map((emp) => {
                     const payroll = emp.EmployeeCurrentPayroll?.[0] || {};
                     return {
                         id: emp.id,
-                        employeeId: emp.employeeId, // 🔹 NEW
-                        customEmployeeId: emp.customEmployeeId, // 🔹 NEW
+                        employeeId: emp.employeeId,
+                        customEmployeeId: emp.customEmployeeId,
                         employeeName: emp.employeeName,
                         email: emp.email,
                         phoneNumber: emp.mobile,
@@ -104,38 +101,38 @@ const CurrentPayroll = () => {
 
     const handlePayrollSubmit = async () => {
         if (!selectedEmployee?.customEmployeeId || !selectedEmployee?.income || !selectedEmployee?.date) {
-          enqueueSnackbar('Please fill out all required fields.', { variant: 'warning' });
-          return;
+            enqueueSnackbar('Please fill out all required fields.', { variant: 'warning' });
+            return;
         }
-      
+
         const payload = {
-          customEmployeeId: selectedEmployee.customEmployeeId,
-          income: Number(selectedEmployee.income),
-          date: new Date(selectedEmployee.date).toISOString(),
+            customEmployeeId: selectedEmployee.customEmployeeId,
+            income: Number(selectedEmployee.income),
+            date: new Date(selectedEmployee.date).toISOString(),
         };
-      
+
         try {
-          await axios.post(
-            '/api/v1/employee/payroll/createEmployeeCurrentPayroll',
-            payload,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-      
-          enqueueSnackbar('Payroll added successfully!', { variant: 'success' });
-      
-          setAddPayrollOpen(false);
-          fetchUsers();
+            await axios.post(
+                'https://api.earnplus.net/api/v1/employee/payroll/createEmployeeCurrentPayroll',
+                payload,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            enqueueSnackbar('Payroll added successfully!', { variant: 'success' });
+
+            setAddPayrollOpen(false);
+            fetchUsers();
         } catch (error) {
-          console.error('Error submitting payroll:', error);
-          enqueueSnackbar('Failed to submit payroll. Please try again.', { variant: 'error' });
+            console.error('Error submitting payroll:', error);
+            enqueueSnackbar('Failed to submit payroll. Please try again.', { variant: 'error' });
         }
-      };
-      
+    };
+
 
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
             fetchUsers();
-        }, 500); // ⏳ delay 500ms
+        }, 500);
 
         return () => clearTimeout(delayDebounce);
     }, [search, page, rowsPerPage]);

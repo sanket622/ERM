@@ -141,12 +141,12 @@ const DashboardLayout = () => {
               >
                 <span className="text-xs">{location.pathname.includes('/payroll/historical') ? '◆' : '◇'}</span> Historical Data
               </li>
-              <li
+              {/* <li
                 className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/payroll/base') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/payroll/base')}
               >
                 <span className="text-xs">{location.pathname.includes('/payroll/base') ? '◆' : '◇'}</span> Base Data
-              </li>
+              </li> */}
             </ul>
           )}
 
@@ -232,7 +232,7 @@ const DashboardLayout = () => {
 
               <Route path="/payroll/current" element={<CurrentPayroll />} />
               <Route path="/payroll/historical" element={<HistoricalPayroll />} />
-              <Route path="/payroll/base" element={<BasePayroll />} />
+              {/* <Route path="/payroll/base" element={<BasePayroll />} /> */}
               <Route path="/ewa/outstandingloans" element={<OutstandingLoans/>} />
               <Route path="/ewa/employeeloaninfo" element={<EmployeeLoanInfo/>} />
               <Route path="/ewa/disbursementrequests" element={<div>Disbursement Requests</div>} />

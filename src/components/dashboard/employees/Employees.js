@@ -87,7 +87,7 @@ const Employees = () => {
         try {
             const token = localStorage.getItem('accessToken');
             const response = await axios.get(
-                '/api/v1/employer/auth/getEmployeesByEmployer',
+                'https://api.earnplus.net/api/v1/employer/auth/getEmployeesByEmployer',
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

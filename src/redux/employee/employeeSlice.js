@@ -12,7 +12,7 @@ const initialState = {
     loading: false,
     error: null,
     success: false,
-    error: null,        // general error string
+    error: null,     
     errors: {},  
 };
 
@@ -55,13 +55,10 @@ const employeeSlice = createSlice({
             state.paymentCycles = action.payload;
         },
         setErrors: (state, action) => {
-            state.errors = action.payload;  // payload is an object of field errors
+            state.errors = action.payload; 
         },
-
-
     },
 });
-
 
 export const {
     updateFormField,
@@ -144,8 +141,9 @@ export const fetchWorkLocations = () => async (dispatch) => {
 
 export const fetchPaymentCyclesByContractType = (contractTypeId) => async (dispatch) => {
     console.log(contractTypeId)
+    const getEmployerContractCombinations = "https://api.earnplus.net/api/v1/employer/auth/getEmployerContractCombinations"
     try {
-        const res = await axios.get(`https://api.earnplus.net/api/v1/employer/auth/getEmployerContractCombinations?contractTypeId=${contractTypeId}`, {
+        const res = await axios.get(`${getEmployerContractCombinations}?contractTypeId=${contractTypeId}`, {
             headers: { Authorization: `Bearer ${getToken()}` },
         });
         const formatted = res.data.data.map(p => ({
