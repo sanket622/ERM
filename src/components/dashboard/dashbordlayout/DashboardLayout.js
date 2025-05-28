@@ -218,8 +218,8 @@ const DashboardLayout = () => {
           <div className="mt-14">
             <Routes>
               <Route path="/home" element={<DashboardHeader/>} />
-              <Route path="/member" element={<MemberHome />} />
-              <Route path="/memberdetail/:id" element={<MemberProfile />} />
+              {/* <Route path="/member" element={<MemberHome />} />
+              <Route path="/memberdetail/:id" element={<MemberProfile />} /> */}
               <Route path="/employer" element={<EmployerHome />} />
               <Route path="/employerprofile" element={<EmployerProfile />} />
               <Route path="/usermanagement" element={<UserManagement />} />
@@ -229,7 +229,6 @@ const DashboardLayout = () => {
               <Route path="/employees" element={<Employees />} />
               <Route path="/addemployees" element={<AddEmployees />} />
               <Route path="/employees/:id" element={<EmployeeDetailsCard />} />
-
               <Route path="/payroll/current" element={<CurrentPayroll />} />
               <Route path="/payroll/historical" element={<HistoricalPayroll />} />
               {/* <Route path="/payroll/base" element={<BasePayroll />} /> */}
