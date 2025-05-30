@@ -36,6 +36,7 @@ import Repayment from '../ewa/repayment/Repayment';
 import Analytics from '../analytics/Analytics';
 import LienManagement from '../ewa/lien/LienManagement';
 import DelinquencyManagement from '../ewa/delinquency/DelinquencyManagement';
+import MyRequest from '../myrequest/MyRequest';
 
 
 const DashboardLayout = () => {
@@ -223,6 +224,7 @@ const DashboardLayout = () => {
               <Route path="/employer" element={<EmployerHome />} />
               <Route path="/employerprofile" element={<EmployerProfile />} />
               <Route path="/usermanagement" element={<UserManagement />} />
+              <Route path="/myrequests" element={<MyRequest />} />
               <Route path="/helpcenter" element={<EMSPortalHelpPage />} />
               <Route path="/settings" element={<Settings/>} />
               <Route path="/addaccess" element={<AddAccess />} />

@@ -5,6 +5,9 @@ import employeeReducer from './employee/employeeSlice';
 import payrollReducer from './historicalpayroll/payrollSlice';
 import cardReducer from './dashboardhome/cardSlice';
 import employerProfileReducer from './dashboardhome/employerProfileSlice';
+import analyticsReducer from './analytics/analyticsSlice';
+import ticketReducer from './help/ticketSlice';
+import myRequestReducer from './myrequest/MyRequestSlice';
 
 export const store = configureStore({
     reducer: {
@@ -14,5 +17,8 @@ export const store = configureStore({
         payroll: payrollReducer,
         employeeCard: cardReducer,
         employerProfile: employerProfileReducer,
+        employerAnalytics: analyticsReducer,
+        helpdeskTicket: ticketReducer,
+        myRequest: myRequestReducer,
     },
 });

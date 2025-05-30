@@ -20,6 +20,7 @@ export default function Dashboard() {
 
     const dispatch = useDispatch();
     const totalEmployees = useSelector(state => state.employeeCard.totalEmployees);
+    const totalApplicants = useSelector(state => state.employeeCard.totalApplicants);
     const loading = useSelector(state => state.employeeCard.loading);
 
     useEffect(() => {
@@ -82,10 +83,13 @@ export default function Dashboard() {
                                     <h3 className="text-xl font-semibold text-gray-800">Total Applicant</h3>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <h2 className="text-4xl font-bold text-gray-900">{userData.applicants}</h2>
+                                    <h2 className="text-4xl font-bold text-gray-900">
+                                        {loading ? 'Loading...' : totalApplicants}
+                                    </h2>
+                                    {/* Replace with actual growth data if available */}
                                     <div className="bg-green-100 text-green-600 py-1 px-3 rounded-full flex items-center">
                                         <ArrowUpwardIcon style={{ fontSize: 16, marginRight: 4 }} />
-                                        <span>{userData.applicantGrowth}%</span>
+                                        <span>12%</span>
                                     </div>
                                 </div>
                             </div>
