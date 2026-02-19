@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import logo from '../../../assets/earnlogo.png';
 import { Button } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const navigate = useNavigate();

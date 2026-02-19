@@ -25,14 +25,14 @@ function App() {
     <>      
         <BrowserRouter>
           <Routes>           
-            <Route path="/login" element={<Login />} />           
-            <Route path="/newpassword" element={<NewPassword />} />
-            <Route path="/*" element={<DashboardLayout />} />            
             <Route path="/" element={<Home />} />            
             <Route path="/faq" element={<FAQSection />} />            
             <Route path="/contact" element={<ContactForm />} />            
+            <Route path="/login" element={<Login />} />           
+            <Route path="/newpassword" element={<NewPassword />} />
             <Route path="/welcome" element={<WelcomePage />} />            
             <Route path="/profileinformation" element={<MultiStepForm />} />                       
+            <Route path="/*" element={<DashboardLayout />} />            
           </Routes>
         </BrowserRouter>
      
