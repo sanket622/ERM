@@ -157,7 +157,7 @@ const CurrentPayroll = () => {
                                     setSearch(e.target.value);
                                     setPage(0); // Reset to first page on new search
                                 }}
-                                className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+                                className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#4B5563]"
                             />
 
                         </div>
@@ -170,7 +170,7 @@ const CurrentPayroll = () => {
                                 startIcon={<AddCircleOutlineOutlinedIcon />}
                                 variant="contained"
                                 sx={{
-                                    background: '#BDF4FA',
+                                    background: '#F3F4F6',
                                     color: 'black',
                                     px: 4,
                                     py: 1,
@@ -178,7 +178,7 @@ const CurrentPayroll = () => {
                                     fontSize: '16px',
                                     fontWeight: 500,
                                     textTransform: 'none',
-                                    '&:hover': { background: '#BDF4FA' },
+                                    '&:hover': { background: '#F3F4F6' },
                                 }}
                             >
                                 Upload Excel
@@ -193,7 +193,7 @@ const CurrentPayroll = () => {
                             overflowX: 'auto',
                             borderRadius: 2,
                             '&::-webkit-scrollbar': { height: '8px' },
-                            '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' },
+                            '&::-webkit-scrollbar-thumb': { backgroundColor: '#4B5563', borderRadius: '4px' },
                             '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' },
                         }}
                     >
@@ -254,14 +254,14 @@ const CurrentPayroll = () => {
                                         <TableCell>
                                             <Button
                                                 sx={{
-                                                    background: '#0000FF',
+                                                    background: '#4B5563',
                                                     color: 'white',
                                                     px: 2,
                                                     borderRadius: 2,
                                                     fontSize: '16px',
                                                     fontWeight: 500,
                                                     textTransform: 'none',
-                                                    '&:hover': { background: '#0000FF' },
+                                                    '&:hover': { background: '#4B5563' },
                                                 }}
                                                 variant="outlined"
                                                 size="small"
@@ -308,9 +308,9 @@ const CurrentPayroll = () => {
                                             borderRadius: '8px',
                                             fontSize: '0.75rem',
                                             px: 0,
-                                            color: item.selected ? '#0000FF' : 'black',
-                                            borderColor: item.selected ? '#0000FF' : 'transparent',
-                                            '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' },
+                                            color: item.selected ? '#4B5563' : 'black',
+                                            borderColor: item.selected ? '#4B5563' : 'transparent',
+                                            '&:hover': { borderColor: '#4B5563', backgroundColor: 'transparent' },
                                             fontWeight: item.selected ? 600 : 400,
                                         }}
                                     />

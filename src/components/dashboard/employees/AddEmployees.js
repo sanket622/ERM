@@ -157,8 +157,8 @@ const AddEmployees = () => {
                     className="border-b"
                     sx={{
                         '& .MuiTab-root': { color: '#000' },
-                        '& .Mui-selected': { color: '#0000FF' },
-                        '& .MuiTabs-indicator': { backgroundColor: '#0000FF' }
+                        '& .Mui-selected': { color: '#4B5563' },
+                        '& .MuiTabs-indicator': { backgroundColor: '#4B5563' }
                     }}>
                     <Tab icon={<Person />} iconPosition="start" label="Personal Information" />
                     <Tab icon={<BusinessCenterOutlinedIcon />} iconPosition="start" label="Employment Details" />
@@ -434,9 +434,9 @@ const AddEmployees = () => {
                             sx={{
                                 width: '15%',
                                 py: 1,
-                                backgroundColor: '#0000FF',
+                                backgroundColor: '#4B5563',
                                 borderRadius: 3,
-                                '&:hover': { backgroundColor: '#0000FF' },
+                                '&:hover': { backgroundColor: '#4B5563' },
                             }}
                         >
                             Next
@@ -449,9 +449,9 @@ const AddEmployees = () => {
                             sx={{
                                 width: '15%',
                                 py: 1,
-                                backgroundColor: '#0000FF',
+                                backgroundColor: '#4B5563',
                                 borderRadius: 3,
-                                '&:hover': { backgroundColor: '#0000FF' },
+                                '&:hover': { backgroundColor: '#4B5563' },
                             }}
                         >
                             Submit

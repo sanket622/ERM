@@ -1,11 +1,11 @@
 import React from 'react'
-import logo from '../../../assets/earnlogo.png';
+import logo from '../../../assets/AppIcons.png';
 
 const Footer = () => {
     return (
         <div>
             {/* Footer */}
-            <footer className="bg-[#CDEDFF] py-6 px-4 ">
+            <footer className="bg-[#F3F4F6] py-6 px-4 ">
                 <div className="flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto">
                     <div className="flex items-start mb-4 md:mb-0">
                         <img src={logo} alt="Earn Plus" className="w-36" />

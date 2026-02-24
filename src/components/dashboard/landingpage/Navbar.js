@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../../../assets/earnlogo.png';
+import logo from '../../../assets/AppIcons.png';
 import { Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -33,13 +33,13 @@ const Navbar = () => {
                                 key={item.path}
                                 onClick={() => navigate(item.path)}
                                 sx={{
-                                    color: location.pathname === item.path ? '#0000FF' : 'black',
+                                    color: location.pathname === item.path ? '#4B5563' : 'black',
                                     fontWeight: 500,
                                     px: 2,
                                     py: 1,
                                     textTransform: 'none',
                                     '&:hover': {
-                                        color: '#0000FF',
+                                        color: '#4B5563',
                                     },
                                 }}
                             >
@@ -54,7 +54,7 @@ const Navbar = () => {
                         <Button
                          onClick={() => navigate('/login')}
                             sx={{
-                                background: 'linear-gradient(to bottom, #0000ff, #00bfff)', // solid blue to sky blue
+                                background: 'linear-gradient(to bottom, #4b5563, #9ca3af)', // gray gradient
                                 color: 'white',
                                 px: 8,
                                 py: 1.5,
@@ -62,7 +62,7 @@ const Navbar = () => {
                                 fontWeight: 500,
                                 textTransform: 'none',
                                 '&:hover': {
-                                    background: 'linear-gradient(to bottom, #0000ff, #00bfff)',
+                                    background: 'linear-gradient(to bottom, #4b5563, #9ca3af)',
                                 },
                             }}
                         >
@@ -75,7 +75,7 @@ const Navbar = () => {
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-600 hover:bg-gray-100 focus:outline-none"
                         >
                             <span className="sr-only">Open main menu</span>
                             {/* Hamburger Icon */}
@@ -109,16 +109,16 @@ const Navbar = () => {
                     <a  className="text-black font-medium block px-3 py-2 hover:bg-gray-50">
                         Home
                     </a>
-                    <a  className="text-black font-medium block px-3 py-2 hover:bg-gray-50 hover:text-blue-600">
+                    <a  className="text-black font-medium block px-3 py-2 hover:bg-gray-50 hover:text-gray-600">
                         Contact Us
                     </a>
-                    <a  className="text-black font-medium block px-3 py-2 hover:bg-gray-50 hover:text-blue-600">
+                    <a  className="text-black font-medium block px-3 py-2 hover:bg-gray-50 hover:text-gray-600">
                         FAQs
                     </a>
                     <div className="px-3 py-3">
                         <Button
                             sx={{
-                                background: 'linear-gradient(to bottom, #0000ff, #00bfff)', 
+                                background: 'linear-gradient(to bottom, #4b5563, #9ca3af)', 
                                 color: 'white',
                                 px: 8,
                                 py: 1.5,
@@ -126,7 +126,7 @@ const Navbar = () => {
                                 fontWeight: 500,
                                 textTransform: 'none',
                                 '&:hover': {
-                                    background: 'linear-gradient(to bottom, #0000ff, #00bfff)',
+                                    background: 'linear-gradient(to bottom, #4b5563, #9ca3af)',
                                 },
                             }}
                         >

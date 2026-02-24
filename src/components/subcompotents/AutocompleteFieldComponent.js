@@ -38,14 +38,14 @@ const AutocompleteFieldComponent = ({
       sx={{
         '& .MuiOutlinedInput-root': {
           '&.Mui-focused fieldset': {
-            borderColor: '#0000FF',
+            borderColor: '#4B5563',
           },
           '& .MuiOutlinedInput-notchedOutline': {
             borderRadius: '10px',
           },
         },
         '& .MuiInputLabel-root.Mui-focused': {
-          color: '#0000FF',
+          color: '#4B5563',
         },
       }}
     />

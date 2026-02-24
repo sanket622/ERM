@@ -51,9 +51,9 @@ export default function EmployerProfile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-600 border-t-transparent mb-4"></div>
           <p className="text-gray-600 text-lg font-medium">Loading profile...</p>
         </div>
       </div>
@@ -112,14 +112,14 @@ export default function EmployerProfile() {
       id: "business",
       title: "Business Details",
       icon: <BusinessIcon />,
-      color: "blue",
+      color: "gray",
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           <InfoCard 
             label="Company Name" 
             value={name || "N/A"} 
             icon="🏢"
-            color="blue"
+            color="gray"
           />
           <InfoCard 
             label="Employer ID" 
@@ -165,7 +165,7 @@ export default function EmployerProfile() {
             title="Remote Work Policy"
             description={EmployerCompanyPolicies?.remoteworkPolicy || "N/A"}
             icon="🏠"
-            color="blue"
+            color="gray"
           />
           <PolicyCard
             title="Overtime Policy"
@@ -241,7 +241,7 @@ export default function EmployerProfile() {
             title="PAN Number"
             email={pan || "N/A"}
             type="Tax Identification"
-            color="blue"
+            color="gray"
           />
           <ContactCard
             title="GST Number"
@@ -297,21 +297,21 @@ export default function EmployerProfile() {
 
   const getColorClasses = (color, isActive = false) => {
     const colors = {
-      blue: isActive ? 'border-blue-500 text-blue-600 bg-blue-50' : 'border-transparent text-gray-600 hover:text-blue-600 hover:bg-blue-50',
+      gray: isActive ? 'border-gray-500 text-gray-600 bg-gray-50' : 'border-transparent text-gray-600 hover:text-gray-600 hover:bg-gray-50',
       green: isActive ? 'border-green-500 text-green-600 bg-green-50' : 'border-transparent text-gray-600 hover:text-green-600 hover:bg-green-50',
       purple: isActive ? 'border-purple-500 text-purple-600 bg-purple-50' : 'border-transparent text-gray-600 hover:text-purple-600 hover:bg-purple-50',
       orange: isActive ? 'border-orange-500 text-orange-600 bg-orange-50' : 'border-transparent text-gray-600 hover:text-orange-600 hover:bg-orange-50',
-      indigo: isActive ? 'border-indigo-500 text-indigo-600 bg-indigo-50' : 'border-transparent text-gray-600 hover:text-indigo-600 hover:bg-indigo-50',
+      indigo: isActive ? 'border-gray-500 text-gray-600 bg-gray-50' : 'border-transparent text-gray-600 hover:text-gray-600 hover:bg-gray-50',
     };
-    return colors[color] || colors.blue;
+    return colors[color] || colors.gray;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-600 bg-clip-text text-transparent mb-4">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-600 bg-clip-text text-transparent mb-4">
             Employer Profile
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -322,7 +322,7 @@ export default function EmployerProfile() {
         {/* Main Content */}
         <div className="bg-white/80 backdrop-blur-sm shadow-2xl rounded-3xl border border-white/20 overflow-hidden">
           {/* Tabs */}
-          <div className="bg-gradient-to-r from-gray-50 to-blue-50/50 px-8 py-6">
+          <div className="bg-gradient-to-r from-gray-50 to-gray-50/50 px-8 py-6">
             <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
               {sections.map((section, index) => (
                 <button
@@ -345,7 +345,7 @@ export default function EmployerProfile() {
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
                 {sections[activeTab].title}
               </h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+              <div className="w-20 h-1 bg-gradient-to-r from-gray-500 to-purple-500 rounded-full"></div>
             </div>
             {sections[activeTab].content}
           </div>
@@ -359,16 +359,16 @@ export default function EmployerProfile() {
 function InfoCard({ label, value, icon, color }) {
   const getCardColors = (color) => {
     const colors = {
-      blue: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200',
+      gray: 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200',
       green: 'bg-gradient-to-br from-green-50 to-green-100 border-green-200',
       purple: 'bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200',
       orange: 'bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200',
       red: 'bg-gradient-to-br from-red-50 to-red-100 border-red-200',
-      indigo: 'bg-gradient-to-br from-indigo-50 to-indigo-100 border-indigo-200',
+      indigo: 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200',
       yellow: 'bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200',
       pink: 'bg-gradient-to-br from-pink-50 to-pink-100 border-pink-200',
     };
-    return colors[color] || colors.blue;
+    return colors[color] || colors.gray;
   };
 
   return (
@@ -386,14 +386,14 @@ function InfoCard({ label, value, icon, color }) {
 function PolicyCard({ title, description, icon, color }) {
   const getCardColors = (color) => {
     const colors = {
-      blue: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200',
+      gray: 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200',
       green: 'bg-gradient-to-br from-green-50 to-green-100 border-green-200',
       purple: 'bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200',
       orange: 'bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200',
       yellow: 'bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200',
       pink: 'bg-gradient-to-br from-pink-50 to-pink-100 border-pink-200',
     };
-    return colors[color] || colors.blue;
+    return colors[color] || colors.gray;
   };
 
   return (
@@ -413,7 +413,7 @@ function ContactCard({ title, email, type, color }) {
     const colors = {
       purple: 'bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200',
       green: 'bg-gradient-to-br from-green-50 to-green-100 border-green-200',
-      blue: 'bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200',
+      gray: 'bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200',
       orange: 'bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200',
     };
     return colors[color] || colors.purple;

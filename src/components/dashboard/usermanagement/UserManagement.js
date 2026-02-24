@@ -185,12 +185,12 @@ const UserManagement = () => {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                             <SearchIcon />
                         </div>
-                        <input type="text" placeholder="Search" value={search} onChange={(e) => { setPage(1); setSearch(e.target.value); }} className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#0000FF]" />
+                        <input type="text" placeholder="Search" value={search} onChange={(e) => { setPage(1); setSearch(e.target.value); }} className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#4B5563]" />
                     </div>
-                    <Button onClick={() => navigate('/addaccess')} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#0000FF', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>Add Access</Button>
+                    <Button onClick={() => navigate('/addaccess')} startIcon={<AddCircleOutlineOutlinedIcon />} type="submit" variant="contained" fullWidth={false} sx={{ background: '#4B5563', color: 'white', px: 4, py: 1, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#4B5563' } }}>Add Access</Button>
                 </div>
 
-                <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }} >
+                <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#4B5563', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }} >
                     <Table>
                         <TableHead>
                             <TableRow>
@@ -235,7 +235,7 @@ const UserManagement = () => {
                                                         : openActivateModal(user)
                                                 }
                                                 style={{
-                                                    background: user.isActive ? '#5577FD' : '#22C900',
+                                                    background: user.isActive ? '#6B7280' : '#22C900',
                                                     color: 'white',
                                                     padding: '4px 8px',
                                                     fontSize: '12px',
@@ -275,7 +275,7 @@ const UserManagement = () => {
 
                     <div className="flex items-center space-x-2">
                         <Pagination count={Math.ceil(totalCount / limit)} page={page} onChange={(e, v) => setPage(v)} size="small" shape="rounded" variant="outlined"
-                            renderItem={(item) => <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#0000FF' : 'black', borderColor: item.selected ? '#0000FF' : 'transparent', '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />} />
+                            renderItem={(item) => <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#4B5563' : 'black', borderColor: item.selected ? '#4B5563' : 'transparent', '&:hover': { borderColor: '#4B5563', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />} />
                     </div>
                 </div>
             </div>

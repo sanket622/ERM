@@ -37,7 +37,7 @@ const AddBasePayrollDialog = ({ open, onClose }) => {
                 <Button onClick={onClose} variant="outlined" sx={{ width: '14%', mr: 1, py: 1, color: 'black', borderColor: 'lightgrey', borderRadius: 3, '&:hover': { borderColor: 'lightgrey', backgroundColor: 'rgba(0, 0, 0, 0.04)' } }} >
                     Cancel
                 </Button>
-                <Button variant="contained" sx={{ width: '14%', py: 1, backgroundColor: '#0000FF', borderRadius: 3, '&:hover': { backgroundColor: '#0000FF' } }} >
+                <Button variant="contained" sx={{ width: '14%', py: 1, backgroundColor: '#4B5563', borderRadius: 3, '&:hover': { backgroundColor: '#4B5563' } }} >
                     Add
                 </Button>
             </DialogActions>

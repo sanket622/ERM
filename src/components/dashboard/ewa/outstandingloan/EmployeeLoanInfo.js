@@ -8,8 +8,8 @@ const EmployeeLoanInfo = () => {
       {/* Employee Information Card */}
       <div className="border rounded-lg overflow-hidden shadow-sm">
         <div className="flex items-center bg-white p-4 border-b">
-          <Person className="text-[#0000FF] mr-2" />
-          <h2 className="text-[#0000FF] font-medium text-lg">Employee Information</h2>
+          <Person className="text-[#4B5563] mr-2" />
+          <h2 className="text-[#4B5563] font-medium text-lg">Employee Information</h2>
         </div>
         
         <div className="grid grid-cols-2 p-4 gap-6 bg-white">
@@ -82,8 +82,8 @@ const EmployeeLoanInfo = () => {
       {/* Loan Information Card */}
       <div className="border rounded-lg overflow-hidden shadow-sm">
         <div className="flex items-center bg-white p-4 border-b">
-          <Description className="text-[#0000FF] mr-2" />
-          <h2 className="text-[#0000FF] font-medium text-lg">Loan Information</h2>
+          <Description className="text-[#4B5563] mr-2" />
+          <h2 className="text-[#4B5563] font-medium text-lg">Loan Information</h2>
         </div>
         
         <div className="grid grid-cols-2 p-4 gap-6 bg-white">

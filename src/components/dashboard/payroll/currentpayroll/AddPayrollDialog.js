@@ -107,10 +107,10 @@ const AddPayrollDialog = ({ open, onClose, formData = {}, onChange, onSubmit }) 
                     sx={{
                         width: '14%',
                         py: 1,
-                        backgroundColor: '#0000FF',
+                        backgroundColor: '#4B5563',
                         borderRadius: 3,
                         '&:hover': {
-                            backgroundColor: '#0000FF',
+                            backgroundColor: '#4B5563',
                         },
                     }}
                 >

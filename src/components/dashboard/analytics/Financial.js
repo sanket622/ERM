@@ -42,7 +42,7 @@ const alertsData = [
     id: 1,
     title: 'Employees with income fluctuations',
     description: 'Identified 10 employees with >5% income fluctuations',
-    icon: <CompareArrows className="text-blue-500" />
+    icon: <CompareArrows className="text-gray-500" />
   },
   {
     id: 2,
@@ -89,7 +89,7 @@ export default function FinancialDashboard() {
                   cy="50%"
                   labelLine={false}
                   outerRadius={80}
-                  fill="#8884d8"
+                  fill="#6B7280"
                   dataKey="value"
                 >
                   {pieData.map((entry, index) => (
@@ -142,7 +142,7 @@ export default function FinancialDashboard() {
                 <Line
                   type="monotone"
                   dataKey="score"
-                  stroke="#3B82F6"
+                  stroke="#6B7280"
                   strokeWidth={2}
                   dot={{ r: 4 }}
                 />

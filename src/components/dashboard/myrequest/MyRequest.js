@@ -31,7 +31,7 @@ const MyRequest = () => {
         switch (status) {
             case 'PENDING': return 'bg-amber-100 text-amber-700';
             case 'RESOLVED': return 'bg-emerald-100 text-emerald-700';
-            case 'IN_PROGRESS': return 'bg-blue-100 text-blue-700';
+            case 'IN_PROGRESS': return 'bg-gray-100 text-gray-700';
             default: return 'bg-gray-100 text-gray-700';
         }
     };
@@ -47,7 +47,7 @@ const MyRequest = () => {
                             {/* Header */}
                             <div className="flex items-center justify-between mb-6">
                                 <div className="flex items-center space-x-4">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center shadow-md">
                                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 4h10a2 2 0 012 2v14l-4-4H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
                                         </svg>

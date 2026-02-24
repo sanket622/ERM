@@ -38,7 +38,7 @@ const ContactForm = () => {
             <div className="flex justify-center max-h-screen items-center md:mt-20 p-4 md:py-20">
                 <div className="relative w-full max-w-5xl">
                     {/* Left Blue Card */}
-                    <div className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#CDEDFF] p-20 py-32 rounded shadow-md w-full max-w-sm  z-10">
+                    <div className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-[#F3F4F6] p-20 py-32 rounded shadow-md w-full max-w-sm  z-10">
                         <h2 className="text-[40px] font-semibold mb-12">Contact Us</h2>
 
                         <div className="flex items-center mb-6">
@@ -101,7 +101,7 @@ const ContactForm = () => {
                                 <div>
                                     <Button
                                         sx={{
-                                            background: 'linear-gradient(to bottom, #0000FF, #55E4F6)',
+                                            background: 'linear-gradient(to bottom, #4B5563, #9CA3AF)',
                                             color: 'white',
                                             px: 8,
                                             py: 1.5,
@@ -109,7 +109,7 @@ const ContactForm = () => {
                                             fontWeight: 500,
                                             textTransform: 'none',
                                             '&:hover': {
-                                                background: 'linear-gradient(to bottom, #0000FF, #55E4F6)',
+                                                background: 'linear-gradient(to bottom, #4B5563, #9CA3AF)',
                                             },
                                         }}
                                     >

@@ -111,7 +111,7 @@ const EmployeeDetailsCard = () => {
             variant="contained"
             startIcon={<EditIcon />}
             onClick={handleOpen}
-            sx={{ backgroundColor: '#0000FF', textTransform: 'none', borderRadius: '8px', py: 1, px: 3 }}
+            sx={{ backgroundColor: '#4B5563', textTransform: 'none', borderRadius: '8px', py: 1, px: 3 }}
           >
             Request Edit
           </Button>
@@ -156,7 +156,7 @@ const EmployeeDetailsCard = () => {
                     checked={selectedFields.includes(option)}
                     onChange={() => handleFieldToggle(option)}
                     sx={{
-                      '&.Mui-checked': { color: '#0000FF' },
+                      '&.Mui-checked': { color: '#4B5563' },
                     }}
                   />
                 }
@@ -184,7 +184,7 @@ const EmployeeDetailsCard = () => {
             variant="contained"
             onClick={handleSubmit}
             sx={{
-              backgroundColor: '#0000FF',
+              backgroundColor: '#4B5563',
               textTransform: 'none',
               borderRadius: '10px',
               px: 4,

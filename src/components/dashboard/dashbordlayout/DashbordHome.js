@@ -81,7 +81,7 @@ const DashboardHome = () => {
         <CardContent
           className="flex flex-col items-center"
           style={{
-            background: 'linear-gradient(to right, #60A5FA, #3B82F6, #1D4ED8)',
+            background: 'linear-gradient(to right, #9CA3AF, #6B7280, #4B5563)',
             color: 'white',
           }}
         >

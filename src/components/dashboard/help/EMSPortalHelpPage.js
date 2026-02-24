@@ -75,7 +75,7 @@ export default function EMSPortalHelpPage() {
 
                     <div className="space-y-4">
                         <div className="flex items-start space-x-3">
-                            <div className="w-12 h-12 bg-blue-500 rounded flex-shrink-0"></div>
+                            <div className="w-12 h-12 bg-gray-500 rounded flex-shrink-0"></div>
                             <div>
                                 <p className="font-medium text-gray-800">
                                     Getting Started with EMS
@@ -83,7 +83,7 @@ export default function EMSPortalHelpPage() {
                                 <p className="text-sm text-gray-600">
                                     Learn the basics of navigating the EMS portal
                                 </p>
-                                <p className="text-sm text-blue-500">
+                                <p className="text-sm text-gray-500">
                                     Watch now (5 min)
                                 </p>
                             </div>
@@ -98,7 +98,7 @@ export default function EMSPortalHelpPage() {
                                 <p className="text-sm text-gray-600">
                                     Learn how to add, edit, and manage employees
                                 </p>
-                                <p className="text-sm text-blue-500">
+                                <p className="text-sm text-gray-500">
                                     Watch now (8 min)
                                 </p>
                             </div>
@@ -143,7 +143,7 @@ export default function EMSPortalHelpPage() {
                         <button
                             onClick={handleSubmit}
                             disabled={loading}
-                            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md disabled:opacity-50"
+                            className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-md disabled:opacity-50"
                         >
                             {loading ? 'Submitting...' : 'Submit Ticket'}
                         </button>
@@ -198,10 +198,10 @@ export default function EMSPortalHelpPage() {
                             Latest Support Articles
                         </p>
                         <div className="space-y-1">
-                            <p className="text-sm text-blue-500">
+                            <p className="text-sm text-gray-500">
                                 • New payroll tax updates for 2025
                             </p>
-                            <p className="text-sm text-blue-500">
+                            <p className="text-sm text-gray-500">
                                 • Employee onboarding checklist
                             </p>
                         </div>

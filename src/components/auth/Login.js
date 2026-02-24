@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../../redux/auth/authSlice";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
-import logo from '../../assets/earnlogo.png';
+import logo from '../../assets/AppIcons.png';
 import backgroundimg from '../../assets/1.png';
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { useSnackbar } from 'notistack';
@@ -98,7 +98,7 @@ const Login = () => {
             </div>
             <div className="w-full h-screen flex items-center justify-end px-4">
                 <div className="w-[631px] h-[682px] md:px-10 md:mr-10 bg-white bg-opacity-25 backdrop-blur-[34px] p-5 rounded-2xl shadow-lg flex justify-center flex-col">
-                    <h1 className="md:text-[32px] text-xl font-bold text-[#0000FF] text-center mb-4">Your Security, Our Priority</h1>
+                    <h1 className="md:text-[32px] text-xl font-bold text-[#4B5563] text-center mb-4">Your Security, Our Priority</h1>
                     <p className="text-[20px] text-center">Log in securely to access your account.</p>
                     <form className="grid grid-cols-1 gap-4 mt-10" onSubmit={handleLogin}>
                         <div>
@@ -144,7 +144,7 @@ const Login = () => {
                                 variant="contained"
                                 disabled={loading || !isFormValid}
                                 sx={{
-                                    background: '#0000FF',
+                                    background: '#4B5563',
                                     color: 'white',
                                     px: 12,
                                     py: 1.5,
@@ -152,7 +152,7 @@ const Login = () => {
                                     fontSize: '16px',
                                     fontWeight: 500,
                                     textTransform: 'none',
-                                    '&:hover': { background: '#0000FF' }
+                                    '&:hover': { background: '#4B5563' }
                                 }}
                             >
                                 {loading ? 'Logging In...' : 'Log In'}
@@ -161,7 +161,7 @@ const Login = () => {
                     </form>
                     <div className="flex items-center justify-center space-x-2 mt-10">
                         <p className="text-[#838383] text-[14px]">Don’t have an account?</p>
-                        <button onClick={() => navigate("/contact")} className="text-[#0000FF] text-[14px] font-semibold">
+                        <button onClick={() => navigate("/contact")} className="text-[#4B5563] text-[14px] font-semibold">
                             Contact us
                         </button>
                     </div>

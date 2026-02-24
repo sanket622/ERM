@@ -64,7 +64,7 @@ const EmployerHome = () => {
 
   // Render Profile Info Section
   const renderProfileInfo = () => (
-    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 shadow-xl rounded-lg p-8 mb-8 text-white">
+    <div className="bg-gradient-to-r from-gray-500 to-gray-600 shadow-xl rounded-lg p-8 mb-8 text-white">
       <h3 className="text-2xl font-bold mb-4">Profile Information</h3>
       <p><strong className="font-semibold">Name:</strong> {userData.name}</p>
       <p><strong className="font-semibold">Email:</strong> {userData.email}</p>
@@ -81,7 +81,7 @@ const EmployerHome = () => {
 
   // Render Business Details Section
   const renderBusinessDetails = () => (
-    <div className="bg-white shadow-2xl rounded-lg p-8 mb-8 border-l-8 border-indigo-500 transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div className="bg-white shadow-2xl rounded-lg p-8 mb-8 border-l-8 border-gray-500 transform hover:scale-105 transition-transform duration-300 ease-in-out">
       <h3 className="text-2xl font-bold text-gray-800 mb-4">Business Details</h3>
       {userData.business_details.map((business, index) => (
         <div key={index} className="mb-6">
@@ -193,7 +193,7 @@ const EmployerHome = () => {
 
       {/* Dialog for editing */}
       <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth='md' fullWidth>
-        <DialogTitle className="bg-gradient-to-r from-teal-400 to-blue-600 text-white text-2xl font-bold py-6 px-8 rounded-t-lg shadow-2xl">
+        <DialogTitle className="bg-gradient-to-r from-teal-400 to-gray-600 text-white text-2xl font-bold py-6 px-8 rounded-t-lg shadow-2xl">
           Edit Information
         </DialogTitle>
         <DialogContent className="bg-white p-8 rounded-b-lg shadow-xl ">

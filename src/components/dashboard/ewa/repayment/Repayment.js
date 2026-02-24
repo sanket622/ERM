@@ -75,7 +75,7 @@ const Repayment = () => {
                             <input
                                 type="text"
                                 placeholder="Search"
-                                className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+                                className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#4B5563]"
                             />
                         </div>
                         <div className='mb-4'>
@@ -83,7 +83,7 @@ const Repayment = () => {
                         </div>
                     </div>
 
-                    <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }}
+                    <TableContainer component={Paper} sx={{ overflowX: 'auto', borderRadius: 2, '&::-webkit-scrollbar': { height: '8px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: '#4B5563', borderRadius: '4px' }, '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' } }}
                     >
                         <Table>
                             <TableHead>
@@ -107,7 +107,7 @@ const Repayment = () => {
                                         <TableCell>{user.Mode}</TableCell>
                                         {/* <TableCell>
                                             <div style={{ display: 'flex', gap: '10px' }}>
-                                                <IconButton style={{ color: '#5577FD', padding: '6px' }}>
+                                                <IconButton style={{ color: '#6B7280', padding: '6px' }}>
                                                     <VisibilityOutlinedIcon />
                                                 </IconButton>
                                             </div>
@@ -133,7 +133,7 @@ const Repayment = () => {
                         <div className="flex items-center space-x-2">
                             <Pagination count={15} page={page + 1} onChange={(e, v) => handleChangePage(v - 1)} size="small" shape="rounded" variant="outlined"
                                 renderItem={(item) => (
-                                    <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#0000FF' : 'black', borderColor: item.selected ? '#0000FF' : 'transparent', '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />
+                                    <PaginationItem components={{ previous: ChevronLeftIcon, next: ChevronRightIcon }} {...item} sx={{ minWidth: 32, height: 32, borderRadius: '8px', fontSize: '0.75rem', px: 0, color: item.selected ? '#4B5563' : 'black', borderColor: item.selected ? '#4B5563' : 'transparent', '&:hover': { borderColor: '#4B5563', backgroundColor: 'transparent' }, fontWeight: item.selected ? 600 : 400 }} />
                                 )}
                             />
                         </div>

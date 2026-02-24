@@ -18,7 +18,7 @@ const Settings = () => {
             <div className="max-w-7xl mt-16">
                 <p className="text-[24px] font-semibold">Settings</p>
                 <div className="my-4">
-                <Tabs value={tabIndex} onChange={handleTabChange} variant="fullWidth" textColor="inherit" indicatorColor="primary" className="border-b" sx={{ mb: 2, '& .MuiTab-root': { color: '#000' }, '& .Mui-selected': { color: '#0000FF' }, '& .MuiTabs-indicator': { backgroundColor: '#0000FF' } }} >
+                <Tabs value={tabIndex} onChange={handleTabChange} variant="fullWidth" textColor="inherit" indicatorColor="primary" className="border-b" sx={{ mb: 2, '& .MuiTab-root': { color: '#000' }, '& .Mui-selected': { color: '#4B5563' }, '& .MuiTabs-indicator': { backgroundColor: '#4B5563' } }} >
 
                         <Tab icon={<Person />} iconPosition="start" label="Activity Logs" />
                         <Tab icon={<NotificationsIcon />} iconPosition="start" label="Notification Setting" />

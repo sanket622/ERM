@@ -11,7 +11,7 @@ import img7 from '../../../assets/unsplash_Hcfwew744z4.png'
 import img8 from '../../../assets/unsplash_hpjSkU2UYSU.png'
 import ladyimg from '../../../assets/5a7b0ba3fc73ee370822320de58467b8 1.png'
 import footer from './2.png'
-import logo from '../../../assets/earnlogo.png';
+import logo from '../../../assets/AppIcons.png';
 import Footer from "./Footer";
 
 
@@ -97,7 +97,7 @@ export default function LandingPage() {
                     <div className="flex justify-center items-center mt-10">
                         <Button
                             sx={{
-                                background: 'linear-gradient(to bottom, #0000ff, #00bfff)',
+                                background: 'linear-gradient(to bottom, #4b5563, #9ca3af)',
                                 color: 'white',
                                 px: 6,
                                 py: 1.5,
@@ -108,7 +108,7 @@ export default function LandingPage() {
                                 fontSize: 20,
 
                                 '&:hover': {
-                                    background: 'linear-gradient(to bottom, #0000ff, #00bfff)',
+                                    background: 'linear-gradient(to bottom, #4b5563, #9ca3af)',
                                 },
                             }}
                         >
@@ -139,7 +139,7 @@ export default function LandingPage() {
             </section>
 
             {/* Get Started CTA */}
-            <section className="bg-[#CDEDFF] py-14 text-center">
+            <section className="bg-[#F3F4F6] py-14 text-center">
                 {/* <p className="text-yellow-600 text-sm font-bold mb-2 relative inline-block">
                     <span className="relative z-10">Begin</span>
                     <img
@@ -148,14 +148,14 @@ export default function LandingPage() {
                         className="absolute -bottom-1 left-0 w-full z-0"
                     />
                 </p> */}
-                <h3 className="text-[40px] font-bold text-[#0000FF]">Get Started Today!</h3>
+                <h3 className="text-[40px] font-bold text-[#4B5563]">Get Started Today!</h3>
                 <p className="text-[24px] max-w-2xl mx-auto my-8">
                     Log in now to explore Earn+ and take the first step towards improving your workforce’s financial wellbeing.
                 </p>
                 <div className=" flex justify-center ">
                     <Button
                         sx={{
-                            background: 'linear-gradient(to bottom, #0000ff, #00bfff)', // solid blue to sky blue
+                            background: 'linear-gradient(to bottom, #4b5563, #9ca3af)', // gray gradient
                             color: 'white',
                             px: 8,
                             py: 1,
@@ -164,7 +164,7 @@ export default function LandingPage() {
                             textTransform: 'none',
                             fontSize: '20px',
                             '&:hover': {
-                                background: 'linear-gradient(to bottom, #0000ff, #00bfff)',
+                                background: 'linear-gradient(to bottom, #4b5563, #9ca3af)',
                             },
                         }}
                     >
@@ -181,7 +181,7 @@ export default function LandingPage() {
                 {/* Header Section */}
                 <section className="text-center py-8">
                     <h2 className="text-[40px]  font-semibold">
-                        <span className="text-blue-600 font-bold">We’re here to help!</span>{' '}
+                        <span className="text-gray-600 font-bold">We’re here to help!</span>{' '}
                         Access support anytime
                     </h2>
                 </section>
@@ -215,7 +215,7 @@ export default function LandingPage() {
                                     Reach us at <br />
                                     <a
                                         href="mailto:support@loan2grow.com"
-                                        className="text-blue-600 underline"
+                                        className="text-gray-600 underline"
                                     >
                                         support@loan2grow.com
                                     </a>
@@ -295,7 +295,7 @@ export default function LandingPage() {
                             </div>
                             <Button
                                 sx={{
-                                    background: 'linear-gradient(to bottom, #0000FF, #55E4F6)', 
+                                    background: 'linear-gradient(to bottom, #4B5563, #9CA3AF)', 
                                     color: 'white',
                                     px: 8,
                                     py: 1.5,
@@ -303,7 +303,7 @@ export default function LandingPage() {
                                     fontWeight: 500,
                                     textTransform: 'none',
                                     '&:hover': {
-                                        background: 'linear-gradient(to bottom, #0000FF, #55E4F6)',
+                                        background: 'linear-gradient(to bottom, #4B5563, #9CA3AF)',
                                     },
                                 }}
                             >

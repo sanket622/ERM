@@ -35,7 +35,7 @@ const FilterDialog = ({ open, onClose }) => {
                                         <Checkbox
                                             checked={contractTypes.includes(option.value)}
                                             onChange={() => handleToggle(option.value, contractTypes, setContractTypes)}
-                                            sx={{ color: '', '&.Mui-checked': { color: '#0000FF' } }}
+                                            sx={{ color: '', '&.Mui-checked': { color: '#4B5563' } }}
                                         />
                                     }
                                     label={option.label}
@@ -56,7 +56,7 @@ const FilterDialog = ({ open, onClose }) => {
                                         <Checkbox
                                             checked={paymentCycles.includes(option.value)}
                                             onChange={() => handleToggle(option.value, paymentCycles, setPaymentCycles)}
-                                            sx={{ color: '', '&.Mui-checked': { color: '#0000FF' } }}
+                                            sx={{ color: '', '&.Mui-checked': { color: '#4B5563' } }}
                                         />
                                     }
                                     label={option.label}
@@ -84,8 +84,8 @@ const FilterDialog = ({ open, onClose }) => {
                         <Button
                             variant="contained"
                             sx={{
-                                width: '20%', py: 1.5, backgroundColor: '#0000FF', borderRadius: 3,
-                                '&:hover': { backgroundColor: '#0000FF' }
+                                width: '20%', py: 1.5, backgroundColor: '#4B5563', borderRadius: 3,
+                                '&:hover': { backgroundColor: '#4B5563' }
                             }}
                         >
                             Apply

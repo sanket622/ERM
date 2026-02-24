@@ -226,7 +226,7 @@ export default function EmailAccessForm() {
                     onClick={handleSubmit}
                     variant="contained"
                     sx={{
-                        background: '#0000FF',
+                        background: '#4B5563',
                         color: 'white',
                         px: 4,
                         py: 1,
@@ -234,7 +234,7 @@ export default function EmailAccessForm() {
                         fontSize: '14px',
                         fontWeight: 500,
                         textTransform: 'none',
-                        '&:hover': { background: '#0000FF' },
+                        '&:hover': { background: '#4B5563' },
                     }}
                 >
                     Done

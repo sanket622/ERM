@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { Button, IconButton, Pagination, PaginationItem } from '@mui/material';
 import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Paper } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import HelpIcon from '@mui/icons-material/Help';
 import AddPayrollDialog from './AddHistoricalPayrollDialog';
 import Tooltip from '@mui/material/Tooltip';
@@ -88,7 +88,7 @@ const HistoricalPayroll = () => {
                                     setSearch(e.target.value);
                                     setPage(0); // Reset to first page when search changes
                                 }}
-                                className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+                                className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#4B5563]"
                             />
                         </div>
                         <div className='mb-4'>
@@ -102,7 +102,7 @@ const HistoricalPayroll = () => {
                                 variant="contained"
                                 fullWidth={false}
                                 sx={{
-                                    background: '#BDF4FA',
+                                    background: '#F3F4F6',
                                     color: 'black',
                                     px: 4,
                                     py: 1,
@@ -111,7 +111,7 @@ const HistoricalPayroll = () => {
                                     fontWeight: 500,
                                     textTransform: 'none',
                                     marginRight: 4,
-                                    '&:hover': { background: '#BDF4FA' }
+                                    '&:hover': { background: '#F3F4F6' }
                                 }}
                             >
                                 Upload Excel
@@ -125,7 +125,7 @@ const HistoricalPayroll = () => {
                             overflowX: 'auto',
                             borderRadius: 2,
                             '&::-webkit-scrollbar': { height: '8px' },
-                            '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' },
+                            '&::-webkit-scrollbar-thumb': { backgroundColor: '#4B5563', borderRadius: '4px' },
                             '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' }
                         }}
                     >
@@ -203,9 +203,9 @@ const HistoricalPayroll = () => {
                                             borderRadius: '8px',
                                             fontSize: '0.75rem',
                                             px: 0,
-                                            color: item.selected ? '#0000FF' : 'black',
-                                            borderColor: item.selected ? '#0000FF' : 'transparent',
-                                            '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' },
+                                            color: item.selected ? '#4B5563' : 'black',
+                                            borderColor: item.selected ? '#4B5563' : 'transparent',
+                                            '&:hover': { borderColor: '#4B5563', backgroundColor: 'transparent' },
                                             fontWeight: item.selected ? 600 : 400,
                                         }}
                                     />

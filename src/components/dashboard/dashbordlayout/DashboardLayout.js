@@ -111,7 +111,7 @@ const DashboardLayout = () => {
               <li
                 key={item.path}
                 onClick={() => navigate(`/${item.path}`)}
-                className={`relative flex items-center px-5 py-3 cursor-pointer gap-3 transition-all ${isActive ? 'bg-gradient-to-r from-[#C3F9FF] to-white text-[#0000FF] font-medium rounded-xl' : 'hover:bg-gradient-to-r from-[#C3F9FF] to-white hover:text-black text-black rounded-xl'}`}
+                className={`relative flex items-center px-5 py-3 cursor-pointer gap-3 transition-all ${isActive ? 'bg-gradient-to-r from-[#F3F4F6] to-white text-[#4B5563] font-medium rounded-xl' : 'hover:bg-gradient-to-r from-[#F3F4F6] to-white hover:text-black text-black rounded-xl'}`}
               >
                 <span>{isActive ? item.icon : item.outlinedIcon}</span>
                 <span>{item.label}</span>
@@ -122,28 +122,28 @@ const DashboardLayout = () => {
           {/* Payroll Menu */}
           <li
             onClick={togglePayroll}
-            className={`relative flex items-center px-5 py-3 cursor-pointer gap-3 transition-all ${location.pathname.includes('payroll') ? 'bg-gradient-to-r from-[#C3F9FF] to-white text-[#0000FF] font-medium rounded-xl' : 'hover:bg-gradient-to-r from-[#C3F9FF] to-white hover:text-black text-black rounded-xl'}`}
+            className={`relative flex items-center px-5 py-3 cursor-pointer gap-3 transition-all ${location.pathname.includes('payroll') ? 'bg-gradient-to-r from-[#F3F4F6] to-white text-[#4B5563] font-medium rounded-xl' : 'hover:bg-gradient-to-r from-[#F3F4F6] to-white hover:text-black text-black rounded-xl'}`}
           >
             <span >{payrollOpen ? <CurrencyRupeeOutlinedIcon /> : <CurrencyRupeeIcon />}</span>
-            <span className={location.pathname.includes('payroll') ? 'text-[#0000FF]' : 'text-black'}>Payroll</span>
+            <span className={location.pathname.includes('payroll') ? 'text-[#4B5563]' : 'text-black'}>Payroll</span>
             <span>{payrollOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}</span>
           </li>
           {payrollOpen && (
             <ul className="ml-10 space-y-4">
               <li
-                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/payroll/current') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
+                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/payroll/current') ? 'text-[#4B5563] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/payroll/current')}
               >
                 <span className="text-xs">{location.pathname.includes('/payroll/current') ? '◆' : '◇'}</span> Current Payroll
               </li>
               <li
-                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/payroll/historical') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
+                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/payroll/historical') ? 'text-[#4B5563] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/payroll/historical')}
               >
                 <span className="text-xs">{location.pathname.includes('/payroll/historical') ? '◆' : '◇'}</span> Historical Data
               </li>
               {/* <li
-                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/payroll/base') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
+                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/payroll/base') ? 'text-[#4B5563] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/payroll/base')}
               >
                 <span className="text-xs">{location.pathname.includes('/payroll/base') ? '◆' : '◇'}</span> Base Data
@@ -153,40 +153,40 @@ const DashboardLayout = () => {
 
           <li
             onClick={toggleEwa}
-            className={`relative flex items-center px-5 py-3 cursor-pointer gap-3 transition-all ${location.pathname.includes('ewa') ? 'bg-gradient-to-r from-[#C3F9FF] to-white text-[#0000FF] font-medium rounded-xl' : 'hover:bg-gradient-to-r from-[#C3F9FF] to-white hover:text-black text-black rounded-xl'}`}
+            className={`relative flex items-center px-5 py-3 cursor-pointer gap-3 transition-all ${location.pathname.includes('ewa') ? 'bg-gradient-to-r from-[#F3F4F6] to-white text-[#4B5563] font-medium rounded-xl' : 'hover:bg-gradient-to-r from-[#F3F4F6] to-white hover:text-black text-black rounded-xl'}`}
           >
             <span >{ewaOpen ? <AccountBalanceWalletIcon /> : <AccountBalanceWalletOutlinedIcon />}</span>
-            <span className={location.pathname.includes('ewa') ? 'text-[#0000FF]' : 'text-black'}>EWA</span>
+            <span className={location.pathname.includes('ewa') ? 'text-[#4B5563]' : 'text-black'}>EWA</span>
             <span>{ewaOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}</span>
           </li>
           {ewaOpen && (
             <ul className="ml-10 space-y-4">
               <li
-                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/outstandingloans') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
+                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/outstandingloans') ? 'text-[#4B5563] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/ewa/outstandingloans')}
               >
                 <span className="text-xs">{location.pathname.includes('/ewa/outstandingloans') ? '◆' : '◇'}</span> Outstanding Loans
               </li>
               <li
-                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/disbursementrequests') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
+                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/disbursementrequests') ? 'text-[#4B5563] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/ewa/disbursementrequests')}
               >
                 <span className="text-xs">{location.pathname.includes('/ewa/disbursementrequests') ? '◆' : '◇'}</span> Disbursement Requests
               </li>
               <li
-                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/lienmanagement') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
+                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/lienmanagement') ? 'text-[#4B5563] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/ewa/lienmanagement')}
               >
                 <span className="text-xs">{location.pathname.includes('/ewa/lienmanagement') ? '◆' : '◇'}</span> Lien Management
               </li>
               <li
-                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/delinquencymanagement') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
+                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/delinquencymanagement') ? 'text-[#4B5563] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/ewa/delinquencymanagement')}
               >
                 <span className="text-xs">{location.pathname.includes('/ewa/delinquencymanagement') ? '◆' : '◇'}</span> Delinquency Management
               </li>
               <li
-                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/repayment') ? 'text-[#0000FF] font-semibold' : 'text-black'}`}
+                className={`cursor-pointer flex items-center gap-2 ${location.pathname.includes('/ewa/repayment') ? 'text-[#4B5563] font-semibold' : 'text-black'}`}
                 onClick={() => navigate('/ewa/repayment')}
               >
                 <span className="text-xs">{location.pathname.includes('/ewa/repayment') ? '◆' : '◇'}</span> Repayment
@@ -197,7 +197,7 @@ const DashboardLayout = () => {
           {/* Settings Button */}
           <li
             onClick={() => navigate('/analytics')}
-            className={`relative flex items-center px-5 py-3 cursor-pointer gap-3 transition-all ${location.pathname.includes('analytics') ? 'bg-gradient-to-r from-[#C3F9FF] to-white text-[#0000FF] font-medium rounded-xl' : 'hover:bg-gradient-to-r from-[#C3F9FF] to-white hover:text-black text-black rounded-xl'}`}
+            className={`relative flex items-center px-5 py-3 cursor-pointer gap-3 transition-all ${location.pathname.includes('analytics') ? 'bg-gradient-to-r from-[#F3F4F6] to-white text-[#4B5563] font-medium rounded-xl' : 'hover:bg-gradient-to-r from-[#F3F4F6] to-white hover:text-black text-black rounded-xl'}`}
           >
             <span>{location.pathname.includes('analytics') ? <AnalyticsIcon /> : <AnalyticsOutlinedIcon />}</span>
             <span>Analytics</span>

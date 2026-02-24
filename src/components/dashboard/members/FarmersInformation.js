@@ -639,7 +639,7 @@ const FarmersInformation = () => {
                         <button
                             onClick={handleUpload}
                             style={{ zIndex: 10 }}
-                            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition w-full"
+                            className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition w-full"
                             disabled={loading}
                         >
                             {loading ? 'Uploading...' : 'Upload Excel'}

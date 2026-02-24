@@ -145,7 +145,7 @@ const AddHistoricalPayrollDialog = ({ open, onClose, onSuccess, prefillData = {}
         <Button
           onClick={handleSubmit}
           variant="contained"
-          sx={{ width: '14%', py: 1, backgroundColor: '#0000FF', borderRadius: 3, '&:hover': { backgroundColor: '#0000FF' } }}
+          sx={{ width: '14%', py: 1, backgroundColor: '#4B5563', borderRadius: 3, '&:hover': { backgroundColor: '#4B5563' } }}
         >
           Add
         </Button>

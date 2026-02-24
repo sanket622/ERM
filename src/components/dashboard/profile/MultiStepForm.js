@@ -368,7 +368,7 @@ const MultiStepForm = () => {
                                         >
                                             <Box
                                                 sx={{
-                                                    backgroundColor: isSelected ? '#0000FF' : '#F2F2F4',
+                                                    backgroundColor: isSelected ? '#4B5563' : '#F2F2F4',
                                                     padding: '12px 16px',
                                                     display: 'flex',
                                                     justifyContent: 'space-between',
@@ -414,15 +414,15 @@ const MultiStepForm = () => {
                         {steps.map((step, index) => (
                             <Box key={index} className="flex flex-col items-center">
                                 <Box
-                                    className={`w-5 h-5 rounded-full flex items-center justify-center z-10 ${index <= activeStep ? 'border-2 border-[#0000FF]' : 'border-2 border-gray-300'}`}
+                                    className={`w-5 h-5 rounded-full flex items-center justify-center z-10 ${index <= activeStep ? 'border-2 border-[#4B5563]' : 'border-2 border-gray-300'}`}
                                 >
                                     <Box
-                                        className={`w-3 h-3 rounded-full ${index <= activeStep ? 'bg-[#0000FF]' : 'bg-gray-300'}`}
+                                        className={`w-3 h-3 rounded-full ${index <= activeStep ? 'bg-[#4B5563]' : 'bg-gray-300'}`}
                                     />
                                 </Box>
                                 {index < steps.length - 1 && (
                                     <Box
-                                        className={`w-0.5 h-32 ${index < activeStep ? 'bg-[#0000FF]' : 'bg-gray-300'}`}
+                                        className={`w-0.5 h-32 ${index < activeStep ? 'bg-[#4B5563]' : 'bg-gray-300'}`}
                                     />
                                 )}
                             </Box>
@@ -444,11 +444,11 @@ const MultiStepForm = () => {
                         <Box className="mt-4 "> {renderStepContent()}  </Box>
                         <Box className="mt-10 flex justify-center gap-4">
                             {activeStep < steps.length - 1 ? (
-                                <Button onClick={handleSubmit} variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
+                                <Button onClick={handleSubmit} variant="contained" sx={{ background: '#4B5563', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#4B5563' } }}>
                                     Next
                                 </Button>
                             ) : (
-                                <Button type="submit" variant="contained" sx={{ background: '#0000FF', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#0000FF' } }}>
+                                <Button type="submit" variant="contained" sx={{ background: '#4B5563', color: 'white', px: 6, py: 0.5, borderRadius: 2, fontSize: '16px', fontWeight: 500, textTransform: 'none', '&:hover': { background: '#4B5563' } }}>
                                     Submit
                                 </Button>
                             )}

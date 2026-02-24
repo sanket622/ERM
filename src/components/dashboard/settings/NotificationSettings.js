@@ -4,13 +4,13 @@ import { styled } from "@mui/material/styles";
 
 const CustomSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
-        color: "#0000FF",
+        color: "#4B5563",
         "&:hover": {
-            backgroundColor: "rgba(0, 0, 255, 0.08)",
+            backgroundColor: "rgba(107, 114, 128, 0.12)",
         },
     },
     "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-        backgroundColor: "#0000FF",
+        backgroundColor: "#4B5563",
     },
     "& .MuiSwitch-track": {
         borderRadius: 20,

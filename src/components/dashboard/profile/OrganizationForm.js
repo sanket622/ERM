@@ -90,7 +90,7 @@ function OrganizationForm() {
         {/* Custom Stepper */}
         <div className="mr-12 pt-2">
           <div className="flex flex-col items-center h-full">
-            <div className="w-6 h-6 rounded-full bg-blue-600 border-2 border-blue-600 flex items-center justify-center text-white">
+            <div className="w-6 h-6 rounded-full bg-gray-600 border-2 border-gray-600 flex items-center justify-center text-white">
               <div className="w-2 h-2 rounded-full bg-white"></div>
             </div>
             <div className="w-0.5 h-24 bg-gray-300"></div>
@@ -259,7 +259,7 @@ function OrganizationForm() {
             <Button 
               variant="contained" 
               style={{ 
-                backgroundColor: '#0000FF', 
+                backgroundColor: '#4B5563', 
                 color: 'white',
                 borderRadius: '4px',
                 padding: '8px 24px',

@@ -12,7 +12,7 @@ import {
     Paper,
     CircularProgress,
 } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
 import FilterDialog from './FilterDialog';
@@ -150,7 +150,7 @@ const Employees = () => {
                                 placeholder="Search"
                                 value={search}
                                 onChange={handleSearchChange}
-                                className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+                                className="pl-10 pr-4 py-2 w-72 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-[#4B5563]"
                             />
                         </div>
                         <div className="mb-4 flex gap-4">
@@ -159,7 +159,7 @@ const Employees = () => {
                                 startIcon={<AddCircleOutlineOutlinedIcon />}
                                 variant="contained"
                                 sx={{
-                                    background: '#BDF4FA',
+                                    background: '#F3F4F6',
                                     color: 'black',
                                     px: 4,
                                     py: 1,
@@ -167,7 +167,7 @@ const Employees = () => {
                                     fontSize: '16px',
                                     fontWeight: 500,
                                     textTransform: 'none',
-                                    '&:hover': { background: '#BDF4FA' },
+                                    '&:hover': { background: '#F3F4F6' },
                                 }}
                             >
                                 Upload Excel
@@ -177,7 +177,7 @@ const Employees = () => {
                                 startIcon={<AddCircleOutlineOutlinedIcon />}
                                 variant="contained"
                                 sx={{
-                                    background: '#0000FF',
+                                    background: '#4B5563',
                                     color: 'white',
                                     px: 4,
                                     py: 1,
@@ -185,7 +185,7 @@ const Employees = () => {
                                     fontSize: '16px',
                                     fontWeight: 500,
                                     textTransform: 'none',
-                                    '&:hover': { background: '#0000FF' },
+                                    '&:hover': { background: '#4B5563' },
                                 }}
                             >
                                 Add New Employee
@@ -217,7 +217,7 @@ const Employees = () => {
                             overflowX: 'auto',
                             borderRadius: 2,
                             '&::-webkit-scrollbar': { height: '8px' },
-                            '&::-webkit-scrollbar-thumb': { backgroundColor: '#0000FF', borderRadius: '4px' },
+                            '&::-webkit-scrollbar-thumb': { backgroundColor: '#4B5563', borderRadius: '4px' },
                             '&::-webkit-scrollbar-track': { backgroundColor: '#f1f1f1' },
                         }}
                     >
@@ -278,7 +278,7 @@ const Employees = () => {
                                             </TableCell>
                                             <TableCell>
                                                 <IconButton
-                                                    style={{ color: '#5577FD', padding: '6px' }}
+                                                    style={{ color: '#6B7280', padding: '6px' }}
                                                     onClick={() => navigate(`/employees/${emp.id}`)}
                                                 >
                                                     <VisibilityOutlinedIcon />
@@ -332,9 +332,9 @@ const Employees = () => {
                                             borderRadius: '8px',
                                             fontSize: '0.75rem',
                                             px: 0,
-                                            color: item.selected ? '#0000FF' : 'black',
-                                            borderColor: item.selected ? '#0000FF' : 'transparent',
-                                            '&:hover': { borderColor: '#0000FF', backgroundColor: 'transparent' },
+                                            color: item.selected ? '#4B5563' : 'black',
+                                            borderColor: item.selected ? '#4B5563' : 'transparent',
+                                            '&:hover': { borderColor: '#4B5563', backgroundColor: 'transparent' },
                                             fontWeight: item.selected ? 600 : 400,
                                         }}
                                     />

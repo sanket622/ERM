@@ -49,7 +49,7 @@ const ApiReferenceSectionModern = () => {
   const getMethodColor = (method) => {
     switch (method) {
       case "GET":
-        return "bg-blue-600 text-white";
+        return "bg-gray-600 text-white";
       case "POST":
         return "bg-green-600 text-white";
       case "PUT":
@@ -79,7 +79,7 @@ const ApiReferenceSectionModern = () => {
                 onClick={() => setActiveFilter(category)}
                 className={`mr-8 py-4 px-1 text-sm font-medium transition-all duration-200 ${
                   activeFilter === category
-                    ? "border-b-2 border-blue-600 text-blue-600"
+                    ? "border-b-2 border-gray-600 text-gray-600"
                     : "text-gray-500 hover:text-gray-800 hover:border-b-2 hover:border-gray-300"
                 }`}
               >
@@ -126,10 +126,10 @@ const ApiReferenceSectionModern = () => {
               
               {/* Action Links */}
               <div className="mt-6 flex items-center justify-end">
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-800 transition-all duration-200 mr-6">
+                <a href="#" className="text-sm text-gray-600 hover:text-gray-800 transition-all duration-200 mr-6">
                   Documentation
                 </a>
-                <a href="#" className="text-sm text-blue-600 hover:text-blue-800 transition-all duration-200">
+                <a href="#" className="text-sm text-gray-600 hover:text-gray-800 transition-all duration-200">
                   Try it out
                 </a>
               </div>
@@ -144,7 +144,7 @@ const ApiReferenceSectionModern = () => {
         <p className="text-gray-600 max-w-xl mx-auto mb-8">
           Our API is designed to be easy to integrate. Get your API keys now and start building.
         </p>
-        <button className="px-8 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-all duration-200">
+        <button className="px-8 py-3 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 transition-all duration-200">
           Get API Keys
         </button>
       </div>
